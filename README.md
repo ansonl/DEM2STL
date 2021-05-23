@@ -3,16 +3,16 @@
 ```
 Data working directory file structure details
 
->geographic-data
+>geographic-data (root)
 	-README.md
 	-set-zero-to-nodata.model3 <- QGIS process model for setting zero values to NODATA
 	-touch-terrain-batch-python-multithread.py <- Interpretation and multithreaded execution of generated touch-terrain-batch.sh
 	>boundaries
-		-XX.gpkg <- XX boundaries
+	  -XX.gpkg <- XX boundaries
 	>dems
 	  -30-arc-second-merged.tif <-merged North America DEM from step 2
-		>1000m-clipped
-			-XX.tif <- XX DEM
+	  >1000m-clipped
+	    -XX.tif <- XX DEM
 	>state_stls <- generated state stl files
 	  -example_config.json
 	  -TouchTerrain_standalone.py
