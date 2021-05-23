@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -490207.24133170024,
+"bllon": 1003420.5311577488,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/NC.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 295.9935229314424,
+"trlat": -165200.41965196747,
+"trlon": 1743404.3384863548,
+"zip_file_name": "NC",
+"zscale": 5
+}

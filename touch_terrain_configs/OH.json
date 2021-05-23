@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -81198.65651012864,
+"bllon": 873423.3758162353,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/OH.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 139.9969365216285,
+"trlat": 312809.6134646861,
+"trlon": 1223415.7171203066,
+"zip_file_name": "OH",
+"zscale": 5
+}

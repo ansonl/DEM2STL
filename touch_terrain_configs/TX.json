@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -1491228.252105279,
+"bllon": -954536.6239090245,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/TX.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 472.38966294869414,
+"trlat": -342204.1348436987,
+"trlon": 226437.53346271068,
+"zip_file_name": "TX",
+"zscale": 5
+}

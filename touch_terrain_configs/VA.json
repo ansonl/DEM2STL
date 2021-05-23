@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -281202.8544668872,
+"bllon": 1036419.8090521321,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/VA.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 264.39421440227477,
+"trlat": 87804.89076333307,
+"trlon": 1697405.345057819,
+"zip_file_name": "VA",
+"zscale": 5
+}

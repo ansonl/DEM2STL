@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -716211.9850228382,
+"bllon": 1091418.6055427715,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/SC.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 170.79626255638675,
+"trlat": -397205.28928180784,
+"trlon": 1518409.2619337384,
+"zip_file_name": "SC",
+"zscale": 5
+}

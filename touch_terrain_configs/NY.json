@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": 266808.6479346324,
+"bllon": 1251415.104424633,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/NY.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 251.99448573893085,
+"trlat": 739818.5761023667,
+"trlon": 1881401.3187719602,
+"zip_file_name": "NY",
+"zscale": 5
+}

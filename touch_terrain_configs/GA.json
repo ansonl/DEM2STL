@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -910216.0570408944,
+"bllon": 894422.9162944797,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/GA.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 183.99597371414006,
+"trlat": -441206.2128322944,
+"trlon": 1354412.85057983,
+"zip_file_name": "GA",
+"zscale": 5
+}

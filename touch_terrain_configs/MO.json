@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -402205.3942307262,
+"bllon": 18442.08491629176,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/MO.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 223.59510718740077,
+"trlat": 71804.55492679216,
+"trlon": 577429.8528847937,
+"zip_file_name": "MO",
+"zscale": 5
+}

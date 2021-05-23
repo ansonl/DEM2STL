@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": -231201.80497769732,
+"bllon": -1501524.6544613866,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/UT.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 189.59585117500498,
+"trlat": 351810.4320662543,
+"trlon": -1027535.0265238741,
+"zip_file_name": "UT",
+"zscale": 5
+}

@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": 513813.8324112287,
+"bllon": 1663406.089045424,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/VT.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 56.39876585585624,
+"trlat": 777819.3737141509,
+"trlon": 1804403.0036850646,
+"zip_file_name": "VT",
+"zscale": 5
+}

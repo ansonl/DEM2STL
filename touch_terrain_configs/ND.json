@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": 620816.0783180948,
+"bllon": -586544.676480745,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/ND.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 218.39522097374015,
+"trlat": 967823.3617730718,
+"trlon": -40556.6240463946,
+"zip_file_name": "ND",
+"zscale": 5
+}

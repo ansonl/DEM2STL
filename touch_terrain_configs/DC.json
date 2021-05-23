@@ -1,0 +1,21 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 1,
+"bllat": 41803.92523327842,
+"bllon": 1527409.064995842,
+"fileformat": "STLb",
+"ignore_leq": 0,
+"importedDEM": "../dems/1000m-clipped/DC.tif",
+"max_cells_for_memory_only": 5002,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": -1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 6.399859955274314,
+"trlat": 61804.34502895363,
+"trlon": 1543408.7148840278,
+"zip_file_name": "DC",
+"zscale": 5
+}
