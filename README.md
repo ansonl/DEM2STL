@@ -30,12 +30,13 @@ Requires TouchTerrain to be available in the Python environment.
     - Split state boundary file to individual files using STUSPS column. Save state files to `boundaries` folder.
     - Modify below Python snippet's `os.chdir` call parameter to `boundaries` folder path. 
     - Run below Python snippet in QGIS > Plugins > Python Console to remove "STUSPS_" prefix in resulting boundary files.
-    ```
+
+```
 import os
 os.chdir("C:/Users/ansonl/development/mapConstraintColorizer/geographic-data/boundaries")
 for fileName in os.listdir("."):
 	os.rename(fileName, fileName.replace("STUSPS_", ""))
-    ```
+```
 
 2. Merge all DEM files
   - QGIS > Raster > Miscellaneous > Merge
@@ -60,12 +61,13 @@ for fileName in os.listdir("."):
     - Output file: "clip_" + use parameter name (input mask layer)
     - Save under `dems/1000m-clipped` directory
     - Remove `clip_` prefix from saved files' filenames (see below sample Python snippet)
-    ```
+
+```
 import os
 os.chdir("C:/Users/ansonl/development/mapConstraintColorizer/geographic-data/dems/1000m-clipped")
 for fileName in os.listdir("."):
 	os.rename(fileName, fileName.replace("clip_", ""))
-    ```
+```
 
 6. Generate TouchTerrain configurations and commands and batch 3D model generation script using `generate-touch-terrain-config.py` either in the terminal, Spyder, or QGIS > Processing > Python console. .
 
