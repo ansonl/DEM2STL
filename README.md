@@ -1,4 +1,5 @@
-# Clipped DEM to STL workflow
+# DEM to STL workflow
+Convert DEMs with complex boundaries to STL models in preparation for 3D printing.
 
 ```
 Data working directory file structure details
@@ -23,7 +24,7 @@ Data working directory file structure details
 
 Recommended setup is setting up a Python 3 virtual environment through Anaconda with the root of the virtual environment set to the `geographic-data` directory. 
 
-Requires [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) to be available in the Python environment. Use TouchTerrain `setup.py` file to [set up TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) in the environment. 
+Requires [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) v3.3+ to be available in the Python environment. Use TouchTerrain `setup.py` file to [set up TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) in the environment. 
 
 1. Split census US state boundary shapefile into individual states' files
 - QGIS > Vector > Data Management > Split
@@ -69,7 +70,7 @@ for fileName in os.listdir("."):
 os.rename(fileName, fileName.replace("clip_", ""))
 ```
 
-6. Generate TouchTerrain configurations and commands and batch 3D model generation script using `generate-touch-terrain-config.py` either in the terminal, Spyder, or QGIS > Processing > Python console. .
+6. Generate TouchTerrain configurations and commands and batch 3D model generation script using `generate-touch-terrain-config.py` either in the terminal, Spyder, or QGIS > Processing > Python console.
 
 7. Generate state STL 3D models
 - Modify `Pool(N)` in `touch-terrain-batch-python-multithread.py` to the number of threads to use to generate 3D models.
