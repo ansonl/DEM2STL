@@ -95,15 +95,15 @@ def main():
                                        # on the model and can have the effect of making the paths look a bit cleaner
         "gpxPathThickness" : 5, # Stack parallel lines on either side of primary line to create thickness.
         "smooth_borders": True, # smooth borders
+        "offset_masks_lower": None,
+        "fill_holes": None
     }
 
     # write an example json file, in case it gets deleted ...
     with open('example_config.json', 'w+') as fp:
         json.dump(args, fp, indent=0, sort_keys=True) # indent = 0: newline after each comma
     print('Wrote example_config.json with default values, you can use it as a template but make sure to rename it!')
-    
-    
-    
+
     # parse args
     if len(sys.argv) > 1:  # sys.argv are the CLI args
         json_fname = sys.argv[1]
@@ -119,7 +119,7 @@ def main():
             sys.exit("Error: can't json parse " + json_fname + ": " + str(e))
     
         print("reading", json_fname)
-    
+
         for k in list(args.keys()):
             try:
                 args[k] = json_args[k]    # try to find a value for k in json config file
@@ -212,6 +212,10 @@ def main():
     # for local DEM, get the full path to it
     if not args["importedDEM"] == None:
         args["importedDEM"] = abspath(args["importedDEM"])
+
+    if not args["offset_masks_lower"] == None and len(args["offset_masks_lower"]) > 0:
+        for offset_mask_pair in args["offset_masks_lower"]:
+            offset_mask_pair[0] = abspath(offset_mask_pair[0])
 
     # Give all config values to get_zipped_tiles for processing:
     totalsize, full_zip_file_name = TouchTerrain.get_zipped_tiles(**args) # all args are in a dict

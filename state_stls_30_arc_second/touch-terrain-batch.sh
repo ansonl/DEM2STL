@@ -21,6 +21,7 @@ python ./TouchTerrain_standalone.py ../touch_terrain_configs/MA.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MD.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/ME.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MI.json
+python ./TouchTerrain_standalone.py ../touch_terrain_configs/MN.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MO.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MS.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MT.json

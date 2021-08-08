@@ -20,7 +20,7 @@ import json
 os.chdir("./state_stls")
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
-    os.chdir("../dems/1000m-clipped")
+    os.chdir("../dems/7-5-arc-second-clipped-100m")
     
     configFileCount = 0
     
@@ -41,7 +41,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     		# Create args dictionary to save to configuration json file
     		# TouchTerrain_standalone.py should be run from the "geographic-data/state_stl" directory
     		args = {
-    			"importedDEM": "../dems/1000m-clipped/" + entry.name,
+    			"importedDEM": "../dems/7-5-arc-second-clipped-100m/" + entry.name,
     	        "DEM_name": 'USGS/NED',
     
     	        "trlat": maxy,        # lat/lon of top right corner
@@ -56,17 +56,19 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     	        "ntilesx": 1,
     	        "ntilesy": 1,
     
-    	        "printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
+    	        "printres": 0.2,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
                 "smooth_borders": False,
                 "ignore_leq": 0,
-    	        "basethick": 1, # thickness (in mm) of printed base
+    	        "basethick": 2, # thickness (in mm) of printed base
     	        "zscale": 5,      # elevation (vertical) scaling
     
     	        "fileformat": "STLb",  # format of 3D model files: "obj" wavefront obj (ascii),"STLa" ascii STL or "STLb" binary STL
     	        "tile_centered": False, # True-> all tiles are centered around 0/0, False, all tiles "fit together"
     	        "zip_file_name": entry.name.replace(".tif",""),   # base name of zipfile, .zip will be added
     	        "CPU_cores_to_use" : 0,  # 0 means all cores, None (null in JSON!) => don't use multiprocessing
-    	        "max_cells_for_memory_only" : 5000^2, # if raster is bigger, use temp_files instead of memory
+    	        "max_cells_for_memory_only" : 5000**2, # if raster is bigger, use temp_files instead of memory
+                "offset_masks_lower": [["../dems/stream-lake-mask-clipped-100m/" + entry.name, 0.5]],
+                "fill_holes": [-1, 7]
     	    }
     
     		configFilename = entry.name.replace(".tif","")+'.json'
@@ -84,3 +86,4 @@ print('touch-terrain-batch.sh should be run from ./geographic-data folder\n\nEx:
 
 print('\n\nEach state will be unzipped into its own folder where batch file is run from.')
     
+os.chdir("./../../")
