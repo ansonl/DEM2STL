@@ -1,6 +1,7 @@
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/AK.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/AL.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/AR.json
+python ./TouchTerrain_standalone.py ../touch_terrain_configs/AS.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/AZ.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/CA.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/CO.json
@@ -9,6 +10,7 @@ python ./TouchTerrain_standalone.py ../touch_terrain_configs/DC.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/DE.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/FL.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/GA.json
+python ./TouchTerrain_standalone.py ../touch_terrain_configs/GU.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/HI.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/IA.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/ID.json
@@ -21,7 +23,9 @@ python ./TouchTerrain_standalone.py ../touch_terrain_configs/MA.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MD.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/ME.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MI.json
+python ./TouchTerrain_standalone.py ../touch_terrain_configs/MN.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MO.json
+python ./TouchTerrain_standalone.py ../touch_terrain_configs/MP.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MS.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/MT.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/NC.json
@@ -44,6 +48,7 @@ python ./TouchTerrain_standalone.py ../touch_terrain_configs/TN.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/TX.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/UT.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/VA.json
+python ./TouchTerrain_standalone.py ../touch_terrain_configs/VI.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/VT.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/WA.json
 python ./TouchTerrain_standalone.py ../touch_terrain_configs/WI.json

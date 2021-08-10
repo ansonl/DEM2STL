@@ -26,7 +26,9 @@ for i, returncode in enumerate(pool.imap(partial(call, shell=True), commands)):
     completedCount += 1
     print(f'\r{completedCount}/{len(commands)} done')
     if returncode != 0:
-       print("command %d failed: %d" % (i, returncode))
+        print(f'command {i}: ' +commands[i])
+        print("command %d failed: %d" % (i, returncode))
+       
        
 later_time = datetime.datetime.now()
 difference = later_time - first_time

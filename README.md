@@ -153,3 +153,6 @@ for fileName in os.listdir("."):
 
 >ogr2ogr -f "GPX" sc_streams2.gpx -t_srs "ESRI:102009" sc_streams.gpx
 >gdalinfo ../dems/1000m-clipped/SC.tif
+
+For perfect border fit, the printres=-1
+DEM pixel res 1000mx1000m, clip res 1000 1000

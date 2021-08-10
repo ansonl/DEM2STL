@@ -20,7 +20,7 @@ with open('./touch-terrain-batch.sh', 'r') as fp:
     for line in fp:
         commands.append(line)
 
-pool = Pool(12) # 12 concurrent commands at a time
+pool = Pool(6) # 12 concurrent commands at a time
 for i, returncode in enumerate(pool.imap(partial(call, shell=True), commands)):
     if returncode != 0:
        print("%d command failed: %d" % (i, returncode))
