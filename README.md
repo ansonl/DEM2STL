@@ -115,7 +115,7 @@ for fileName in os.listdir("."):
 
 ### Creating offset mask layer Hydro1k and HydroLAKES
 
-1. Reproject Hydro1k and HydroLAKES vectors to projection mode of map (lambert)
+1. Reproject Hydro1k and HydroLAKES vectors to projection mode of map (102009 lambert)
 
 2. Rasterize Hydro1k and HydroLAKES vector layers using a constant value
   - QGIS>GDAL>Vector conversion>Rasterize (vector to raster). Set to georeferenced units and set resolutions relative to vector unit of measurement
@@ -124,6 +124,7 @@ for fileName in os.listdir("."):
   - No data = 0
   - georeferenced units relative to source layer units (If the source layer is in a projected CRS, source layer units should be meters. )
   - extent set to source layer extent
+  - If you want to decrease noise from small lakes, filter the projected vector in QGIS with "Lake_area" >= 10 to only show lakes with over 10sqkm of area.
   2a. Clip Hydro1k and HydroLAKES vector layers using USA boundary polygon.
     - QGIS>GDAL>Raster Extraction>Clip raster by mask layer
     - Clipping may need to be done on the raster rather than the vector due to state boundary polygon incompatibility in QGIS.
@@ -143,7 +144,7 @@ for fileName in os.listdir("."):
 6. Truncate prefix added by QGIS batch processing.
 ```
 import os
-os.chdir("C:/Users/ansonl/development/dem-to-stl-workflow/dems/1000m-clipped-stream-lake-mask")
+os.chdir("C:/Users/ansonl/development/dem-to-stl-workflow/dems/stream-lake-mask-clipped-500m")
 for fileName in os.listdir("."):
   os.rename(fileName, fileName.replace("clipSTUSPS_", ""))
 
@@ -156,3 +157,6 @@ for fileName in os.listdir("."):
 
 For perfect border fit, the printres=-1
 DEM pixel res 1000mx1000m, clip res 1000 1000
+
+# gcode pause on layer/height
+M140 S0 ;set bed temp to 0

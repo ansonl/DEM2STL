@@ -14,19 +14,22 @@ first_time = datetime.datetime.now()
 commands = []
 
 # Run this file in geographic_data directory
-os.chdir("./state_stls")
+os.chdir("./")
 
 with open('./touch-terrain-batch.sh', 'r') as fp:
     for line in fp:
         commands.append(line)
 
-pool = Pool(6) # 12 concurrent commands at a time
+pool = Pool(4) # 4 concurrent commands at a time
 for i, returncode in enumerate(pool.imap(partial(call, shell=True), commands)):
+    print(f'{i}: {commands[i]} done', flush=True)
     if returncode != 0:
-       print("%d command failed: %d" % (i, returncode))
+       print("%d command failed: %d" % (i, returncode), flush=True)
        
 later_time = datetime.datetime.now()
 difference = later_time - first_time
 seconds_in_day = 24 * 60 * 60
 elapsed = divmod(difference.days * seconds_in_day + difference.seconds, 60)
 print(str(elapsed[0]) + 'm ' + str(elapsed[1]) + 's elapsed')
+
+os.chdir("./")

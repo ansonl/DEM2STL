@@ -1,0 +1,1 @@
+PROJCS["unnamed",GEOGCS["GCS_unknown",DATUM["D_unknown",SPHEROID["unknown",6370997.0,0.0]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Lambert_Azimuthal_Equal_Area"],PARAMETER["False_Easting",45.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",6370637.0],PARAMETER["Latitude_Of_Origin",-100.0],UNIT["METERS",1.0]]
