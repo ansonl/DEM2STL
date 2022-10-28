@@ -59,7 +59,7 @@ def main():
     # args for get_zipped_tiles() and save them inside a zipped folder.
     # Print each tile on a 3D printer (they are already scaled!)
     args = {
-        "DEM_name": 'USGS/NED',# DEM_name:    name of DEM source used in Google Earth Engine
+        "DEM_name": 'USGS/3DEP/10m',# DEM_name:    name of DEM source used in Google Earth Engine
                             # for all valid sources, see DEM_sources in TouchTerrainEarthEngine.py
         "trlat": 44.69741706507476,        # lat/lon of top right corner
         "trlon": -107.97962089843747,
@@ -95,15 +95,18 @@ def main():
                                        # on the model and can have the effect of making the paths look a bit cleaner
         "gpxPathThickness" : 5, # Stack parallel lines on either side of primary line to create thickness.
         "smooth_borders": True, # smooth borders
-        "offset_masks_lower": None,
-        "fill_holes": None
+        "offset_masks_lower": None, # e.g. [[filename, offset], [filename2, offset2],...] Masked regions (pixel values > 0) in the file will be lowered by offset(mm) * pixel value in the final model.
+        "fill_holes": None, # e.g. [10, 7] Specify number of interations to find and neighbor threshold to fill holes. -1 iterations will continue iterations until no more holes are found. Defaults to 7 neighbors in a 3x3 footprint with elevation > 0 to fill a hole with the average of the footprint. 
+        "clip_by_masks": None, # e.g. [[filename, offset], [filename2, offset2],...] Masked regions (pixel values > 0) in the file will be retained and set to offset(mm) * pixel value in the final model.
     }
 
     # write an example json file, in case it gets deleted ...
     with open('example_config.json', 'w+') as fp:
         json.dump(args, fp, indent=0, sort_keys=True) # indent = 0: newline after each comma
     print('Wrote example_config.json with default values, you can use it as a template but make sure to rename it!')
-
+    
+    
+    
     # parse args
     if len(sys.argv) > 1:  # sys.argv are the CLI args
         json_fname = sys.argv[1]
@@ -119,7 +122,7 @@ def main():
             sys.exit("Error: can't json parse " + json_fname + ": " + str(e))
     
         print("reading", json_fname)
-
+    
         for k in list(args.keys()):
             try:
                 args[k] = json_args[k]    # try to find a value for k in json config file
@@ -131,7 +134,7 @@ def main():
         # no JSON config file given, setting config values in code
         # you can comment out lines for which you don't want to overwrite the default settings
         overwrite_args = {
-            "DEM_name": 'USGS/NED',# DEM_name:    name of DEM source used in Google Earth Engine
+            "DEM_name": 'USGS/3DEP/10m',# DEM_name:    name of DEM source used in Google Earth Engine
                                    # for all valid sources, see DEM_sources in TouchTerrainEarthEngine.py
             "trlat": 44.69741706507476,        # lat/lon of top right corner
             "trlon": -107.97962089843747,
@@ -168,7 +171,7 @@ def main():
     '''
     args = {
                 "importedDEM": None,
-                "DEM_name": "USGS/NED",   # DEM source
+                "DEM_name": "USGS/3DEP/10m",   # DEM source
                 # area for gpx test
                 "bllat": 39.32205105794382,   # bottom left corner lat
                 "bllon": -120.37497608519418, # bottom left corner long
@@ -213,9 +216,15 @@ def main():
     if not args["importedDEM"] == None:
         args["importedDEM"] = abspath(args["importedDEM"])
 
+    # get full path to offset mask TIFF
     if not args["offset_masks_lower"] == None and len(args["offset_masks_lower"]) > 0:
         for offset_mask_pair in args["offset_masks_lower"]:
             offset_mask_pair[0] = abspath(offset_mask_pair[0])
+            
+    # get full path to offset mask TIFF
+    if not args["clip_by_masks"] == None and len(args["clip_by_masks"]) > 0:
+        for clip_mask_pair in args["clip_by_masks"]:
+            clip_mask_pair[0] = abspath(clip_mask_pair[0])
 
     # Give all config values to get_zipped_tiles for processing:
     totalsize, full_zip_file_name = TouchTerrain.get_zipped_tiles(**args) # all args are in a dict

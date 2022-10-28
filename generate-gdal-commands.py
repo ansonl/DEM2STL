@@ -30,12 +30,13 @@ with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
     for entry in os.scandir("./cb_2018_us_state_20m_individual"):
     	if entry.name.endswith('.gpkg') and entry.is_file():
     		#print(entry.path)
+            forwardSlashPath = entry.path.replace(os.sep, '/')
             
             stateName = entry.name.replace(".gpkg","")
     
-            clipElevationCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {entry.path} -crop_to_cutline ./dems/7-5-arc-second-merged-reprojected-102009-500m.tif ./dems/7-5-arc-second-clipped-500m/{stateName}.tif -r cubic -multi -dstnodata -9999'
+            clipElevationCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {forwardSlashPath} -crop_to_cutline ./dems/7-5-arc-second-merged.tif ./dems/7-5-arc-second-clipped-500m/{stateName}.tif -r cubicspline -multi -dstnodata -9999'
 
-            clipMaskCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {entry.path} -crop_to_cutline ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_merged_100m_ge_10sqkm.tif C:/Users/ansonl/development/dem-to-stl-workflow/dems/stream-lake-mask-clipped-500m/{stateName}.tif -r cubic -multi'
+            clipMaskCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {forwardSlashPath} -crop_to_cutline ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_merged_100m_ge_10sqkm.tif C:/Users/ansonl/development/dem-to-stl-workflow/dems/stream-lake-mask-clipped-500m/{stateName}.tif -r cubicspline -multi'
             
             calcLeq0Cmd = f'python gdal_calc.py -A ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --outfile ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --calc="A*(A>0)+(A<0)*1"'
     
