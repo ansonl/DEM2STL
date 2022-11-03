@@ -18,7 +18,8 @@ import json
 
 # Run this file in geographic_data directory
 
-tifsPath = "./dems/7-5-arc-second-clipped-5000m/"
+tifsPath = "./dems/7-5-arc-second-clipped-500m/"
+tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-raised/"
 outputSTLTopDir = './state_stls/'
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
@@ -82,7 +83,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 "CPU_cores_to_use" : 0,  # 0 means all cores, None (null in JSON!) => don't use multiprocessing
                 "max_cells_for_memory_only" : 5000**2, # if raster is bigger, use temp_files instead of memory
                 "lower_leq": [1,0.5],
-                "offset_masks_lower": [["./dems/stream-lake-mask-clipped-5000m/" + entry, 1.7]],
+                "offset_masks_lower": [["./dems/stream-lake-mask-clipped-500m/" + entry, 1.7]],
                 "fill_holes": [-1, 7]
             }
     
@@ -97,6 +98,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             cmdfp.write('python ./TouchTerrain_standalone.py ./touch_terrain_configs/' + configFilename + '\n')
             
             # Write config for STL without rivers but with max height, slightly (0.1mm) lower than previous file
+            args["importedDEM"] = tifsPath2 + entry.replace(".tif","-hydro-raised.tif")
             args["basethick"] = args["basethick"] + args["offset_masks_lower"][0][1] - 0.1
             args.pop("offset_masks_lower")
             zipFilename2 = outputSTLTopDir + entryName + "-no-rivers"
@@ -108,7 +110,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 configFileCount += 1
                 
             # Write libigl gp-CLI command for boolean subtract between second and first STL
-            libiglcmdfp.write(f'./gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n')
+            libiglcmdfp.write(f'./gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}-hydro-raised_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n')
             
             cmdfp.write('python ./TouchTerrain_standalone.py ./touch_terrain_configs/' + configFilename + '\n')
 

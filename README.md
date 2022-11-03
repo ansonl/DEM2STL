@@ -158,5 +158,25 @@ for fileName in os.listdir("."):
 For perfect border fit, the printres=-1
 DEM pixel res 1000mx1000m, clip res 1000 1000
 
-# gcode pause on layer/height
-M140 S0 ;set bed temp to 0
+python gdal_calc.py -A ./dems/7-5-arc-second-clipped-500m/MD.tif -B ./dems/stream-lake-mask-clipped-500m/MD.tif --outfile ./dems/7-5-arc-second-clipped-500m/MD-low-hydro-to-above-sealevel.tif --calc="A*(A>0)+(A<=0)*(B>-1)*(B<1)*1"
+
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline ./cb_2018_us_state_20m_individual/MD.gpkg -crop_to_cutline ./dems/7-5-arc-second-merged.tif ./dems/7-5-arc-second-clipped-500m/MD.tif -r cubicspline -multi -dstnodata -9999
+
+# raise hydro locations that are below or at sea level to 1. Both input tif must be in same CRS/projection!
+# Use QGIS Raster Calc if resolution of two inputs are not the same. Translate generated file datatype to Int16 (or matching non-hydro raised file datatype) before export. This will prevent non-PWN error when doing boolean subtraction in libigl with touchterrain generated file. Changing Float32 to Int16 also fixes a rounding issue where locations that should be 0 are a very small number and touchterrain generates them as land (not good for printing).
+python gdal_calc.py -A ./dems/7-5-arc-second-merged-reproject-102004.tif -B ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm.tif --outfile ./dems/7-5-arc-second-500m-width-hydro-raised-above-sea-level-102004.tif --calc="(A > 0) * A + (A <= 0 AND B > 0) * 1 + (A <= 0 AND B <= 0) * A"
+
+("7-5-arc-second-merged-reproject-102004@1" > 0) * "7-5-arc-second-merged-reproject-102004@1" + ("7-5-arc-second-merged-reproject-102004@1" <= 0 AND "usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm@1" > 0) * 1 + ("7-5-arc-second-merged-reproject-102004@1" <= 0 AND "usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm@1" <= 0) * "7-5-arc-second-merged-reproject-102004@1"
+
+"(A > 0) * A + (A <= 0 AND B > 0) * 1 + (A <= 0 AND B <= 0) * A"
+
+# create 500x500m version of north american hydrolakes merged because the 100x100m version lines are too narrow to raise any sea level hydro areas. Float32 data type is ok.
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_merged_100m_ge_10sqkm.tif C:/Users/ansonl/development/dem-to-stl-workflow/usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm.tif -r cubicspline -multi
+
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 1000.0 1000.0 -tap ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_merged_100m_ge_10sqkm.tif C:/Users/ansonl/development/dem-to-stl-workflow/usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_warp_1000m_ge_10sqkm.tif -r cubicspline -multi
+
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline ./cb_2018_us_state_20m_individual/MD.gpkg -crop_to_cutline ./dems/7-5-arc-second-merged-reproject-102004.tif ./dems/7-5-arc-second-clipped-500m/MD.tif -r cubicspline -multi -dstnodata -9999
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline ./cb_2018_us_state_20m_individual/MD.gpkg -crop_to_cutline ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_merged_100m_ge_10sqkm.tif C:/Users/ansonl/development/dem-to-stl-workflow/dems/stream-lake-mask-clipped-500m/MD.tif -r cubicspline -multi
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline ./cb_2018_us_state_20m_individual/MD.gpkg -crop_to_cutline ./dems/7-5-arc-second-1000m-width-hydro-raised-above-sea-level-102004.tif ./dems/7-5-arc-second-clipped-500m-hydro-raised/MD-hydro-raised.tif -r cubicspline -multi -dstnodata -9999
+
+./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls/MD-no-rivers/MD-hydro-raised_tile_1_1.STL ./state_stls/MD/MD_tile_1_1.STL minus ./state_stls/MD/MD_rivers.STL
