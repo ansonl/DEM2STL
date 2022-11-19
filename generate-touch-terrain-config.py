@@ -82,7 +82,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 "zip_file_name": zipFilename1,    # base name of zipfile, .zip will be added
                 "CPU_cores_to_use" : 0,  # 0 means all cores, None (null in JSON!) => don't use multiprocessing
                 "max_cells_for_memory_only" : 5000**2, # if raster is bigger, use temp_files instead of memory
-                "lower_leq": [1,0.3],
+                #"lower_leq": [1,0.3],
                 #"offset_masks_lower": [["./dems/stream-lake-mask-clipped-500m/" + entry, 1.7]],
                 "fill_holes": [-1, 7]
             }
