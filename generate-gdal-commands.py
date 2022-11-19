@@ -23,7 +23,7 @@ gdalcalcBatchFilename = 'gdalcalc-batch.sh'
 
 with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
     
-    calcCmdfp = open('./'+gdalcalcBatchFilename, 'w+')
+    #calcCmdfp = open('./'+gdalcalcBatchFilename, 'w+')
     
     commandCount = 0
     
@@ -34,20 +34,18 @@ with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
             
             stateName = entry.name.replace(".gpkg","")
     
-            clipElevationCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {forwardSlashPath} -crop_to_cutline ./dems/7-5-arc-second-merged-reproject-102004.tif ./dems/7-5-arc-second-clipped-500m/{stateName}.tif -r cubicspline -multi -dstnodata -9999'
+            clipElevationCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {forwardSlashPath} -crop_to_cutline ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-raised-460.tif ./dems/7-5-arc-second-clipped-500m/{stateName}.tif -r cubicspline -multi -dstnodata -9999'
 
-            clipHydroMaskCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {forwardSlashPath} -crop_to_cutline ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_merged_100m_ge_10sqkm.tif C:/Users/ansonl/development/dem-to-stl-workflow/dems/stream-lake-mask-clipped-500m/{stateName}.tif -r cubicspline -multi'
+            clipElevationRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {forwardSlashPath} -crop_to_cutline ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-hydro-patched-raised-400.tif C:/Users/ansonl/development/dem-to-stl-workflow/dems/7-5-arc-second-clipped-500m-hydro-patched/{stateName}-hydro-patched.tif -r cubicspline -multi'
             
-            clipElevationRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline {forwardSlashPath} -crop_to_cutline ./dems/7-5-arc-second-1000m-width-hydro-raised-above-sea-level-102004.tif ./dems/7-5-arc-second-clipped-500m-hydro-raised/{stateName}-hydro-raised.tif -r cubicspline -multi -dstnodata -9999'
-            
-            calcLeq0Cmd = f'python gdal_calc.py -A ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --outfile ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --calc="A*(A>0)+(A<0)*1"'
+            #calcLeq0Cmd = f'python gdal_calc.py -A ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --outfile ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --calc="A*(A>0)+(A<0)*1"'
     
-            commandCount += 3
+            commandCount += 2
             cmdfp.write(clipElevationCmd + '\n')
-            cmdfp.write(clipHydroMaskCmd + '\n')
+            #cmdfp.write(clipHydroMaskCmd + '\n')
             cmdfp.write(clipElevationRaisedHydroCmd + '\n')
             
-            calcCmdfp.write(calcLeq0Cmd + '\n')
+            #calcCmdfp.write(calcLeq0Cmd + '\n')
 
 print('Wrote ' + str(commandCount) + ' commands to ' + gdalwarpBatchFilename + ' and ' + gdalcalcBatchFilename)
 

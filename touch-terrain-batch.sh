@@ -4,6 +4,8 @@ python ./TouchTerrain_standalone.py ./touch_terrain_configs/RI.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/RI-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/DE.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/DE-no-rivers.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/CT.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/CT-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/NJ.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/NJ-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/PR.json
@@ -20,10 +22,10 @@ python ./TouchTerrain_standalone.py ./touch_terrain_configs/IN.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/IN-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/SC.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/SC-no-rivers.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/OH.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/OH-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/WV.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/WV-no-rivers.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/OH.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/OH-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/ME.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/ME-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/PA.json
@@ -50,10 +52,10 @@ python ./TouchTerrain_standalone.py ./touch_terrain_configs/LA.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/LA-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/KS.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/KS-no-rivers.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/WI.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/WI-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/GA.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/GA-no-rivers.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/WI.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/WI-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/SD.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/SD-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/WA.json
@@ -98,7 +100,5 @@ python ./TouchTerrain_standalone.py ./touch_terrain_configs/CA.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/CA-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/TX.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/TX-no-rivers.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/CT.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/CT-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/AK.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/AK-no-rivers.json
