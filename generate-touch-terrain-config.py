@@ -110,14 +110,19 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 configFileCount += 1
                 
             # Write libigl gp-CLI command for boolean subtract between second and first STL
-            libiglcmdfp.write(f'./gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}-hydro-patched_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n')
+            libiglcmdfp.write(f'echo Mesh boolean subtracting {entryName}' + '\n' + f'time ./gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}-hydro-patched_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
             
             cmdfp.write('python ./TouchTerrain_standalone.py ./touch_terrain_configs/' + configFilename + '\n')
+
+libiglcmdfp.close()
 
 print('Wrote ' + str(configFileCount) + ' config files to ' + configsPath)
 
 print('touch-terrain-batch.sh should be run from ./geographic-data folder\n\nEx: \nchmod 700 touch-terrain-batch.sh\n./touch-terrain-batch.sh')
 
 print('\n\nEach state will be unzipped into its own folder where batch file is run from.')
+
+print('\n\nRun nice -n 5 ./libigl-boolean-subtract.sh after generating 3d state stls to perform boolean subtract to create rivers only 3d model. ')
+print('\nClean up nonmanifold meshes with blender 3d print toolbox.')
     
 os.chdir("./../../")

@@ -14,6 +14,9 @@ python gdal_calc.py -A ./dems/7-5-arc-second-merged-500m-width-reproject-102004-
 #raise nonhydro locations of 500x500 hydro fixed (raised) land dem
 python gdal_calc.py -A ./dems/7-5-arc-second-500m-width-hydro-raised-above-sea-level-102004.tif -B ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm.tif --outfile ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-hydro-patched-raised-400.tif --calc="(A > 4) * (A+400) + (A<=0) * A + logical_and(A > 0, A<= 4) * (A + A * ((B > 0) * (14) + 100))"
 
+#run generate-gdal-commands.py
+#run generate-touch-terrain-config.py
+#run libigl-boolean-subtract.sh
 
 
 gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline ./cb_2018_us_state_20m_individual/DE.gpkg -crop_to_cutline ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-raised-850.tif ./dems/7-5-arc-second-clipped-500m/DE.tif -r cubicspline -multi -dstnodata -9999
