@@ -8,10 +8,15 @@ gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -te -8906000 -3
 #create version of land dem with locations that are <=0 (but covered by hydro) raised to 1 elevation
 python gdal_calc.py -A ./dems/7-5-arc-second-merged-500m-width-reproject-102004-extent-matched.tif -B ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm.tif --outfile ./dems/7-5-arc-second-500m-width-hydro-raised-above-sea-level-102004.tif --calc="(A > 0) * A + logical_and(A <= 0, B > 0) * 1 + logical_and(A <= 0, B <= 0) * A" --overwrite
 
-#raise nonhydro locations of 500x500 land dem
+#raise nonhydro locations of 500x500 land dem. 
+# Raise locations with no hydro and (>4m by 460m)/(>0, <=4 by scaled version to 460m at 4m). 
+# Keep locations under hydro and 0m unchanged. 
+# Accentuate coastlines and areas under 4m. Deepen stream paths vs surroundings so we can print more glow material for sufficient brightness. This also emphasizes below sea level areas. Displayed river width is due to 500mx500m resolution hydro DEM and diagonals and turns end up as 2500mx2500m. 
 python gdal_calc.py -A ./dems/7-5-arc-second-merged-500m-width-reproject-102004-extent-matched.tif -B ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm.tif --outfile ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-raised-460.tif --calc="logical_and(B == 0, A > 4) * (A+460) + (B > 0) * A + logical_and(B == 0, A <= 0) * A + logical_and(B == 0, logical_and(A > 0, A <= 4)) * (A + A * 115)"
 
-#raise nonhydro locations of 500x500 hydro fixed (raised) land dem
+#raise nonhydro locations of 500x500 hydro fixed (raised) land dem. 
+# Raise locations >4m by 400m (400m ensures that this area will be just below the previous DEM that has areas surrounding water artificially raised by 460m). This DEM should not poke above the previous DEM unless we display water there (because the previous DEM did not raise the water areas).
+# Raise location >0,<=4m AND has water over it, <=4m by scaled amount to (114) at 4m. These areas will poke above the previous DEM in areas with water since we did not raise them in previous DEM. If no water there, leave unchanged so we don't poke above previous DEM in low areas with no hydro.
 python gdal_calc.py -A ./dems/7-5-arc-second-500m-width-hydro-raised-above-sea-level-102004.tif -B ./usa_hydro1k_hydrolakes_merged/usa_hydro1k_hydrolakes_warp_500m_ge_10sqkm.tif --outfile ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-hydro-patched-raised-400.tif --calc="(A > 4) * (A+400) + (A<=0) * A + logical_and(A > 0, A<= 4) * (A + A * ((B > 0) * (14) + 100))"
 
 #run generate-gdal-commands.py

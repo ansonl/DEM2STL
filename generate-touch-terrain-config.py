@@ -99,7 +99,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             
             # Write config for STL without rivers but with max height, slightly (0.1mm) lower than previous file
             args["importedDEM"] = tifsPath2 + entry.replace(".tif","-hydro-patched.tif")
-            args["basethick"] = args["basethick"] - 0.1
+            args["basethick"] = args["basethick"] #- 0.1 #decrease base thickness by 0.1mm if hydro patched DEM is not already artificially lowered by 50m
             #args.pop("offset_masks_lower")
             zipFilename2 = outputSTLTopDir + entryName + "-no-rivers"
             args["zip_file_name"] = zipFilename2
