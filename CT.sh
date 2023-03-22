@@ -4,3 +4,5 @@ python ./TouchTerrain_standalone.py ./touch_terrain_configs/CT.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs/CT-no-rivers.json
 
 ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls/CT-no-rivers/CT-hydro-patched_tile_1_1.STL ./state_stls/CT/CT_tile_1_1.STL minus ./state_stls/CT/CT_rivers.STL
+
+./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls/CT-no-rivers/CT-hydro-patched_tile_blender.STL ./state_stls/CT/CT_tile_blender.STL minus ./state_stls/CT/CT_rivers.STL
