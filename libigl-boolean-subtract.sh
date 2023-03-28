@@ -152,5 +152,5 @@ echo Mesh boolean subtracting TX
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/TX-no-rivers/TX-hydro-patched_tile_1_1.STL ./state_stls_500m/TX/TX_tile_1_1.STL minus ./state_stls_500m/TX/TX_rivers.STL
 echo TX result $?
 echo Mesh boolean subtracting AK
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/AK-no-rivers/AK-hydro-patched_tile_1_1.STL ./state_stls_500m/AK/AK_tile_1_1.STL minus ./state_stls_500m/AK/AK_rivers.STL
+#time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/AK-no-rivers/AK-hydro-patched_tile_1_1.STL ./state_stls_500m/AK/AK_tile_1_1.STL minus ./state_stls_500m/AK/AK_rivers.STL
 echo AK result $?

@@ -1,0 +1,9 @@
+Rename field tool to name columns alike
+
+Merge federalandstatewaters and stateboundaries with QGIS>Vector General>Merge vector layers
+
+Dissolve merged layer with QGIS > Dissolve > specify dissolve field
+
+Use GRASS>r.lake on nationwide DEM. Use 0.1 lake height and pick start coordinates in the same CRS as DEM and workspace in the ocean. 
+
+Add 1 to locations on hydroraised DEM where lake outputs are >0 and hydroraised is not already >0. Avoids re-raising areas touched by hydro1k/hydrostreams since those areas will already poke above normal dem.
