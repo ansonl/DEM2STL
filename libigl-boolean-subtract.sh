@@ -1,9 +1,15 @@
 echo Mesh boolean subtracting DC
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/DC-no-rivers/DC-hydro-patched_tile_1_1.STL ./state_stls_500m/DC/DC_tile_1_1.STL minus ./state_stls_500m/DC/DC_rivers.STL
 echo DC result $?
+echo Mesh boolean subtracting GU
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/GU-no-rivers/GU-hydro-patched_tile_1_1.STL ./state_stls_500m/GU/GU_tile_1_1.STL minus ./state_stls_500m/GU/GU_rivers.STL
+echo GU result $?
 echo Mesh boolean subtracting RI
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/RI-no-rivers/RI-hydro-patched_tile_1_1.STL ./state_stls_500m/RI/RI_tile_1_1.STL minus ./state_stls_500m/RI/RI_rivers.STL
 echo RI result $?
+echo Mesh boolean subtracting VI
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/VI-no-rivers/VI-hydro-patched_tile_1_1.STL ./state_stls_500m/VI/VI_tile_1_1.STL minus ./state_stls_500m/VI/VI_rivers.STL
+echo VI result $?
 echo Mesh boolean subtracting DE
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/DE-no-rivers/DE-hydro-patched_tile_1_1.STL ./state_stls_500m/DE/DE_tile_1_1.STL minus ./state_stls_500m/DE/DE_rivers.STL
 echo DE result $?
@@ -31,27 +37,24 @@ echo MD result $?
 echo Mesh boolean subtracting IN
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/IN-no-rivers/IN-hydro-patched_tile_1_1.STL ./state_stls_500m/IN/IN_tile_1_1.STL minus ./state_stls_500m/IN/IN_rivers.STL
 echo IN result $?
-echo Mesh boolean subtracting SC
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/SC-no-rivers/SC-hydro-patched_tile_1_1.STL ./state_stls_500m/SC/SC_tile_1_1.STL minus ./state_stls_500m/SC/SC_rivers.STL
-echo SC result $?
 echo Mesh boolean subtracting WV
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/WV-no-rivers/WV-hydro-patched_tile_1_1.STL ./state_stls_500m/WV/WV_tile_1_1.STL minus ./state_stls_500m/WV/WV_rivers.STL
 echo WV result $?
+echo Mesh boolean subtracting SC
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/SC-no-rivers/SC-hydro-patched_tile_1_1.STL ./state_stls_500m/SC/SC_tile_1_1.STL minus ./state_stls_500m/SC/SC_rivers.STL
+echo SC result $?
 echo Mesh boolean subtracting OH
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/OH-no-rivers/OH-hydro-patched_tile_1_1.STL ./state_stls_500m/OH/OH_tile_1_1.STL minus ./state_stls_500m/OH/OH_rivers.STL
 echo OH result $?
-echo Mesh boolean subtracting ME
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/ME-no-rivers/ME-hydro-patched_tile_1_1.STL ./state_stls_500m/ME/ME_tile_1_1.STL minus ./state_stls_500m/ME/ME_rivers.STL
-echo ME result $?
 echo Mesh boolean subtracting PA
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/PA-no-rivers/PA-hydro-patched_tile_1_1.STL ./state_stls_500m/PA/PA_tile_1_1.STL minus ./state_stls_500m/PA/PA_rivers.STL
 echo PA result $?
+echo Mesh boolean subtracting ME
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/ME-no-rivers/ME-hydro-patched_tile_1_1.STL ./state_stls_500m/ME/ME_tile_1_1.STL minus ./state_stls_500m/ME/ME_rivers.STL
+echo ME result $?
 echo Mesh boolean subtracting MS
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/MS-no-rivers/MS-hydro-patched_tile_1_1.STL ./state_stls_500m/MS/MS_tile_1_1.STL minus ./state_stls_500m/MS/MS_rivers.STL
 echo MS result $?
-echo Mesh boolean subtracting HI
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/HI-no-rivers/HI-hydro-patched_tile_1_1.STL ./state_stls_500m/HI/HI_tile_1_1.STL minus ./state_stls_500m/HI/HI_rivers.STL
-echo HI result $?
 echo Mesh boolean subtracting AR
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/AR-no-rivers/AR-hydro-patched_tile_1_1.STL ./state_stls_500m/AR/AR_tile_1_1.STL minus ./state_stls_500m/AR/AR_rivers.STL
 echo AR result $?
@@ -64,42 +67,48 @@ echo AL result $?
 echo Mesh boolean subtracting TN
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/TN-no-rivers/TN-hydro-patched_tile_1_1.STL ./state_stls_500m/TN/TN_tile_1_1.STL minus ./state_stls_500m/TN/TN_rivers.STL
 echo TN result $?
+echo Mesh boolean subtracting MP
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/MP-no-rivers/MP-hydro-patched_tile_1_1.STL ./state_stls_500m/MP/MP_tile_1_1.STL minus ./state_stls_500m/MP/MP_rivers.STL
+echo MP result $?
 echo Mesh boolean subtracting ND
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/ND-no-rivers/ND-hydro-patched_tile_1_1.STL ./state_stls_500m/ND/ND_tile_1_1.STL minus ./state_stls_500m/ND/ND_rivers.STL
 echo ND result $?
-echo Mesh boolean subtracting IL
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/IL-no-rivers/IL-hydro-patched_tile_1_1.STL ./state_stls_500m/IL/IL_tile_1_1.STL minus ./state_stls_500m/IL/IL_rivers.STL
-echo IL result $?
 echo Mesh boolean subtracting KY
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/KY-no-rivers/KY-hydro-patched_tile_1_1.STL ./state_stls_500m/KY/KY_tile_1_1.STL minus ./state_stls_500m/KY/KY_rivers.STL
 echo KY result $?
-echo Mesh boolean subtracting LA
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/LA-no-rivers/LA-hydro-patched_tile_1_1.STL ./state_stls_500m/LA/LA_tile_1_1.STL minus ./state_stls_500m/LA/LA_rivers.STL
-echo LA result $?
+echo Mesh boolean subtracting IL
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/IL-no-rivers/IL-hydro-patched_tile_1_1.STL ./state_stls_500m/IL/IL_tile_1_1.STL minus ./state_stls_500m/IL/IL_rivers.STL
+echo IL result $?
 echo Mesh boolean subtracting KS
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/KS-no-rivers/KS-hydro-patched_tile_1_1.STL ./state_stls_500m/KS/KS_tile_1_1.STL minus ./state_stls_500m/KS/KS_rivers.STL
 echo KS result $?
+echo Mesh boolean subtracting LA
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/LA-no-rivers/LA-hydro-patched_tile_1_1.STL ./state_stls_500m/LA/LA_tile_1_1.STL minus ./state_stls_500m/LA/LA_rivers.STL
+echo LA result $?
 echo Mesh boolean subtracting GA
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/GA-no-rivers/GA-hydro-patched_tile_1_1.STL ./state_stls_500m/GA/GA_tile_1_1.STL minus ./state_stls_500m/GA/GA_rivers.STL
 echo GA result $?
-echo Mesh boolean subtracting WI
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/WI-no-rivers/WI-hydro-patched_tile_1_1.STL ./state_stls_500m/WI/WI_tile_1_1.STL minus ./state_stls_500m/WI/WI_rivers.STL
-echo WI result $?
 echo Mesh boolean subtracting SD
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/SD-no-rivers/SD-hydro-patched_tile_1_1.STL ./state_stls_500m/SD/SD_tile_1_1.STL minus ./state_stls_500m/SD/SD_rivers.STL
 echo SD result $?
-echo Mesh boolean subtracting WA
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/WA-no-rivers/WA-hydro-patched_tile_1_1.STL ./state_stls_500m/WA/WA_tile_1_1.STL minus ./state_stls_500m/WA/WA_rivers.STL
-echo WA result $?
 echo Mesh boolean subtracting NE
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/NE-no-rivers/NE-hydro-patched_tile_1_1.STL ./state_stls_500m/NE/NE_tile_1_1.STL minus ./state_stls_500m/NE/NE_rivers.STL
 echo NE result $?
+echo Mesh boolean subtracting WA
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/WA-no-rivers/WA-hydro-patched_tile_1_1.STL ./state_stls_500m/WA/WA_tile_1_1.STL minus ./state_stls_500m/WA/WA_rivers.STL
+echo WA result $?
 echo Mesh boolean subtracting NC
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/NC-no-rivers/NC-hydro-patched_tile_1_1.STL ./state_stls_500m/NC/NC_tile_1_1.STL minus ./state_stls_500m/NC/NC_rivers.STL
 echo NC result $?
 echo Mesh boolean subtracting VA
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/VA-no-rivers/VA-hydro-patched_tile_1_1.STL ./state_stls_500m/VA/VA_tile_1_1.STL minus ./state_stls_500m/VA/VA_rivers.STL
 echo VA result $?
+echo Mesh boolean subtracting WI
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/WI-no-rivers/WI-hydro-patched_tile_1_1.STL ./state_stls_500m/WI/WI_tile_1_1.STL minus ./state_stls_500m/WI/WI_rivers.STL
+echo WI result $?
+echo Mesh boolean subtracting AS
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/AS-no-rivers/AS-hydro-patched_tile_1_1.STL ./state_stls_500m/AS/AS_tile_1_1.STL minus ./state_stls_500m/AS/AS_rivers.STL
+echo AS result $?
 echo Mesh boolean subtracting MO
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/MO-no-rivers/MO-hydro-patched_tile_1_1.STL ./state_stls_500m/MO/MO_tile_1_1.STL minus ./state_stls_500m/MO/MO_rivers.STL
 echo MO result $?
@@ -133,12 +142,12 @@ echo OR result $?
 echo Mesh boolean subtracting ID
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/ID-no-rivers/ID-hydro-patched_tile_1_1.STL ./state_stls_500m/ID/ID_tile_1_1.STL minus ./state_stls_500m/ID/ID_rivers.STL
 echo ID result $?
-echo Mesh boolean subtracting MI
-time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/MI-no-rivers/MI-hydro-patched_tile_1_1.STL ./state_stls_500m/MI/MI_tile_1_1.STL minus ./state_stls_500m/MI/MI_rivers.STL
-echo MI result $?
 echo Mesh boolean subtracting NV
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/NV-no-rivers/NV-hydro-patched_tile_1_1.STL ./state_stls_500m/NV/NV_tile_1_1.STL minus ./state_stls_500m/NV/NV_rivers.STL
 echo NV result $?
+echo Mesh boolean subtracting MI
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/MI-no-rivers/MI-hydro-patched_tile_1_1.STL ./state_stls_500m/MI/MI_tile_1_1.STL minus ./state_stls_500m/MI/MI_rivers.STL
+echo MI result $?
 echo Mesh boolean subtracting MT
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/MT-no-rivers/MT-hydro-patched_tile_1_1.STL ./state_stls_500m/MT/MT_tile_1_1.STL minus ./state_stls_500m/MT/MT_rivers.STL
 echo MT result $?
@@ -151,6 +160,9 @@ echo CA result $?
 echo Mesh boolean subtracting TX
 time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/TX-no-rivers/TX-hydro-patched_tile_1_1.STL ./state_stls_500m/TX/TX_tile_1_1.STL minus ./state_stls_500m/TX/TX_rivers.STL
 echo TX result $?
+echo Mesh boolean subtracting HI
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/HI-no-rivers/HI-hydro-patched_tile_1_1.STL ./state_stls_500m/HI/HI_tile_1_1.STL minus ./state_stls_500m/HI/HI_rivers.STL
+echo HI result $?
 echo Mesh boolean subtracting AK
-#time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/AK-no-rivers/AK-hydro-patched_tile_1_1.STL ./state_stls_500m/AK/AK_tile_1_1.STL minus ./state_stls_500m/AK/AK_rivers.STL
+time ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/AK-no-rivers/AK-hydro-patched_tile_1_1.STL ./state_stls_500m/AK/AK_tile_1_1.STL minus ./state_stls_500m/AK/AK_rivers.STL
 echo AK result $?

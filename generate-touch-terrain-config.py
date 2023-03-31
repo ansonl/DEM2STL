@@ -18,9 +18,13 @@ import json
 
 # Run this file in geographic_data directory
 
-tifsPath = "./dems/7-5-arc-second-clipped-500m/"
-tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-patched/"
-outputSTLTopDir = './state_stls/'
+resolution = 500
+
+#tifsPath = "./dems/7-5-arc-second-clipped-500m/"
+#tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-patched/"
+tifsPath = f'./dems/7-5-arc-second-clipped-{resolution}m/'
+tifsPath2 = f'./dems/7-5-arc-second-clipped-{resolution}m-hydro-patched/'
+outputSTLTopDir = f'./state_stls_{resolution}m/'
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     
@@ -84,18 +88,19 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 "max_cells_for_memory_only" : 5000**2, # if raster is bigger, use temp_files instead of memory
                 #"lower_leq": [1,0.3],
                 #"offset_masks_lower": [["./dems/stream-lake-mask-clipped-500m/" + entry, 1.7]],
-                "fill_holes": [-1, 7]
+                "fill_holes": [-1, 7],
+                "min_elev": 0
             }
     
             configFilename = entry.replace(".tif","")+'.json'
             
             # Write config for STL with rivers "lowered"
-            configsPath = '../../touch_terrain_configs/'
+            configsPath = f'../../touch_terrain_configs_{resolution}m/'
             with open(configsPath + configFilename, 'w+') as fp:
                 json.dump(args, fp, indent=0, sort_keys=True)
                 configFileCount += 1
             
-            cmdfp.write('python ./TouchTerrain_standalone.py ./touch_terrain_configs/' + configFilename + '\n')
+            cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilename + '\n')
             
             # Write config for STL without rivers but with max height, slightly (0.1mm) lower than previous file
             args["importedDEM"] = tifsPath2 + entry.replace(".tif","-hydro-patched.tif")
@@ -104,7 +109,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             zipFilename2 = outputSTLTopDir + entryName + "-no-rivers"
             args["zip_file_name"] = zipFilename2
             configFilename = entryName + "-no-rivers" +'.json'
-            configsPath = '../../touch_terrain_configs/'
+            configsPath = f'../../touch_terrain_configs_{resolution}m/'
             with open(configsPath + configFilename, 'w+') as fp:
                 json.dump(args, fp, indent=0, sort_keys=True)
                 configFileCount += 1
@@ -112,7 +117,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             # Write libigl gp-CLI command for boolean subtract between second and first STL
             libiglcmdfp.write(f'echo Mesh boolean subtracting {entryName}' + '\n' + f'time ./gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}-hydro-patched_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
             
-            cmdfp.write('python ./TouchTerrain_standalone.py ./touch_terrain_configs/' + configFilename + '\n')
+            cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilename + '\n')
 
 libiglcmdfp.close()
 
