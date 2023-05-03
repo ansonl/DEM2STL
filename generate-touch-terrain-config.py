@@ -1,6 +1,11 @@
 import os
-import gdal
-from gdalconst import GA_ReadOnly
+# Set imports based on environment and packages
+#import gdal
+#from gdalconst import GA_ReadOnly
+from osgeo import gdal
+from osgeo import gdalconst
+from osgeo.gdalconst import GA_ReadOnly
+
 import json
 
 # File structure should be like below
