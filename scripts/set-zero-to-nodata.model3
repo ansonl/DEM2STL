@@ -1,0 +1,93 @@
+<!DOCTYPE model>
+<Option type="Map">
+  <Option name="children" type="Map">
+    <Option name="qgis:rastercalculator_1" type="Map">
+      <Option name="active" value="true" type="bool"/>
+      <Option name="alg_config"/>
+      <Option name="alg_id" value="qgis:rastercalculator" type="QString"/>
+      <Option name="component_description" value="Raster calculator - replace x &lt; 0 with NODATA" type="QString"/>
+      <Option name="component_pos_x" value="353" type="double"/>
+      <Option name="component_pos_y" value="378" type="double"/>
+      <Option name="dependencies"/>
+      <Option name="id" value="qgis:rastercalculator_1" type="QString"/>
+      <Option name="outputs" type="Map">
+        <Option name="..." type="Map">
+          <Option name="child_id" value="qgis:rastercalculator_1" type="QString"/>
+          <Option name="component_description" value="..." type="QString"/>
+          <Option name="component_pos_x" value="553" type="double"/>
+          <Option name="component_pos_y" value="423" type="double"/>
+          <Option name="default_value" type="invalid"/>
+          <Option name="mandatory" value="false" type="bool"/>
+          <Option name="name" value="..." type="QString"/>
+          <Option name="output_name" value="OUTPUT" type="QString"/>
+        </Option>
+      </Option>
+      <Option name="outputs_collapsed" value="true" type="bool"/>
+      <Option name="parameters_collapsed" value="true" type="bool"/>
+      <Option name="params" type="Map">
+        <Option name="CELLSIZE" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" value="0" type="double"/>
+          </Option>
+        </Option>
+        <Option name="CRS" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" type="invalid"/>
+          </Option>
+        </Option>
+        <Option name="EXPRESSION" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" value="((&quot;Input_Raster@1&quot;>0)*&quot;Input_Raster@1&quot;) / ((&quot;Input_Raster@1&quot;>0)*1 + (&quot;Input_Raster@1&quot;&lt;=0)*0)" type="QString"/>
+          </Option>
+        </Option>
+        <Option name="EXTENT" type="List">
+          <Option type="Map">
+            <Option name="source" value="2" type="int"/>
+            <Option name="static_value" type="invalid"/>
+          </Option>
+        </Option>
+        <Option name="LAYERS" type="List">
+          <Option type="Map">
+            <Option name="parameter_name" value="InputRaster" type="QString"/>
+            <Option name="source" value="0" type="int"/>
+          </Option>
+        </Option>
+      </Option>
+    </Option>
+  </Option>
+  <Option name="help"/>
+  <Option name="modelVariables"/>
+  <Option name="model_group" value="" type="QString"/>
+  <Option name="model_name" value="Set raster point 0 to NODATA" type="QString"/>
+  <Option name="parameterDefinitions" type="Map">
+    <Option name="InputRaster" type="Map">
+      <Option name="default" type="invalid"/>
+      <Option name="description" value="Input_Raster" type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="metadata"/>
+      <Option name="name" value="InputRaster" type="QString"/>
+      <Option name="parameter_type" value="raster" type="QString"/>
+    </Option>
+    <Option name="qgis:rastercalculator_1:..." type="Map">
+      <Option name="create_by_default" value="true" type="bool"/>
+      <Option name="default" type="invalid"/>
+      <Option name="description" value="..." type="QString"/>
+      <Option name="flags" value="0" type="int"/>
+      <Option name="metadata"/>
+      <Option name="name" value="qgis:rastercalculator_1:..." type="QString"/>
+      <Option name="parameter_type" value="rasterDestination" type="QString"/>
+      <Option name="supports_non_file_outputs" value="true" type="bool"/>
+    </Option>
+  </Option>
+  <Option name="parameters" type="Map">
+    <Option name="InputRaster" type="Map">
+      <Option name="component_description" value="InputRaster" type="QString"/>
+      <Option name="component_pos_x" value="127" type="double"/>
+      <Option name="component_pos_y" value="274" type="double"/>
+      <Option name="name" value="InputRaster" type="QString"/>
+    </Option>
+  </Option>
+</Option>

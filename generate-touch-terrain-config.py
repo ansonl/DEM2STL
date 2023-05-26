@@ -23,26 +23,23 @@ import json
 
 # Run this file in geographic_data directory
 
-resolution = 500
+resolution = 250
 
 #tifsPath = "./dems/7-5-arc-second-clipped-500m/"
 #tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-patched/"
-tifsPath = f'./dems/7-5-arc-second-clipped-{resolution}m/'
-tifsPath2 = f'./dems/7-5-arc-second-clipped-{resolution}m-hydro-patched/'
+tifsPath = f'./dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
+tifsPath2 = f'./dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-clipped/'
 outputSTLTopDir = f'./state_stls_{resolution}m/'
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     
     libiglcmdfp = open('./libigl-boolean-subtract.sh', 'w+')
-    
-    os.chdir(tifsPath)
-    
     configFileCount = 0
     
     # Process states by largest TIF first to optimize 3d model generation time
     # Small states should finish first and the larger states which need the most memoery will trickle in at the end.
-    allFiles = os.listdir(os.getcwd())
-    allFiles.sort(key=lambda f: os.stat(f).st_size, reverse=False)
+    allFiles = os.listdir(tifsPath)
+    allFiles.sort(key=lambda f: os.stat(tifsPath+f).st_size, reverse=False)
     
     for entry in allFiles:
         if entry.endswith('.tif'):
@@ -51,7 +48,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             entryPath = tifsPath + entry
     
             # Get TIF extents to 3d print
-            data = gdal.Open(entry, GA_ReadOnly)
+            data = gdal.Open(tifsPath+entry, GA_ReadOnly)
             geoTransform = data.GetGeoTransform()
             minx = geoTransform[0]
             maxy = geoTransform[3]
@@ -94,13 +91,14 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 #"lower_leq": [1,0.3],
                 #"offset_masks_lower": [["./dems/stream-lake-mask-clipped-500m/" + entry, 1.7]],
                 "fill_holes": [-1, 7],
-                "min_elev": 0
+                "min_elev": 0,
+                "clean_diags": True
             }
     
             configFilename = entry.replace(".tif","")+'.json'
             
             # Write config for STL with rivers "lowered"
-            configsPath = f'../../touch_terrain_configs_{resolution}m/'
+            configsPath = f'./touch_terrain_configs_{resolution}m/'
             with open(configsPath + configFilename, 'w+') as fp:
                 json.dump(args, fp, indent=0, sort_keys=True)
                 configFileCount += 1
@@ -108,13 +106,13 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilename + '\n')
             
             # Write config for STL without rivers but with max height, slightly (0.1mm) lower than previous file
-            args["importedDEM"] = tifsPath2 + entry.replace(".tif","-hydro-patched.tif")
+            args["importedDEM"] = tifsPath2 + entry.replace(".tif",".tif")
             args["basethick"] = args["basethick"] #- 0.1 #decrease base thickness by 0.1mm if hydro patched DEM is not already artificially lowered by 50m
             #args.pop("offset_masks_lower")
             zipFilename2 = outputSTLTopDir + entryName + "-no-rivers"
             args["zip_file_name"] = zipFilename2
             configFilename = entryName + "-no-rivers" +'.json'
-            configsPath = f'../../touch_terrain_configs_{resolution}m/'
+            configsPath = f'./touch_terrain_configs_{resolution}m/'
             with open(configsPath + configFilename, 'w+') as fp:
                 json.dump(args, fp, indent=0, sort_keys=True)
                 configFileCount += 1

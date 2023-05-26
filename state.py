@@ -24,7 +24,30 @@ python gdal_calc.py -A ./dems/tmp/gmted-ME.tif -B ./dems/tmp/srtm-ME.tif --outfi
 #or mosaic (do not -tap or it will shift pixels)
 python gdal_merge.py -o ./dems/tmp/mosaic-ME.tif -of GTiff -co COMPRESS=ZSTD -co PREDICTOR=2 -co BIGTIFF=YES -co NUM_THREADS=ALL_CPUS -ps 20.0 20.0 -v ./dems/tmp/gmted-ME.tif ./dems/tmp/srtm-ME.tif
 
-COMPRESS=ZSTD,PREDICTOR=2,BIGTIFF=YES,NUM_THREADS=ALL_CPUS
+#or buildvrt
+gdalbuildvrt -resolution highest -overwrite north_america_gmted_srtm_merge.vrt north_america_gmted-7-5-arc-second_wgs84.tif north_america_srtm_wgs84.tif
+
+#set cache size to 9999mb before running anything
+set GDAL_CACHEMAX=9999
+
+#merge SRTM
+gdalbuildvrt -resolution highest -overwrite north_america_srtm_wgs84.vrt SRTM/*.hgt
+gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2"-co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" north_america_srtm_wgs84.vrt north_america_srtm_wgs84.tif
+
+#merge GMTED
+gdalbuildvrt -resolution highest north_america_gmted2010_wgs84.vrt GMTED2010/7-5-arc-second/mea/*.tif
+gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" north_america_gmted2010_wgs84.vrt north_america_gmted2010_wgs84.tif
+
+#merge GMTED and SRTM buildvrt
+gdalbuildvrt -resolution highest -overwrite north_america_gmted2010_srtm_merge.vrt north_america_gmted2010_wgs84.vrt north_america_srtm_wgs84.tif
+gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" north_america_gmted2010_srtm_merge.vrt north_america_gmted2010_srtm_merge.tif
+
+#clip merged at -180,-60,15,72 [EPSG:4326]
+
+#test vrt crop speed
+gdalwarp -overwrite -of GTiff -te 1925836.2845578345 715547.1196991404 2268720.5956089958 1251148.1439610166 -te_srs ESRI:102004 north_america_gmted_srtm_merge.vrt merged_vrt_ME.tif -multi -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "NUM_THREADS=ALL_CPUS" -wo "NUM_THREADS=ALL_CPUS"
+
+COMPRESS=ZSTD,PREDICTOR=2,BIGTIFF=YES,TILED=YES,NUM_THREADS=ALL_CPUS
 
 #gdal_merge.py has error when merging entire USA
 #grass i.image.mosaic does resampling which decreases quality since we have already resampled in our upscaling
@@ -62,7 +85,7 @@ python gdal_calc.py -A ./dems/tmp/ME-500m-width-hydro-raised-above-sea-level-102
 # Accentuate coastlines and areas under 4m. Deepen stream paths vs surroundings so we can print more glow material for sufficient brightness. This also emphasizes below sea level areas. Displayed river width is due to 500mx500m resolution hydro DEM and diagonals and turns end up as 2500mx2500m. 
 python gdal_calc.py -A ./dems/tmp/mosaic-ME-500m.tif -B ./dems/tmp/hydro-ME.tif --outfile ./dems/dems-ready-to-cut/ME-500m-width-raised-460.tif --calc="logical_and(B == 0, A > 4) * (A+460) + (B > 0) * A + logical_and(B == 0, A <= 0) * A + logical_and(B == 0, logical_and(A > 0, A <= 4)) * (A + A * 115)" --overwrite --co=COMPRESS=ZSTD --co=PREDICTOR=2 --co=NUM_THREADS=ALL_CPUS
 
-#raise nonhydro locations of 500x500 hydro fixed (raised) land dem. 
+#raise locations of 500x500 hydro fixed (raised) land dem. 
 # Raise locations >4m by 400m (400m ensures that this area will be just below the previous DEM that has areas surrounding water artificially raised by 460m). This DEM should not poke above the previous DEM unless we display water there (because the previous DEM did not raise the water areas).
 # Raise location >0,<=4m AND has water over it, <=4m by scaled amount to (114) at 4m. These areas will poke above the previous DEM in areas with water since we did not raise them in previous DEM. If no water there, leave unchanged so we don't poke above previous DEM in low areas with no hydro.
 #python gdal_calc.py -A ./dems/tmp/ME-500m-width-hydro-raised-above-sea-level-102004.tif -B ./dems/tmp/hydro-ME.tif --outfile ./dems/dems-ready-to-cut/ME-500m-width-hydro-patched-raised-400.tif --calc="(A > 4) * (A+400) + (A<=0) * A + logical_and(A > 0, A<= 4) * (A + A * ((B > 0) * (14) + 100))" --overwrite --co="COMPRESS=ZSTD" --co "PREDICTOR=2" --co NUM_THREADS=ALL_CPUS

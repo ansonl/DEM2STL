@@ -36,7 +36,8 @@ Requires [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) v3.
 import os
 os.chdir("C:/Users/ansonl/development/dem-to-stl-workflow/dem/boundaries")
 for fileName in os.listdir("."):
-os.rename(fileName, fileName.replace("STUSPS_", ""))
+  print(fileName)
+  os.rename(fileName, fileName.replace("STUSPS_", ""))
 ```
 
 2. Merge all DEM files
@@ -115,7 +116,7 @@ for fileName in os.listdir("."):
 
 ### Creating offset mask layer Hydro1k and HydroLAKES
 
-1. Reproject Hydro1k and HydroLAKES vectors to projection mode of map (102009 lambert)
+1. Reproject Hydro1k and HydroLAKES vectors to projection mode of map (102004 lambert)
 
 2. Rasterize Hydro1k and HydroLAKES vector layers using a constant value
   - QGIS>GDAL>Vector conversion>Rasterize (vector to raster). Set to georeferenced units and set resolutions relative to vector unit of measurement
@@ -125,6 +126,8 @@ for fileName in os.listdir("."):
   - georeferenced units relative to source layer units (If the source layer is in a projected CRS, source layer units should be meters. )
   - extent set to source layer extent
   - If you want to decrease noise from small lakes, filter the projected vector in QGIS with "Lake_area" >= 10 to only show lakes with over 10sqkm of area.
+    - Select by Expression  
+    - if( "Lake_area"  / "Shore_len" > 0.5, if( "Lake_area" > 9, true, if( "Shore_len" > 24, true, if( "Wshd_area" > 1000, if( "Lake_area" > 6.5, true, false), false))), if( "Lake_area" > 10, true, if( "Shore_len" > 24, true, if( "Wshd_area" > 1000, if( "Lake_area" > 6.5, true, false), false))))
   2a. Clip Hydro1k and HydroLAKES vector layers using USA boundary polygon.
     - QGIS>GDAL>Raster Extraction>Clip raster by mask layer
     - Clipping may need to be done on the raster rather than the vector due to state boundary polygon incompatibility in QGIS.
