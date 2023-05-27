@@ -79,8 +79,8 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     
                 "printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
                 "smooth_borders": False,
-                "ignore_leq": 0,
-                "basethick": 0.5, # thickness (in mm) of printed base
+                "ignore_leq": -100,
+                "basethick": 0.3, # thickness (in mm) of printed base
                 "zscale": 5,      # elevation (vertical) scaling
     
                 "fileformat": "STLb",  # format of 3D model files: "obj" wavefront obj (ascii),"STLa" ascii STL or "STLb" binary STL
@@ -91,7 +91,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 #"lower_leq": [1,0.3],
                 #"offset_masks_lower": [["./dems/stream-lake-mask-clipped-500m/" + entry, 1.7]],
                 "fill_holes": [-1, 7],
-                "min_elev": 0,
+                "min_elev": -100, #lowest point in NA is greater than -100m
                 "clean_diags": True
             }
     
