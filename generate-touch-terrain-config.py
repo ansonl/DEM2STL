@@ -118,7 +118,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 configFileCount += 1
                 
             # Write libigl gp-CLI command for boolean subtract between second and first STL
-            libiglcmdfp.write(f'echo Mesh boolean subtracting {entryName}' + '\n' + f'time ./gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}-hydro-patched_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
+            libiglcmdfp.write(f'echo Mesh boolean subtracting {entryName}' + '\n' + f'time ./tools/gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
             
             cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilename + '\n')
 
