@@ -30,24 +30,36 @@ def raiseOverSeaLevelLandAIfInHydroMaskB(a, b):
 def raiseLandAIfNotInHydroMaskBAndScaleAt4m(a, b):
   if b > 0:
     if a > 10:
-      return a + 50
+      return a
     elif a > 0:
-      return a + a * 5
-    else: # if A is <= 0 and is covered by mask, set to NODATA so that it does not 3D generated 
+      return a
+    else: # if A is <= 0m and is covered by mask, set to NODATA so that it is not 3D generated. This will allow oceans to be show from other model. 
       return -32768 
-  elif a > 10:
-    return a + 450
+  elif a > 10: # 10m -> 480m
+    return a + 470
   elif a > 0:
-    return a + a * 45
+    return a * 48
   else:
     return a
 
 # Input minuend DEM-A and hydro mask-B. Output minuend DEM.
 def raiseLandAScaleAt4m(a, b):
-  if a > 10:
-    return a + 400
+  if a > 10: # 10m -> 400m
+    return a + 390
   elif a > 0:
-    return a + a * 40
+    return a * 40
+  else:
+    return a
+  
+# Input elevation DEM-A and hydro mask-B. Output single material print DEM.
+def keepLandAIfNotInHydroMaskB(a, b):
+  if b > 0:
+    if a > 0:
+      return a
+    else: # if A is <= 0m and is covered by mask, set to NODATA so that it is not 3D generated. This allows us to start the base thickness from below sea level.
+      return -32768 
+  elif a > 0:
+    return a + 100
   else:
     return a
 
@@ -66,6 +78,9 @@ def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_y
   elif op == 'raiseLandAScaleAt4m':
     vraiseLandAScaleAt4m = np.vectorize(raiseLandAScaleAt4m)
     np.round_(vraiseLandAScaleAt4m(in_ar[0], in_ar[1]), out=out_ar)
+  elif op == 'keepLandAIfNotInHydroMaskB':
+    vKeepLandAIfNotInHydroMaskB = np.vectorize(keepLandAIfNotInHydroMaskB)
+    np.round_(vKeepLandAIfNotInHydroMaskB(in_ar[0], in_ar[1]), out=out_ar)
   else:
     raise Exception(f'Invalid op {op}')
 

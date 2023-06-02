@@ -29,6 +29,7 @@ hydroPatchedRaised = 400 #100
 
 destPath1 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
 destPath2 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-clipped/'
+destPath3 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
 
 with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
     
@@ -47,16 +48,19 @@ with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
 
             clipElevationRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-raised-{hydroPatchedRaised}m.tif {destPath2}{stateName}.tif -r near -multi'
             
+            clipElevationSinglePrintCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m.tif {destPath3}{stateName}.tif -r near -multi'
+            
             #calcLeq0Cmd = f'python gdal_calc.py -A ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --outfile ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --calc="A*(A>0)+(A<0)*1"'
     
-            commandCount += 2
+            commandCount += 3
             cmdfp.write(clipElevationCmd + '\n')
             #cmdfp.write(clipHydroMaskCmd + '\n')
             cmdfp.write(clipElevationRaisedHydroCmd + '\n')
+            cmdfp.write(clipElevationSinglePrintCmd + '\n')
             
             #calcCmdfp.write(calcLeq0Cmd + '\n')
 
-print('Wrote ' + str(commandCount) + ' commands to ' + gdalwarpBatchFilename)
+print('Wrote ' + str(commandCount/3) + ' commands to ' + gdalwarpBatchFilename)
 
 print(f'{gdalwarpBatchFilename} should be run from root project folder\n\nEx: \nchmod 700 {gdalwarpBatchFilename}\n./{gdalwarpBatchFilename}')
     

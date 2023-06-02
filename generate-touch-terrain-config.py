@@ -29,7 +29,10 @@ resolution = 250
 #tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-patched/"
 tifsPath = f'./dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
 tifsPath2 = f'./dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-clipped/'
+tifsPath3 = f'./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
 outputSTLTopDir = f'./state_stls_{resolution}m/'
+
+excludeList = ['AK', 'HI', 'GU', 'AS']
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     
@@ -45,6 +48,10 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
         if entry.endswith('.tif'):
             #print(entry.path)
             entryName = entry.replace(".tif","")
+            
+            if entryName in excludeList:
+                continue
+            
             entryPath = tifsPath + entry
     
             # Get TIF extents to 3d print
@@ -70,7 +77,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 "bllat": miny,        # lat/lon of bottom left corner
                 "bllon": minx,
     
-                # width of each tile in mm (total width of TIF extent in meters divided by 500km = number of "200mm wide buildplates" needed at our 0.4mm = 1km scale)
+                # width of each tile in mm (total width of TIF extent in meters divided by 500km = number of "200mm wide buildplates" needed at our 0.4mm = 1km scale) 
                 "tilewidth": 200 * ( maxx - minx ) / 500000, 
                 
                 # number of tiles in x and y. We are creating 1 big 3D model at our desired scale that we will custom divide to fit on the printer.
@@ -80,7 +87,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 "printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
                 "smooth_borders": False,
                 "ignore_leq": -100,
-                "basethick": 0.3, # thickness (in mm) of printed base
+                "basethick": 0.7, # thickness (in mm) of printed base
                 "zscale": 5,      # elevation (vertical) scaling
     
                 "fileformat": "STLb",  # format of 3D model files: "obj" wavefront obj (ascii),"STLa" ascii STL or "STLb" binary STL
@@ -107,18 +114,28 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             
             # Write config for STL without rivers but with max height, slightly (0.1mm) lower than previous file
             args["importedDEM"] = tifsPath2 + entry.replace(".tif",".tif")
-            args["basethick"] = args["basethick"] #- 0.1 #decrease base thickness by 0.1mm if hydro patched DEM is not already artificially lowered by 50m
+            #args["basethick"] = args["basethick"] - 0.1 #decrease base thickness by 0.1mm if hydro patched DEM is not already artificially lowered by 50m
             #args.pop("offset_masks_lower")
             zipFilename2 = outputSTLTopDir + entryName + "-no-rivers"
             args["zip_file_name"] = zipFilename2
-            configFilename = entryName + "-no-rivers" +'.json'
+            configFilenameNoRivers = entryName + "-no-rivers" +'.json'
             configsPath = f'./touch_terrain_configs_{resolution}m/'
-            with open(configsPath + configFilename, 'w+') as fp:
+            with open(configsPath + configFilenameNoRivers, 'w+') as fp:
+                json.dump(args, fp, indent=0, sort_keys=True)
+                configFileCount += 1
+                
+             # Write config for STL single material print file
+            args["importedDEM"] = tifsPath3 + entry.replace(".tif",".tif")
+            zipFilename3 = outputSTLTopDir + entryName + "-single-print"
+            args["zip_file_name"] = zipFilename3
+            configFilenameSinglePrint = entryName + "-single-print" +'.json'
+            configsPath = f'./touch_terrain_configs_{resolution}m/'
+            with open(configsPath + configFilenameSinglePrint, 'w+') as fp:
                 json.dump(args, fp, indent=0, sort_keys=True)
                 configFileCount += 1
                 
             # Write libigl gp-CLI command for boolean subtract between second and first STL
-            libiglcmdfp.write(f'echo Mesh boolean subtracting {entryName}' + '\n' + f'time ./tools/gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
+            libiglcmdfp.write(f'echo {configFileCount} Mesh boolean subtracting {entryName}' + '\n' + f'time ./tools/gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
             
             cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilename + '\n')
 
