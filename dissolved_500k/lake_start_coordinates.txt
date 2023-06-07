@@ -1,0 +1,10 @@
+coordinates in 102004 for starting r.lake with 0.1 lake height and negative lake heights enabled
+
+-2326318,978236 ocean
+
+1946326,467429 north sea NY
+1947187,455762 north sea NY
+1951673,459935 north sea NY
+2244940,1013181 maine
+
+-2517172,-37197 500m ocean

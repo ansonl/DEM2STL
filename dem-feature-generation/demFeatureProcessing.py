@@ -35,19 +35,19 @@ def raiseLandAIfNotInHydroMaskBAndScaleAt4m(a, b):
       return a
     else: # if A is <= 0m and is covered by mask, set to NODATA so that it is not 3D generated. This will allow oceans to be show from other model. 
       return -32768 
-  elif a > 10: # 10m -> 480m
-    return a + 470
+  elif a > 40: # 40m -> 450m
+    return a + 410
   elif a > 0:
-    return a * 48
+    return np.log(a+1)*450/np.log(41)
   else:
     return a
 
 # Input minuend DEM-A and hydro mask-B. Output minuend DEM.
 def raiseLandAScaleAt4m(a, b):
-  if a > 10: # 10m -> 400m
-    return a + 390
+  if a > 40: # 40m -> 400m
+    return a + 360
   elif a > 0:
-    return a * 40
+    return np.log(a+1)*400/np.log(41)
   else:
     return a
   

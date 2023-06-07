@@ -124,6 +124,11 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 json.dump(args, fp, indent=0, sort_keys=True)
                 configFileCount += 1
                 
+            cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilenameNoRivers + '\n')
+            
+            # Write libigl gp-CLI command for boolean subtract between second and first STL
+            libiglcmdfp.write(f'echo {configFileCount} Mesh boolean subtracting {entryName}' + '\n' + f'time ./tools/gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
+                
              # Write config for STL single material print file
             args["importedDEM"] = tifsPath3 + entry.replace(".tif",".tif")
             zipFilename3 = outputSTLTopDir + entryName + "-single-print"
@@ -133,11 +138,8 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             with open(configsPath + configFilenameSinglePrint, 'w+') as fp:
                 json.dump(args, fp, indent=0, sort_keys=True)
                 configFileCount += 1
-                
-            # Write libigl gp-CLI command for boolean subtract between second and first STL
-            libiglcmdfp.write(f'echo {configFileCount} Mesh boolean subtracting {entryName}' + '\n' + f'time ./tools/gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
             
-            cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilename + '\n')
+            cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilenameSinglePrint + '\n')
 
 libiglcmdfp.close()
 
