@@ -29,10 +29,11 @@ resolution = 250
 #tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-patched/"
 tifsPath = f'./dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
 tifsPath2 = f'./dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-clipped/'
-tifsPath3 = f'./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
+tifsPath3 = f'./dem-feature-generation/deleteLandAIfInHydroMaskB-{resolution}m-clipped/'
+tifsPath4 = f'./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
 outputSTLTopDir = f'./state_stls_{resolution}m/'
 
-excludeList = ['AK', 'HI', 'GU', 'AS']
+excludeList = ['AK', 'HI', 'GU', 'AS', 'MP']
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     
@@ -113,7 +114,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilename + '\n')
             
             # Write config for STL without rivers but with max height, slightly (0.1mm) lower than previous file
-            args["importedDEM"] = tifsPath2 + entry.replace(".tif",".tif")
+            args["importedDEM"] = tifsPath2 + entry
             #args["basethick"] = args["basethick"] - 0.1 #decrease base thickness by 0.1mm if hydro patched DEM is not already artificially lowered by 50m
             #args.pop("offset_masks_lower")
             zipFilename2 = outputSTLTopDir + entryName + "-no-rivers"
@@ -128,9 +129,23 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
             
             # Write libigl gp-CLI command for boolean subtract between second and first STL
             libiglcmdfp.write(f'echo {configFileCount} Mesh boolean subtracting {entryName}' + '\n' + f'time ./tools/gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename1}/{entryName}_tile_1_1.STL minus {zipFilename1}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
+            
+            #config for translucent model
+            args["importedDEM"] = tifsPath3 + entry
+            zipFilename3 = outputSTLTopDir + entryName + "-thru-river-cutout-base"
+            args["zip_file_name"] = zipFilename3
+            configFilenameThruRivers = entryName + "-thru-river-cutout-base" +'.json'
+            configsPath = f'./touch_terrain_configs_{resolution}m/'
+            with open(configsPath + configFilenameThruRivers, 'w+') as fp:
+                json.dump(args, fp, indent=0, sort_keys=True)
+                configFileCount += 1
+            cmdfp.write(f'python ./TouchTerrain_standalone.py ./touch_terrain_configs_{resolution}m/' + configFilenameThruRivers + '\n')
+            
+            # Write libigl gp-CLI command for boolean subtract between second and third STL
+            libiglcmdfp.write(f'echo {configFileCount} Mesh boolean subtracting {entryName}' + '\n' + f'time ./tools/gp-cli/precompiled/pc/bin/meshboolean.exe {zipFilename2}/{entryName}_tile_1_1.STL {zipFilename3}/{entryName}_tile_1_1.STL minus {zipFilename3}/{entryName}_thru_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
                 
              # Write config for STL single material print file
-            args["importedDEM"] = tifsPath3 + entry.replace(".tif",".tif")
+            args["importedDEM"] = tifsPath4 + entry
             zipFilename3 = outputSTLTopDir + entryName + "-single-print"
             args["zip_file_name"] = zipFilename3
             configFilenameSinglePrint = entryName + "-single-print" +'.json'

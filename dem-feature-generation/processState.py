@@ -9,7 +9,7 @@ rasterResolution = 250
 clipCRS = 'ESRI:102004'
 
 boundaryPath = f'../sources/USCB/tl_2022_us_state/split_individual/'
-sourceDEMRasterPath = f'../sources/north_america_gmted2010_srtm_merge_102004_500m_avg_250m_cubicspline.tif'
+sourceDEMRasterPath = f'../sources/north_america_gmted2010_srtm_merge_102004_500m_avg_250m_bi.tif'
 sourceMaskRasterPath = f'../hydrographic-masks/north_america_hydrographic_mask_merge_102004_250m.tif'
 
 clippedDEMRasterPath = f'../dem-feature-generation/source-dem-{rasterResolution}m-clipped/'

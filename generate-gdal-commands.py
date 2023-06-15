@@ -29,7 +29,8 @@ hydroPatchedRaised = 400 #100
 
 destPath1 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
 destPath2 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-clipped/'
-destPath3 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
+destPath3 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/deleteLandAIfInHydroMaskB-{resolution}m-clipped/'
+destPath4 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
 
 with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
     
@@ -48,7 +49,9 @@ with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
 
             clipElevationRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-raised-{hydroPatchedRaised}m.tif {destPath2}{stateName}.tif -r near -multi'
             
-            clipElevationSinglePrintCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m.tif {destPath3}{stateName}.tif -r near -multi'
+            clipElevationTransluscentRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/deleteLandAIfInHydroMaskB-{resolution}m-raised-{raised}m.tif {destPath3}{stateName}.tif -r near -multi'
+            
+            clipElevationSinglePrintCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m.tif {destPath4}{stateName}.tif -r near -multi'
             
             #calcLeq0Cmd = f'python gdal_calc.py -A ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --outfile ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --calc="A*(A>0)+(A<0)*1"'
     
@@ -56,6 +59,9 @@ with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
             cmdfp.write(clipElevationCmd + '\n')
             #cmdfp.write(clipHydroMaskCmd + '\n')
             cmdfp.write(clipElevationRaisedHydroCmd + '\n')
+            
+            cmdfp.write(clipElevationTransluscentRaisedHydroCmd + '\n')
+            
             cmdfp.write(clipElevationSinglePrintCmd + '\n')
             
             #calcCmdfp.write(calcLeq0Cmd + '\n')

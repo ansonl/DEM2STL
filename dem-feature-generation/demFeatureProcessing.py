@@ -1,23 +1,35 @@
 import numpy as np
 
 #Powershell envvar settings
-#$env:GDAL_VRT_ENABLE_PYTHON = 'YES'
-#$env:PYTHONPATH = './'
+"""
+$env:GDAL_VRT_ENABLE_PYTHON = 'YES'
+$env:PYTHONPATH = './'
+"""
 
 #Add subClass="VRTDerivedRasterBand" to <VRTRasterBand>
-#Change dataType="Float32" in <VRTRasterBand> if in Int16 due to numpy.round only outputting float array
-#<VRTRasterBand dataType="Float32" band="1" subClass="VRTDerivedRasterBand">
+"""
+Change dataType="Float32" in <VRTRasterBand> if in Int16 due to numpy.round only outputting float array
+<VRTRasterBand dataType="Float32" band="1" subClass="VRTDerivedRasterBand">
+"""
 #Add PixelFunction to VRT inside <VRTRasterBand>
-#<PixelFunctionLanguage>Python</PixelFunctionLanguage>
-#<PixelFunctionType>demFeatureProcessing.runOperation</PixelFunctionType>
-#one of the below
-#<PixelFunctionArguments op="raiseOverSeaLevelLandAIfInHydroMaskB" />
-#<PixelFunctionArguments op="raiseLandAIfNotInHydroMaskBAndScaleAt4m" />
-#<PixelFunctionArguments op="raiseLandAScaleAt4m" />
+"""
+<PixelFunctionLanguage>Python</PixelFunctionLanguage>
+<PixelFunctionType>demFeatureProcessing.runOperation</PixelFunctionType>
+<PixelFunctionArguments op="OPERATION" />
+
+e.g. one of the below
+
+<PixelFunctionArguments op="raiseLandAIfNotInHydroMaskBAndScaleAt4m" />
+<PixelFunctionArguments op="raiseLandAScaleAt4m" />
+<PixelFunctionArguments op="deleteLandAIfInHydroMaskB" />
+<PixelFunctionArguments op="keepLandAIfNotInHydroMaskB" />
+"""
 
 # minuend - subtrahend = difference
 
 # Input elevation DEM-A and hydro mask-B. Output minuend DEM intermediate.
+# Was intermediate step for raiseLandAScaleAt4m. No longer needed because r.lake flood will include below sea level locations touching the ocean.
+"""
 def raiseOverSeaLevelLandAIfInHydroMaskB(a, b):
   if a > 0:
     return a
@@ -25,6 +37,7 @@ def raiseOverSeaLevelLandAIfInHydroMaskB(a, b):
     return b
   else:
     return a
+"""
 
 # Input elevation DEM-A and hydro mask-B. Output subtrahend DEM.
 def raiseLandAIfNotInHydroMaskBAndScaleAt4m(a, b):
@@ -48,6 +61,13 @@ def raiseLandAScaleAt4m(a, b):
     return a + 360
   elif a > 0:
     return np.log(a+1)*400/np.log(41)
+  else:
+    return a
+  
+# Input elevation DEM-A and hydro mask-B. Output subtrahend DEM for translucent rivers thru the base. 
+def deleteLandAIfInHydroMaskB(a, b):
+  if b > 0:
+    return -32768
   else:
     return a
   
@@ -78,6 +98,9 @@ def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_y
   elif op == 'raiseLandAScaleAt4m':
     vraiseLandAScaleAt4m = np.vectorize(raiseLandAScaleAt4m)
     np.round_(vraiseLandAScaleAt4m(in_ar[0], in_ar[1]), out=out_ar)
+  elif op == 'deleteLandAIfInHydroMaskB':
+    vDeleteLandAIfInHydroMaskB = np.vectorize(deleteLandAIfInHydroMaskB)
+    np.round_(vDeleteLandAIfInHydroMaskB(in_ar[0], in_ar[1]), out=out_ar)
   elif op == 'keepLandAIfNotInHydroMaskB':
     vKeepLandAIfNotInHydroMaskB = np.vectorize(keepLandAIfNotInHydroMaskB)
     np.round_(vKeepLandAIfNotInHydroMaskB(in_ar[0], in_ar[1]), out=out_ar)
