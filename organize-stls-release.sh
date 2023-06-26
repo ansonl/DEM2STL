@@ -12,7 +12,11 @@ for f in *; do
     echo -n "."
     mv "${f}-single-print/${f}_tile_1_1.STL" "${f}/${f}-single.stl"
     echo -n "."
-
+    mv "${f}-thru-river-cutout-base/${f}_thru_rivers.STL" "${f}/${f}-dual-hydrography-transparent.stl"
+    echo -n "."
+    mv "${f}-thru-river-cutout-base/${f}_tile_1_1.STL" "${f}/${f}-dual-land-elevation-transparent.stl"
+    echo -n "."
+  
     # Delete unneeded files and directories
     rm "${f}/logfile.txt"
     rm "${f}-no-rivers/${f}_tile_1_1.STL"
@@ -20,6 +24,8 @@ for f in *; do
     rmdir "${f}-no-rivers"
     rm "${f}-single-print/logfile.txt"
     rmdir "${f}-single-print"
+    rm "${f}-thru-river-cutout-base/logfile.txt"
+    rmdir "${f}-thru-river-cutout-base"
     echo "Done"
   fi
 done
