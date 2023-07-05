@@ -1,0 +1,23 @@
+<VRTDataset rasterXSize="215152" rasterYSize="90674">
+  <SRS dataAxisToSRSAxisMapping="2,1">GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Latitude",NORTH],AXIS["Longitude",EAST],AUTHORITY["EPSG","4326"]]</SRS>
+  <GeoTransform> -1.2528878063300000e+02,  2.7777605810280071e-04,  0.0000000000000000e+00,  4.9269976147999998e+01,  0.0000000000000000e+00, -2.7777499407993718e-04</GeoTransform>
+  <VRTRasterBand dataType="Int16" band="1">
+    <Metadata>
+      <MDI key="STATISTICS_APPROXIMATE">YES</MDI>
+      <MDI key="STATISTICS_MAXIMUM">34</MDI>
+      <MDI key="STATISTICS_MEAN">1.0023427722586</MDI>
+      <MDI key="STATISTICS_MINIMUM">1</MDI>
+      <MDI key="STATISTICS_STDDEV">0.119753218373</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">16.15</MDI>
+    </Metadata>
+    <NoDataValue>0</NoDataValue>
+    <ColorInterp>Gray</ColorInterp>
+    <SimpleSource>
+      <SourceFilename relativeToVRT="1">coastline_hydrographic_mask_merge.vrt</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="215152" RasterYSize="90674" DataType="Float32" BlockXSize="128" BlockYSize="128" />
+      <SrcRect xOff="0" yOff="0" xSize="215152" ySize="90674" />
+      <DstRect xOff="0" yOff="0" xSize="215152" ySize="90674" />
+    </SimpleSource>
+  </VRTRasterBand>
+</VRTDataset>

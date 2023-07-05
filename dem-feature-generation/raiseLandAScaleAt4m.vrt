@@ -5,11 +5,11 @@
     <NoDataValue>-32768</NoDataValue>
     <ColorInterp>Gray</ColorInterp>
     <ComplexSource>
-      <SourceFilename relativeToVRT="1">raiseOverSeaLevelLandAIfInHydroMaskB.vrt</SourceFilename>
+      <SourceFilename relativeToVRT="1">../sources/north_america_gmted2010_srtm_merge_102004_1000m_avg_250m_cubicspline.tif</SourceFilename>
       <SourceBand>1</SourceBand>
-      <SourceProperties RasterXSize="53851" RasterYSize="44635" DataType="Int16" BlockXSize="128" BlockYSize="128" />
-      <SrcRect xOff="0" yOff="0" xSize="53851" ySize="44635" />
-      <DstRect xOff="0" yOff="0" xSize="53851" ySize="44635" />
+      <SourceProperties RasterXSize="52844" RasterYSize="44624" DataType="Int16" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="52844" ySize="44624" />
+      <DstRect xOff="8.21315252798051" yOff="0" xSize="52844" ySize="44624" />
       <NODATA>-32768</NODATA>
     </ComplexSource>
     <ComplexSource>

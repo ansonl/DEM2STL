@@ -1,0 +1,27 @@
+<VRTDataset rasterXSize="53851" rasterYSize="44635">
+  <SRS dataAxisToSRSAxisMapping="1,2">PROJCS["USA_Contiguous_Lambert_Conformal_Conic",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101004,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Lambert_Conformal_Conic_2SP"],PARAMETER["latitude_of_origin",39],PARAMETER["central_meridian",-96],PARAMETER["standard_parallel_1",33],PARAMETER["standard_parallel_2",45],PARAMETER["false_easting",0],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH]]</SRS>
+  <GeoTransform> -8.9079824401319958e+06,  2.5000000000000000e+02,  0.0000000000000000e+00,  7.8277193986999998e+06,  0.0000000000000000e+00, -2.5000000000000000e+02</GeoTransform>
+  <VRTRasterBand dataType="Float32" band="1" subClass="VRTDerivedRasterBand">
+    <NoDataValue>-32768</NoDataValue>
+    <ColorInterp>Gray</ColorInterp>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">./raiseLandAIfNotInHydroMaskBAndScaleAt4m-250m-raised-460m.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="53851" RasterYSize="44635" DataType="Int16" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="53851" ySize="44635" />
+      <DstRect xOff="0" yOff="0" xSize="53851" ySize="44635" />
+      <NODATA>-32768</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">../hydrographic-masks/north_america_hydrographic_mask_merge_102004_250m.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="53851" RasterYSize="39245" DataType="Int16" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="53851" ySize="39245" />
+      <DstRect xOff="0" yOff="5389.50952181305" xSize="53851" ySize="39245" />
+      <NODATA>0</NODATA>
+    </ComplexSource>
+    <PixelFunctionLanguage>Python</PixelFunctionLanguage>
+    <PixelFunctionType>demFeatureProcessing.runOperation</PixelFunctionType>
+    <PixelFunctionArguments op="deleteLandAIfInHydroMaskB" />
+  </VRTRasterBand>
+</VRTDataset>

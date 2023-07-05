@@ -1,0 +1,19 @@
+# Compiled Object files
+*.tif
+*.aux.xml
+*.stl
+.spyproject/*
+*.zip
+*.hgt
+
+*.gpkg
+
+logfile.txt
+touch_terrain_configs_*/*.json
+
+sources/*
+tools/*
+
+state_stls_*/*
+
+tmp/*

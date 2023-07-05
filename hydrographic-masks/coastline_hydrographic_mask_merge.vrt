@@ -1,0 +1,88 @@
+<VRTDataset rasterXSize="215152" rasterYSize="90674">
+  <SRS dataAxisToSRSAxisMapping="2,1">GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Latitude",NORTH],AXIS["Longitude",EAST],AUTHORITY["EPSG","4326"]]</SRS>
+  <GeoTransform> -1.2528878063300000e+02,  2.7777605810280071e-04,  0.0000000000000000e+00,  4.9269976147999998e+01,  0.0000000000000000e+00, -2.7777499407993718e-04</GeoTransform>
+  <VRTRasterBand dataType="Float32" band="1">
+    <NoDataValue>nan</NoDataValue>
+    <ColorInterp>Gray</ColorInterp>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/coast-northeast.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="36779" RasterYSize="30574" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="36778.6508812899" ySize="30574" />
+      <DstRect xOff="178372.876144938" yOff="13735.5965343015" xSize="36779.1238550619" ySize="30574" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/coast-pacific-west-coast.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="30271" RasterYSize="61147" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="30271" ySize="61147" />
+      <DstRect xOff="0" yOff="0" xSize="30271.1711744721" ySize="61148" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/coast-south-atlantic.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="23424" RasterYSize="59785" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="23424" ySize="59785" />
+      <DstRect xOff="156560.57951872" yOff="30585.2334841742" xSize="23424" ySize="59785.7920796891" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/coast-south-gulf.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="61147" RasterYSize="24901" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="61147" ySize="24901" />
+      <DstRect xOff="96965.8925717487" yOff="65772.5732602926" xSize="61147.7657722177" ySize="24901.165174751" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/fl-banana-river-n.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="1400" RasterYSize="1989" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="1400" ySize="1989" />
+      <DstRect xOff="159849.09987659" yOff="73563.1513329078" xSize="1400.00866761555" ySize="1989.01993258976" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/fl-banana-river-s.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="1400" RasterYSize="1989" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="1400" ySize="1989" />
+      <DstRect xOff="159849.09987659" yOff="73563.1513329078" xSize="1400.00866761555" ySize="1989.01993258976" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/fl-indian-river-n.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="1400" RasterYSize="1989" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="1400" ySize="1989" />
+      <DstRect xOff="159849.09987659" yOff="73563.1513329078" xSize="1400.00866761555" ySize="1989.01993258976" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/fl-saint-johns-river-n.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="953" RasterYSize="1564" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="953" ySize="1564" />
+      <DstRect xOff="156709.080438064" yOff="69051.1061138939" xSize="953.005899097443" ySize="1564.01567548941" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/fl-saint-johns-river-s.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="495" RasterYSize="974" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="495" ySize="974" />
+      <DstRect xOff="156830.048430156" yOff="70599.5308287415" xSize="495.316320419125" ySize="974.125827619057" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline/la-bon-secour-bay.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="1678" RasterYSize="873" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="1678" ySize="873" />
+      <DstRect xOff="128581.906305912" yOff="67460.0901714264" xSize="1678.01039147696" ySize="873.008748693246" />
+      <NODATA>nan</NODATA>
+    </ComplexSource>
+  </VRTRasterBand>
+</VRTDataset>

@@ -1,0 +1,32 @@
+<VRTDataset rasterXSize="439926" rasterYSize="261172">
+  <SRS dataAxisToSRSAxisMapping="2,1">GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AXIS["Latitude",NORTH],AXIS["Longitude",EAST],AUTHORITY["EPSG","4326"]]</SRS>
+  <GeoTransform> -1.7999601680000001e+02,  2.7777605810280071e-04,  0.0000000000000000e+00,  8.2523062062999998e+01,  0.0000000000000000e+00, -2.7777499407993718e-04</GeoTransform>
+  <VRTRasterBand dataType="Int16" band="1">
+    <NoDataValue>0</NoDataValue>
+    <ColorInterp>Gray</ColorInterp>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">coastline_hydrographic_mask_merge_int16.vrt</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="215152" RasterYSize="90674" DataType="Int16" BlockXSize="128" BlockYSize="128" />
+      <SrcRect xOff="0" yOff="0" xSize="215152" ySize="90674" />
+      <DstRect xOff="196947.269468248" yOff="119712.308968425" xSize="215152" ySize="90674" />
+      <NODATA>0</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">hydro1k_mask_buffer1k_wgs84.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="356944" RasterYSize="163312" DataType="Int16" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="356944" ySize="163312" />
+      <DstRect xOff="48911.1565222511" yOff="41753.1147013988" xSize="356946.209792874" ySize="163313.636615343" />
+      <NODATA>0</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">hydrolakes_mask_gt10sqkm_wgs84.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="439923" RasterYSize="261169" DataType="Int16" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="439923" ySize="261169" />
+      <DstRect xOff="0" yOff="0" xSize="439925.723504131" ySize="261171.617284321" />
+      <NODATA>0</NODATA>
+    </ComplexSource>
+  </VRTRasterBand>
+</VRTDataset>
