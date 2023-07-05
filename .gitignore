@@ -8,6 +8,10 @@
 
 *.gpkg
 
+.vscode/
+.ipynb_checkpoints/
+__pycache__/
+
 logfile.txt
 touch_terrain_configs_*/*.json
 
