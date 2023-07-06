@@ -1,0 +1,72 @@
+OLD Rename field tool to name columns alike
+
+OLD Merge federalandstatewaters and stateboundaries with QGIS>Vector General>Merge vector layers
+
+OLD Dissolve merged layer with QGIS > Dissolve > specify dissolve field
+
+Use TIGER shapefile that has land+water boundaries
+
+
+
+Use GRASS>r.lake on nationwide DEM at original resolution. Use 0.1 lake height and pick start coordinates in the same CRS as DEM and workspace in the ocean. 
+
+To test r.lake start coordinates in small pockets, clip raster by current extent to create smaller raster and run lake on it
+
+#downscale lake output to 500x500m resolution
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap ./dissolved_500k/7-5-arc-second-ocean.tif ./dissolved_500k/7-5-arc-second-ocean-500m-width-reproject-102004.tif -r cubicspline -multi -co COMPRESS=ZSTD -co PREDICTOR=2 -co NUM_THREADS=ALL_CPUS -wo "NUM_THREADS=ALL_CPUS"
+
+#watch out for -9999 nodata, if -dstnodata is used to set -9999 nodata, the gdalcalc will ignore all points that are in the -9999 nodata input!
+
+#crop lake output by hydro dem
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -te -6490500 -1937000 3519500 4780000 -te_srs ESRI:102004 ./dissolved_500k/7-5-arc-second-ocean-500m-width-reproject-102004.tif ./dissolved_500k/7-5-arc-second-ocean-500m-width-reproject-102004-extent-matched.tif -r cubicspline -multi -co COMPRESS=ZSTD -co PREDICTOR=2 -co NUM_THREADS=ALL_CPUS -wo "NUM_THREADS=ALL_CPUS"
+
+Add 1 to locations on hydroraised DEM where lake outputs are >0 and hydroraised is not already >0. Avoids re-raising areas touched by hydro1k/hydrostreams since those areas will already poke above normal dem.
+
+#md test
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500 500 -tap -cutline ./tl_2022_us_state/split_individual/MD.gpkg -crop_to_cutline ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-raised-460.tif ./dems/7-5-arc-second-clipped-500m/MD.tif -r cubicspline -multi -co COMPRESS=ZSTD -co PREDICTOR=2 -wo "NUM_THREADS=val/ALL_CPUS" 
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500 500 -tap -cutline ./tl_2022_us_state/split_individual/MD.gpkg -crop_to_cutline ./dems/dems-ready-to-cut/7-5-arc-second-merged-500m-width-hydro-patched-raised2-400.tif C:/Users/ansonl/development/dem-to-stl-workflow/dems/7-5-arc-second-clipped-500m-hydro-patched/MD-hydro-patched.tif -r cubicspline -multi -co COMPRESS=ZSTD -co PREDICTOR=2 -wo "NUM_THREADS=val/ALL_CPUS" 
+#toucheterrain
+python ./TouchTerrain_standalone.py ./touch_terrain_configs_500m/MD.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs_500m/MD-no-rivers.json
+#libigl
+./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_500m/MD-no-rivers/MD-hydro-patched_repaired.STL ./state_stls_500m/MD/MD_repaired.STL minus ./state_stls_500m/MD/MD_rivers.STL
+
+#srtm
+# download from nasa dataexplorer
+# import all srtm hgt to qgis
+# use Merge tool
+# save srtm with compression
+
+#possible experiment is to use nearest neighor instead of cubicspline resampling when upscaling
+#since we use cubicspline when downscaling to 500x500m later
+
+# resample 7.5 arc second gmted2010 to square 20m resolution in 102004 projection
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 20.0 20.0 -tap ./dems/7-5-arc-second-merged-reproject-102004.tif ./dems/7-5-arc-second-merged-20m-width-reproject-102004.tif -r cubicspline -multi -wm 9999 -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "NUM_THREADS=ALL_CPUS" -co "BIGTIFF=YES" -wo "NUM_THREADS=ALL_CPUS" 
+
+#same as above but nn resampling
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 20.0 20.0 -tap ./dems/7-5-arc-second-merged-reproject-102004.tif ./dems/7-5-arc-second-merged-nn-20m-width-reproject-102004.tif -r near -multi -wm 9999 -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "NUM_THREADS=ALL_CPUS" -co "BIGTIFF=YES" -wo "NUM_THREADS=ALL_CPUS" 
+
+# resample 1-2 arc second srtm v3 to square 20m resolution in 102004 projection
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 20.0 20.0 -tap ./srtm/north_america_srtm.tif ./dems/srtm-20m-width-reproject-102004.tif -r cubicspline -multi -wm 9999 -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "NUM_THREADS=ALL_CPUS" -co "BIGTIFF=YES" -wo "NUM_THREADS=ALL_CPUS" 
+
+#same as above but nn resampling
+gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 20.0 20.0 -tap ./srtm/north_america_srtm.tif ./dems/srtm-nn-20m-width-reproject-102004.tif -r near -multi -wm 9999 -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "NUM_THREADS=ALL_CPUS" -co "BIGTIFF=YES" -wo "NUM_THREADS=ALL_CPUS"
+
+# get wider extent info of gmted DEM (we need to extend extents of SRTM DEM if we use raster calc combine method)
+gdalinfo ./dems/7-5-arc-second-merged-20m-width-reproject-102004.tif
+
+#unneeded if we use patch - extend srtm DEM to fit GMTED DEM
+#gdalwarp.exe -te xmin ymin xmax ymax old_extent.tif new_extent.tif
+#gdalwarp.exe -te -8905940 -3327860 4305220 7827720 ./dems/srtm-20m-width-reproject-102004.tif ./dems/srtm-20m-width-reproject-102004-extended.tif -multi -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "NUM_THREADS=ALL_CPUS" -co "BIGTIFF=YES" -wo "NUM_THREADS=ALL_CPUS" 
+#old combine
+#python gdal_calc.py -A ./dems/7-5-arc-second-merged-20m-width-reproject-102004-extended.tif -B ./dems/srtm-20m-width-reproject-102004.tif --outfile ./dems/gmted_and_srtm.tif --calc="A + B - (logical_and(B > 0, B<= 0) * A)" --overwrite --co="COMPRESS=ZSTD" --co "PREDICTOR=2" --co NUM_THREADS=ALL_CPUS
+# combine 
+#python gdal_merge.py -o ./dems/na_gmted_srtm_mosaic.tif -of GTiff -co COMPRESS=ZSTD -co PREDICTOR=2 -co BIGTIFF=YES -co NUM_THREADS=ALL_CPUS -ps 20.0 20.0 -tap -v ./dems/7-5-arc-second-merged-20m-width-reproject-102004.tif ./dems/srtm-20m-width-reproject-102004.tif
+
+# use grass.i.image.patch r.patch to merge/mosaic images (mosaic named cmd in grass does resampling which we do not want since we did it already)
+# do patch in QGIS. Make sure the high res file is first to keep first input over the second input.
+
+
+#options
+COMPRESS=ZSTD,PREDICTOR=2,BIGTIFF=YES,NUM_THREADS=ALL_CPUS
+

@@ -53,8 +53,6 @@ with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
             
             clipElevationSinglePrintCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m.tif {destPath4}{stateName}.tif -r near -multi'
             
-            #calcLeq0Cmd = f'python gdal_calc.py -A ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --outfile ./dems/7-5-arc-second-clipped-500m/{stateName}.tif --calc="A*(A>0)+(A<0)*1"'
-    
             commandCount += 3
             cmdfp.write(clipElevationCmd + '\n')
             #cmdfp.write(clipHydroMaskCmd + '\n')
