@@ -14,7 +14,8 @@ def export3MF(abbr, printType, style, partNum):
       o.select_set(True)
 
   # export objects
-  bpy.ops.export_mesh.threemf(filepath=f'K:/USAofPlasticv1/release_250m_v1/{abbr}/{abbr}-{printType}{"-" if len(style) > 0 else ""}{style}{"-p" if partNum > 0 else ""}{partNum}.3mf', use_selection=True)
+  if len(bpy.context.selected_objects) > 0:
+    bpy.ops.export_mesh.threemf(filepath=f'K:/USAofPlasticv1/release_250m_v1/{abbr}/{abbr}-{printType}{"-" if len(style) > 0 else ""}{style}{"-p" if partNum > 0 else ""}{partNum}.3mf', use_selection=True)
   
 regionAbbr = 'RI'
 
