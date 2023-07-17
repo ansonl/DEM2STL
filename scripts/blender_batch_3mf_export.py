@@ -1,7 +1,15 @@
 # 3D region model 3MF exporter
 # Created by Anson Liu 2023
-
+#
 # License: AGPL v3
+#
+# This script automates the 3MF export of objects named in the below format. 
+# Format: Abbreviation-PrintType-(land-elevation|hydrography|)-Style-pPartNumber
+#   Abbreviation : Region abbreviation
+#   PrintType : single or dual [extrusion]
+#   land-elevation and hydrography are checked if dual PrintType
+#   Style : Special style e.g. transparent
+#   pPartNumber: p followed by the partNumber if objects are part of a multi-piece multi-print model. Use 0 if not in a multi-piece model.
 
 import re, bpy
 
