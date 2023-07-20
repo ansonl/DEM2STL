@@ -78,18 +78,28 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 "bllat": miny,        # lat/lon of bottom left corner
                 "bllon": minx,
     
+                # individual states
                 # width of each tile in mm (total width of TIF extent in meters divided by 500km = number of "200mm wide buildplates" needed at our 0.4mm = 1km scale) 
-                "tilewidth": 200 * ( maxx - minx ) / 500000, 
+                #"tilewidth": 200 * ( maxx - minx ) / 500000, 
+                #"printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
+                #"basethick": 0.7, # thickness (in mm) of printed base
+                #"zscale": 5,      # elevation (vertical) scaling
+                #"fill_holes": [-1, 7],
+                
+                # usa 48 state combined width 200mm buildplate is 5000km, 0.4mm = 10km
+                "tilewidth": 200 * ( maxx - minx ) / 5000000, 
+                "printres": -1,
+                "basethick": 5, # thickness (in mm) of printed base
+                "zscale": 50,      # elevation (vertical) scaling
+                "fill_holes": [-1, 8],
                 
                 # number of tiles in x and y. We are creating 1 big 3D model at our desired scale that we will custom divide to fit on the printer.
                 "ntilesx": 1,
-                "ntilesy": 1,
-    
-                "printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
+                "ntilesy": 1,            
+                
                 "smooth_borders": False,
                 "ignore_leq": -100,
-                "basethick": 0.7, # thickness (in mm) of printed base
-                "zscale": 5,      # elevation (vertical) scaling
+                
     
                 "fileformat": "STLb",  # format of 3D model files: "obj" wavefront obj (ascii),"STLa" ascii STL or "STLb" binary STL
                 "tile_centered": False, # True-> all tiles are centered around 0/0, False, all tiles "fit together"
@@ -98,7 +108,7 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 "max_cells_for_memory_only" : 5000**2, # if raster is bigger, use temp_files instead of memory
                 #"lower_leq": [1,0.3],
                 #"offset_masks_lower": [["./dems/stream-lake-mask-clipped-500m/" + entry, 1.7]],
-                "fill_holes": [-1, 7],
+                
                 "min_elev": -100, #lowest point in NA is greater than -100m
                 "clean_diags": True
             }

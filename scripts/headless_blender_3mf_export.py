@@ -106,7 +106,7 @@ class ModalTimerOperator(bpy.types.Operator):
     self._regionList.sort(key=lambda f: get_dir_size(regionsTopDir+f), reverse=False)
     excludeList.sort(key=lambda f: get_dir_size(regionsTopDir+f, False), reverse=False)
 
-    #self._regionList = ['RI', 'DC']
+    #self._regionList = ['TX']
 
     wm = context.window_manager
     self._timer = wm.event_timer_add(time_step=0.1, window=context.window)
