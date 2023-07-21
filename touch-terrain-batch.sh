@@ -202,3 +202,7 @@ python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/TX.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/TX-no-rivers.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/TX-thru-river-cutout-base.json
 python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/TX-single-print.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/usa_48.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/usa_48-no-rivers.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/usa_48-thru-river-cutout-base.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs_250m/usa_48-single-print.json
