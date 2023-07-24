@@ -110,9 +110,10 @@ for fileName in os.listdir("."):
 - Bulk Download requires BOTH Java Runtime Environment (JRE) and Java Development Kit (JDK) to be installed. 
 
 ### License
-- File `TouchTerrain_standalone.py` is provided for convenience. It is from the [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) project.  
 
-- All other files are copyright Anson Liu and may be used for commercial and non-commercial use. Attribution is required for commercial use.
+- All files are released under [GNU Affero General Public License](https://www.gnu.org/licenses/gpl-faq.html). Copyright Anson Liu.
+
+- File `TouchTerrain_standalone.py` is provided for convenience. It is from the [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) project.  
 
 ### Creating offset mask layer Hydro1k and HydroLAKES
 
