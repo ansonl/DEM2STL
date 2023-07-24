@@ -1,4 +1,5 @@
 import os
+import json
 
 from constants import *
 
@@ -9,17 +10,23 @@ def generateCoastlineDEMCommands(sourceDEMFilename):
     lakeMaskInt16Filename = os.path.splitext(lakeMaskFilename)[0] + "_int16" + ".vrt"
 
     #load lakes data from lake-locations.json
-    lakes = []
+    input_file = open ('stores-small.json')
+    lakes = json.load(input_file)
 
     for location in lakes:
 
         featureName = location['feature']
         clippedDEMFilename = featureName.replace(' ', '-') + '.tif'
 
-        featureArea = location['area']
+        featureExtent = location['extent']
         #re
-        extents = []
-        extentsCRS = ''
+        extentMatches = re.findall('([-\d.]+),([-\d.]+),([-\d.]+),([-\d.]+) \[([A-Z:0-9]*)\]', featureExtent)
+        if len(extentMatches) == 5:
+            extents = extentMatches[0:4]
+            extentsCRS = extentMatches[4]
+        else:
+            print(f'Could not parse feature extent for {featureName}. Got {len(extentMatches)}/5 matches.')
+            continue
 
         featureStart = location['start']
 
