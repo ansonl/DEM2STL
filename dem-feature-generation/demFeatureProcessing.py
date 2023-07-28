@@ -89,10 +89,7 @@ def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_y
   #ctypes.windll.user32.MessageBoxW(0, "Your text", "Your title", 1)
 
   #print(f'Requested {op}')
-  if op == 'raiseOverSeaLevelLandAIfInHydroMaskB':
-    vRaiseOverSeaLevelLandAIfInHydroMaskB = np.vectorize(raiseOverSeaLevelLandAIfInHydroMaskB)
-    np.round_(vRaiseOverSeaLevelLandAIfInHydroMaskB(in_ar[0], in_ar[1]), out=out_ar)
-  elif op == 'raiseLandAIfNotInHydroMaskBAndScaleAt4m':
+  if op == 'raiseLandAIfNotInHydroMaskBAndScaleAt4m':
     vRaiseLandAIfNotInHydroMaskBAndScaleAt4m = np.vectorize(raiseLandAIfNotInHydroMaskBAndScaleAt4m)
     np.round_(vRaiseLandAIfNotInHydroMaskBAndScaleAt4m(in_ar[0], in_ar[1]), out=out_ar)
   elif op == 'raiseLandAScaleAt4m':

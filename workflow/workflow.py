@@ -15,12 +15,12 @@ while 1:
     print('Enter the step numbers (ex:1) to run in order. Enter negative number or letter to exit.')
     print('1. Source DEM')
     print('2. Coastline Mask')
-    print('3. Coastline Mask')
-    print('2. Coastline Mask')
-    print('2. Coastline Mask')
-    print('2. Coastline Mask')
-    print('2. Coastline Mask')
-    print('2. Coastline Mask')
+    print('3. Combined Hydrographic Mask')
+    print('4. ')
+    print('5. Coastline Mask')
+    print('6. Coastline Mask')
+    print('7. Coastline Mask')
+    print('8. Coastline Mask')
 
 
 

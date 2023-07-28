@@ -10,7 +10,7 @@ def generateCoastlineDEMCommands(sourceDEMFilename):
     lakeMaskInt16Filename = os.path.splitext(lakeMaskFilename)[0] + "_int16" + ".vrt"
 
     #load lakes data from lake-locations.json
-    input_file = open ('stores-small.json')
+    input_file = open ('../hydrographic-masks/lake-locations.json')
     lakes = json.load(input_file)
 
     for location in lakes:
@@ -25,7 +25,7 @@ def generateCoastlineDEMCommands(sourceDEMFilename):
             extents = extentMatches[0:4]
             extentsCRS = extentMatches[4]
         else:
-            print(f'Could not parse feature extent for {featureName}. Got {len(extentMatches)}/5 matches.')
+            print(f'# Could not parse feature extent for {featureName}. Got {len(extentMatches)}/5 matches.')
             continue
 
         featureStart = location['start']

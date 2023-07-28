@@ -16,5 +16,12 @@ GTIFF_write_options = {
     #USE_OPENCL: 'TRUE'
 }
 
+configuration_keywords = {
+    'GDAL_VRT_ENABLE_PYTHON': 'YES'
+}
+
 GTIFF_creation_options_str = ' '.join([f'-co "{key}={value}"' for key, value in GTIFF_creation_options.items()])
 GTIFF_write_options_str = ' '.join([f'-wo "{key}={value}"' for key, value in GTIFF_creation_options.items()])
+
+# https://gdal.org/programs/raster_common_options.html#cmdoption-config
+configuration_keywords_str = ' '.join([f'--config "{key} {value}"' for key, value in configuration_keywords.items()])
