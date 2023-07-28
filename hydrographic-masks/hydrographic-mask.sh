@@ -17,7 +17,3 @@ gdalwarp -overwrite -t_srs ESRI:102004 north_america_hydrographic_mask_merge.vrt
 #downscale to 250x250m
 gdalwarp -overwrite -tr 250.0 250.0 north_america_hydrographic_mask_merge_102004.vrt north_america_hydrographic_mask_merge_102004_250m.vrt -r max -multi -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" -wo "NUM_THREADS=ALL_CPUS" -wo "USE_OPENCL=TRUE"
 gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" north_america_hydrographic_mask_merge_102004_250m.vrt north_america_hydrographic_mask_merge_102004_250m.tif
-
-#downscale to 250x250m test cubic?
-gdalwarp -overwrite -tr 250.0 250.0 north_america_hydrographic_mask_merge_102004.vrt north_america_hydrographic_mask_merge_102004_250m_cubic.vrt -r cubic -multi -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" -wo "NUM_THREADS=ALL_CPUS" -wo "USE_OPENCL=TRUE"
-gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" north_america_hydrographic_mask_merge_102004_250m_cubic.vrt north_america_hydrographic_mask_merge_102004_250m_cubic.tif
