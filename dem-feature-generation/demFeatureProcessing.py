@@ -1,5 +1,7 @@
 import numpy as np
 
+import math
+
 #Powershell envvar settings
 """
 $env:GDAL_VRT_ENABLE_PYTHON = 'YES'
@@ -39,6 +41,30 @@ def raiseOverSeaLevelLandAIfInHydroMaskB(a, b):
     return a
 """
 
+# Global log scale. Add 50 (popover height) before log scale.Transparent version. Output subtrahend DEM
+def globalLogScaleLandADeleteIfInHydroMaskB(a,b):
+  if b > 0:
+    return -32768
+  elif a > 0 :
+    return math.log(a+50)
+  elif a == 0:
+    return 0
+  elif a > -32768:
+    return -1 * math.log(abs(a))
+  else:
+    return a
+
+# Global log scale. Output minuend DEM
+def globalLogScaleLandA(a):
+  if a > 0:
+    return math.log(a)
+  elif a == 0:
+    return 0
+  elif a > -32768:
+    return -1 * math.log(abs(a))
+  else:
+    return a
+
 # Input elevation DEM-A and hydro mask-B. Output subtrahend DEM.
 def raiseLandAIfNotInHydroMaskBAndScaleAt4m(a, b):
   if b > 0:
@@ -55,7 +81,7 @@ def raiseLandAIfNotInHydroMaskBAndScaleAt4m(a, b):
   else:
     return a
 
-# Input minuend DEM-A and hydro mask-B. Output minuend DEM.
+# Input elevation DEM-A and hydro mask-B. Output minuend DEM.
 def raiseLandAScaleAt4m(a, b):
   if a > 40: # 40m -> 400m
     return a + 360
