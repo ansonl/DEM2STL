@@ -26,11 +26,11 @@ def export3MF(abbr, printType, style, partNum):
 
 rAbbr = 'TX'
 
-print('Starting single')
+#print('Starting single')
 
-importSTL(rAbbr, 'single', '')
-export3MF(rAbbr, 'single', '', 0)
-bpy.ops.object.delete() # delete the object afterwards to reduce unused memory usage
+#importSTL(rAbbr, 'single', '')
+#export3MF(rAbbr, 'single', '', 0)
+#bpy.ops.object.delete() # delete the object afterwards to reduce unused memory usage
 
 print('Starting dual')
 

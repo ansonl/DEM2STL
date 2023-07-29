@@ -41,30 +41,6 @@ def raiseOverSeaLevelLandAIfInHydroMaskB(a, b):
     return a
 """
 
-# Global log scale. Add 50 (popover height) before log scale.Transparent version. Output subtrahend DEM
-def globalLogScaleLandADeleteIfInHydroMaskB(a,b):
-  if b > 0:
-    return -32768
-  elif a > 0 :
-    return math.log(a+50)
-  elif a == 0:
-    return 0
-  elif a > -32768:
-    return -1 * math.log(abs(a))
-  else:
-    return a
-
-# Global log scale. Output minuend DEM
-def globalLogScaleLandA(a):
-  if a > 0:
-    return math.log(a)
-  elif a == 0:
-    return 0
-  elif a > -32768:
-    return -1 * math.log(abs(a))
-  else:
-    return a
-
 # Input elevation DEM-A and hydro mask-B. Output subtrahend DEM.
 def raiseLandAIfNotInHydroMaskBAndScaleAt4m(a, b):
   if b > 0:
@@ -108,13 +84,39 @@ def keepLandAIfNotInHydroMaskB(a, b):
     return a + 100
   else:
     return a
+  
+# Global log scale. Add 50 (popover height) before log scale.Transparent version. Output subtrahend DEM. raiseLandAIfNotInHydroMaskBAndScaleAt4m and deleteLandAIfInHydroMaskB adapted for log scale
+# ((B > 0 ) * -32768) + ((B <= 0 ) * ((A > 0 ) * ln("A"+50))) + ((B <= 0 ) * ((A < 0 ) * (A > -32768 ) * ln(abs("A"))))
+def globalLogScaleLandADeleteIfInHydroMaskB(a,b):
+  if b > 0:
+    return -32768
+  elif a > 0 :
+    return math.sqrt(a) * 35 + 65 #(math.log(a+1)/math.log(2)) *200
+  elif a == 0:
+    return 0
+  elif a > -32768:
+    return -1 * math.sqrt(abs(a)) * 35 #(math.log(abs(a)+1)/math.log(2)) *200
+  else:
+    return a
+
+# Global log scale. Output minuend DEM. raiseLandAScaleAt4m adapted for log scale
+# ((A > 0 ) * ln("A")) + ((A < 0 ) * (A > -32768 ) * ln(abs("A")))
+def globalLogScaleLandA(a):
+  if a > 0:
+    return math.sqrt(a) * 35 + 65#(math.log(a+1)/math.log(2)) *200
+  elif a == 0:
+    return 0
+  elif a > -32768:
+    return -1 * math.sqrt(abs(a)) * 35 #(math.log(abs(a)+1)/math.log(2)) *200
+  else:
+    return a
 
 def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize, radius, gt, **kwargs):
   op = kwargs['op'].decode('utf-8')
   #import ctypes  # An included library with Python install.   
   #ctypes.windll.user32.MessageBoxW(0, "Your text", "Your title", 1)
 
-  #print(f'Requested {op}')
+  print(f'Requested {op}')
   if op == 'raiseLandAIfNotInHydroMaskBAndScaleAt4m':
     vRaiseLandAIfNotInHydroMaskBAndScaleAt4m = np.vectorize(raiseLandAIfNotInHydroMaskBAndScaleAt4m)
     np.round_(vRaiseLandAIfNotInHydroMaskBAndScaleAt4m(in_ar[0], in_ar[1]), out=out_ar)
@@ -127,6 +129,12 @@ def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_y
   elif op == 'keepLandAIfNotInHydroMaskB':
     vKeepLandAIfNotInHydroMaskB = np.vectorize(keepLandAIfNotInHydroMaskB)
     np.round_(vKeepLandAIfNotInHydroMaskB(in_ar[0], in_ar[1]), out=out_ar)
+  elif op == 'globalLogScaleLandADeleteIfInHydroMaskB':
+    vGlobalLogScaleLandADeleteIfInHydroMaskB = np.vectorize(globalLogScaleLandADeleteIfInHydroMaskB)
+    np.round_(vGlobalLogScaleLandADeleteIfInHydroMaskB(in_ar[0], in_ar[1]), decimals=4, out=out_ar)
+  elif op == 'globalLogScaleLandA':
+    vGlobalLogScaleLandA = np.vectorize(globalLogScaleLandA)
+    np.round_(vGlobalLogScaleLandA(in_ar[0]), decimals=4, out=out_ar)
   else:
     raise Exception(f'Invalid op {op}')
 
