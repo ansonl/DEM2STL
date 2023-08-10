@@ -1,0 +1,27 @@
+{
+"CPU_cores_to_use": 0,
+"DEM_name": "USGS/NED",
+"basethick": 0.7,
+"bllat": -1521888.9729977224,
+"bllon": -2366841.4630866684,
+"clean_diags": true,
+"fileformat": "STLb",
+"fill_holes": [
+-1,
+7
+],
+"ignore_leq": -100,
+"importedDEM": "./dem-feature-generation/keepLandAIfNotInHydroMaskB-250m-clipped/usa_48.tif",
+"max_cells_for_memory_only": 25000000,
+"min_elev": -100,
+"ntilesx": 1,
+"ntilesy": 1,
+"printres": 0.1,
+"smooth_borders": false,
+"tile_centered": false,
+"tilewidth": 185.22,
+"trlat": 1412361.0270022776,
+"trlon": 2263658.5369133316,
+"zip_file_name": "./state_stls_250m/usa_48-single-print",
+"zscale": 5
+}

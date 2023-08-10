@@ -8,6 +8,8 @@ from osgeo.gdalconst import GA_ReadOnly
 
 import json
 
+import sys
+
 # File structure should be like below
 #
 # >geographic-data
@@ -23,7 +25,11 @@ import json
 
 # Run this file in geographic_data directory
 
-resolution = 250
+#lower 48 us states
+#resolution = 250
+
+#oahu 5x
+resolution = 20
 
 #tifsPath = "./dems/7-5-arc-second-clipped-500m/"
 #tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-patched/"
@@ -33,7 +39,7 @@ tifsPath3 = f'./dem-feature-generation/deleteLandAIfInHydroMaskB-{resolution}m-c
 tifsPath4 = f'./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
 outputSTLTopDir = f'./state_stls_{resolution}m/'
 
-excludeList = ['AK', 'HI', 'GU', 'AS', 'MP']
+excludeList = []#['AK', 'HI', 'GU', 'AS', 'MP']
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
     
@@ -49,6 +55,9 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
         if entry.endswith('.tif'):
             #print(entry.path)
             entryName = entry.replace(".tif","")
+            
+            if len(sys.argv) > 1:
+                entryName = sys.argv[1]
             
             if entryName in excludeList:
                 continue
@@ -81,24 +90,43 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 # individual states
                 # width of each tile in mm (total width of TIF extent in meters divided by 500km = number of "200mm wide buildplates" needed at our 0.4mm = 1km scale) 
                 #"tilewidth": 200 * ( maxx - minx ) / 500000, 
-                #"printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
+                
+                #5x size
+                "tilewidth": 5*200 * ( maxx - minx ) / 500000, 
+                
+                "printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
+                
+                #oahu
+                "basethick": 0, # thickness (in mm) of printed base
+                
+                #individual states
                 #"basethick": 0.7, # thickness (in mm) of printed base
-                #"zscale": 5,      # elevation (vertical) scaling
                 #"fill_holes": [-1, 7],
                 
+                "zscale": 5,      # elevation (vertical) scaling
+                
+                
                 # usa 48 state combined width 200mm buildplate is 5000km, 0.4mm = 10km
-                "tilewidth": 200 * ( maxx - minx ) / 5000000, 
-                "printres": -1,
-                "basethick": 5, # thickness (in mm) of printed base
-                "zscale": 50,      # elevation (vertical) scaling
-                "fill_holes": [-1, 8],
+                #"tilewidth": 200 * ( maxx - minx ) / 5000000, 
+                #"printres": -1,
+                #"basethick": 5, # thickness (in mm) of printed base
+                #"zscale": 50,      # elevation (vertical) scaling
+                #"fill_holes": [-1, 8],
                 
                 # number of tiles in x and y. We are creating 1 big 3D model at our desired scale that we will custom divide to fit on the printer.
                 "ntilesx": 1,
                 "ntilesy": 1,            
                 
                 "smooth_borders": False,
-                "ignore_leq": -100,
+                
+                #indidivudal states
+                #"ignore_leq": -100,
+                #"min_elev": -100, #lowest point in NA is greater than -100m
+                
+                #oahu
+                "ignore_leq": -125,
+                "min_elev": -125, 
+                "fill_holes": [-1, 7],
                 
     
                 "fileformat": "STLb",  # format of 3D model files: "obj" wavefront obj (ascii),"STLa" ascii STL or "STLb" binary STL
@@ -109,11 +137,11 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 #"lower_leq": [1,0.3],
                 #"offset_masks_lower": [["./dems/stream-lake-mask-clipped-500m/" + entry, 1.7]],
                 
-                "min_elev": -100, #lowest point in NA is greater than -100m
+                
                 "clean_diags": True
             }
     
-            configFilename = entry.replace(".tif","")+'.json'
+            configFilename = entryName+'.json'
             
             # Write config for STL with rivers "lowered"
             configsPath = f'./touch_terrain_configs_{resolution}m/'
