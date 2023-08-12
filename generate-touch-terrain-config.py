@@ -33,11 +33,14 @@ resolution = 20
 
 #tifsPath = "./dems/7-5-arc-second-clipped-500m/"
 #tifsPath2 = "./dems/7-5-arc-second-clipped-500m-hydro-patched/"
-tifsPath = f'./dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
+#tifsPath = f'./dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
 tifsPath2 = f'./dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-clipped/'
 tifsPath3 = f'./dem-feature-generation/deleteLandAIfInHydroMaskB-{resolution}m-clipped/'
 tifsPath4 = f'./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
 outputSTLTopDir = f'./state_stls_{resolution}m/'
+
+#usa48 low poly
+tifsPath = f'./globalLogScaleLandA/'
 
 excludeList = []#['AK', 'HI', 'GU', 'AS', 'MP']
 
@@ -92,18 +95,17 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 #"tilewidth": 200 * ( maxx - minx ) / 500000, 
                 
                 #5x size
-                "tilewidth": 5*200 * ( maxx - minx ) / 500000, 
+                #"tilewidth": 5*200 * ( maxx - minx ) / 500000, 
                 
                 "printres": -1,  # resolution (horizontal) of 3D printer (= size of one pixel) in mm
                 
                 #oahu
-                "basethick": 0, # thickness (in mm) of printed base
+                #"basethick": 0, # thickness (in mm) of printed base
                 
                 #individual states
                 #"basethick": 0.7, # thickness (in mm) of printed base
                 #"fill_holes": [-1, 7],
-                
-                "zscale": 5,      # elevation (vertical) scaling
+                #"zscale": 5,      # elevation (vertical) scaling
                 
                 
                 # usa 48 state combined width 200mm buildplate is 5000km, 0.4mm = 10km
@@ -113,20 +115,31 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 #"zscale": 50,      # elevation (vertical) scaling
                 #"fill_holes": [-1, 8],
                 
+                # USA 48 combined low poly
+                "tilewidth": 200 * ( maxx - minx ) / 5000000, #0.4mm = 10km
+                "printres": -1,
+                "basethick": 2, # thickness (in mm) of printed base
+                "zscale": 100,      # elevation (vertical) scaling
+                "fill_holes": [-1, 8],
+                "ignore_leq": -100,
+                "min_elev": -100, #lowest point in NA is greater than -100m
+                "smooth_borders": True,
+                
                 # number of tiles in x and y. We are creating 1 big 3D model at our desired scale that we will custom divide to fit on the printer.
                 "ntilesx": 1,
                 "ntilesy": 1,            
                 
-                "smooth_borders": False,
+                
                 
                 #indidivudal states
                 #"ignore_leq": -100,
                 #"min_elev": -100, #lowest point in NA is greater than -100m
+                #"smooth_borders": False,
                 
                 #oahu
-                "ignore_leq": -125,
-                "min_elev": -125, 
-                "fill_holes": [-1, 7],
+                #"ignore_leq": -125,
+                #"min_elev": -125, 
+                #"fill_holes": [-1, 7],
                 
     
                 "fileformat": "STLb",  # format of 3D model files: "obj" wavefront obj (ascii),"STLa" ascii STL or "STLb" binary STL
