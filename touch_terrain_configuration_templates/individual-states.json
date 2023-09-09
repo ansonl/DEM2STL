@@ -1,5 +1,6 @@
 {
   "templateName": "USAofPlastic individual states interlocking 0.4mm:1km",
+  "parentTemplates": [],
   "demRes": 250,
   "pathsAndOutputFileSuffix": [
     ["./dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-", ""],
@@ -9,8 +10,10 @@
   ],
   "addResToPaths": true,
   "addSuffixToPaths": "m-clipped/",
+  "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
 
   "1mmToRealScale": 2500000,
+
   "basethick": 0.7,
   "fill_holes": [-1, 7],
   "zscale": 5,

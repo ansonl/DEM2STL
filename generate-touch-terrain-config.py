@@ -10,6 +10,8 @@ import json
 
 import sys
 
+import argparse
+
 # File structure should be like below
 #
 # >geographic-data
@@ -34,11 +36,17 @@ import sys
 # usa48 low poly
 # tifsPath = f'./globalLogScaleLandA/'
 
-excludeList = []  # ['AK', 'HI', 'GU', 'AS', 'MP']
+parser = argparse.ArgumentParser(description='touch terrain config generation')
+parser.add_argument(
+    'template', help='Path to template configuration that will be used.')
+templateConfigurationPath = parser.parse_args().template
+
 
 # use tt template config
-templateConfigurationPath = './touch_terrain_configuration_templates/individual-states.json'
+# templateConfigurationPath = './touch_terrain_configuration_templates/individual-states.json'
 
+templateRequiredKeys = ['templateName', 'parentTemplates', 'demRes',
+                        'pathsAndOutputFileSuffix', 'addResToPaths', 'addSuffixToPaths', 'excludeFileList', '1mmToRealScale']
 templateConfig = {}
 templateName = ''
 templateDEMRes = -1
@@ -47,13 +55,24 @@ if templateConfigurationPath:
     templateFp = open(templateConfigurationPath, 'r')
     templateConfig = json.load(templateFp)
     if isinstance(templateConfig, dict):
-        requiredKeys = ['templateName', 'demRes',
-                        'pathsAndOutputFileSuffix', 'addResToPaths', 'addSuffixToPaths']
-        for rK in requiredKeys:
-            if rK not in requiredKeys:
+        for rK in templateRequiredKeys:
+            if rK not in templateConfig:
                 print(
-                    f'\nTemplate - {templateConfigurationPath} is missing {requiredKeys}\n')
+                    f'Template - {templateConfigurationPath} is missing {templateRequiredKeys}\n')
                 sys.exit()
+
+        def inheritFromParent(parentPath):
+            pConfig = json.load(open(parentPath, 'r'))
+            if isinstance(pConfig, dict):
+                for pT in pConfig['parentTemplates']:
+                    inheritFromParent(pT)
+                for pK in pConfig.keys():
+                    if pK not in templateConfig.keys():
+                        templateConfig[pK] = pConfig[pK]
+
+        for pT in templateConfig['parentTemplates']:
+            inheritFromParent(pT)
+
         templateName = templateConfig['templateName']
         templateDEMRes = templateConfig['demRes']
         templatePathsAndOutputFileSuffix = templateConfig['pathsAndOutputFileSuffix']
@@ -62,17 +81,33 @@ if templateConfigurationPath:
                 templatePathsAndOutputFileSuffix[i][0] += str(templateDEMRes)
             if len(templateConfig['addSuffixToPaths']):
                 templatePathsAndOutputFileSuffix[i][0] += templateConfig['addSuffixToPaths']
-        print(f'Loaded config template {templateName}\n')
-        print(f'Using {len(templatePathsAndOutputFileSuffix)} input paths\n')
+        print(f'Loaded config template {templateName}')
+        print(f'Using {len(templatePathsAndOutputFileSuffix)} input paths')
         print(
-            f'Getting all file name listing from {templatePathsAndOutputFileSuffix[0]}\n')
+            f'Getting all file name listing from directory {templatePathsAndOutputFileSuffix[0][0]}')
     else:
         print(f'\nTemplate - {templateConfigurationPath} is not dict\n')
         sys.exit()
 
 configTemplatePath = f'./touch_terrain_configs/{os.path.basename(templateConfigurationPath).split(".")[0]}/{templateDEMRes}/'
+def delete_files_in_directory(directory_path):
+   try:
+     files = os.listdir(directory_path)
+     for file in files:
+       file_path = os.path.join(directory_path, file)
+       if os.path.isfile(file_path):
+         os.remove(file_path)
+   except OSError:
+     print("Error occurred while deleting files.")
+delete_files_in_directory(configTemplatePath)
 
-outputSTLTopDir = f'./state_stls_m/{os.path.basename(templateConfigurationPath).split(".")[0]}/{templateDEMRes}/'
+os.makedirs(os.path.dirname(configTemplatePath), exist_ok=True)
+
+print(os.path.basename(templateConfigurationPath).split(".")[0])
+
+outputSTLTopDir = './state_stls/'
+outputSTLTemplateDir = f'{outputSTLTopDir}{os.path.basename(templateConfigurationPath).split(".")[0]}/{templateDEMRes}/'
+os.makedirs(os.path.dirname('./tmp/' + outputSTLTemplateDir), exist_ok=True)
 
 with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
 
@@ -88,14 +123,13 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
 
     for entry in allFiles:
         if entry.endswith('.tif'):
-            # print(entry.path)
+
             entryName = entry.replace(".tif", "")
 
-            if len(sys.argv) > 1:
-                entryName = sys.argv[1]
-
-            if entryName in excludeList:
+            if entryName in templateConfig['excludeFileList']:
                 continue
+
+            print(entry)
 
             # Get TIF extents to 3d print
             data = gdal.Open(
@@ -195,15 +229,15 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
                 if tK == '1mmToRealScale':
                     # (meters of real world)/((1mmtoRealScalemm)/(1000mmin1m))
                     ttArgs["tilewidth"] = (maxx - minx) / (tV / 1000)
-                elif tK == 'templateName' or tK == 'demRes':
+                elif tK in templateRequiredKeys:  # skip putting template metadata keys in the args passed to touchterrain
                     continue
                 else:
                     ttArgs[tK] = tV
 
-            os.makedirs(os.path.dirname(configTemplatePath), exist_ok=True)
+            
 
             def generateZipFilenameForPathIndex(i):
-                return outputSTLTopDir + entryName + templatePathsAndOutputFileSuffix[i][1]
+                return outputSTLTemplateDir + entryName + templatePathsAndOutputFileSuffix[i][1]
 
             for i in range(0, len(templatePathsAndOutputFileSuffix)):
                 ttArgs["importedDEM"] = templatePathsAndOutputFileSuffix[i][0] + entry
@@ -231,14 +265,14 @@ with open('./touch-terrain-batch.sh', 'w+') as cmdfp:
 
 libiglcmdfp.close()
 
-print('Wrote ' + str(configFileCount) +
-      ' config files to ' + configTemplatePath)
+print(f'Wrote {str(configFileCount)} config files to {configTemplatePath}')
 
-print('touch-terrain-batch.sh should be run from ./geographic-data folder\n\nEx: \nchmod 700 touch-terrain-batch.sh\n./touch-terrain-batch.sh')
+print(f'touch-terrain-batch.sh should be run from {os.getcwd()}')
 
-print('\n\nEach state will be unzipped into its own folder where batch file is run from.')
+print(
+    f'Each state will be unzipped into its own folder in {outputSTLTopDir} relative to where batch file is run from.')
+print('Run libigl-boolean-subtract.sh after generating 3d state stls to perform boolean subtract to create rivers only 3d model')
+print('Ex: \nchmod 700 touch-terrain-batch.sh\n./touch-terrain-batch.sh\nnice -n 5 ./libigl-boolean-subtract.sh')
 
-print('\n\nRun nice -n 5 ./libigl-boolean-subtract.sh after generating 3d state stls to perform boolean subtract to create rivers only 3d model. ')
-print('\nClean up nonmanifold meshes with blender 3d print toolbox.')
 
-os.chdir("./../../")
+print('\nClean up nonmanifold meshes afterward with blender 3d print toolbox.')
