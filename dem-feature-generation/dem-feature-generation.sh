@@ -23,6 +23,10 @@ gdalbuildvrt -resolution highest -overwrite keepLandAIfNotInHydroMaskB.vrt ../so
 gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" keepLandAIfNotInHydroMaskB.vrt keepLandAIfNotInHydroMaskB-250m.tif --config GDAL_VRT_ENABLE_PYTHON YES
 
 #log scale test
+gdal_translate -ot Float32 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" globalLogScaleLandA.vrt globalLogScaleLandA-250m.tif --config GDAL_VRT_ENABLE_PYTHON YES
+gdal_translate -ot Float32 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" globalLogScaleLandADeleteIfInHydroMaskB.vrt globalLogScaleLandADeleteIfInHydroMaskB-250m.tif --config GDAL_VRT_ENABLE_PYTHON YES
+
+
 gdalbuildvrt -resolution highest -overwrite CTglobalLogScaleLandA.vrt ../sources/CT_gmted2010_srtm_merge_102004_1000m_avg_250m_cubicspline.tif ../hydrographic-masks/CT_hydrographic_mask_merge_102004_250m.tif
 gdalbuildvrt -resolution highest -overwrite CTglobalLogScaleLandADeleteIfInHydroMaskB.vrt ../sources/CT_gmted2010_srtm_merge_102004_1000m_avg_250m_cubicspline.tif ../hydrographic-masks/CT_hydrographic_mask_merge_102004_250m.tif
 gdal_translate -ot Float32 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" VAglobalLogScaleLandA.vrt CTglobalLogScaleLandA-250m.tif --config GDAL_VRT_ENABLE_PYTHON YES

@@ -1,0 +1,32 @@
+{
+  "templateName": "USAofPlastic individual states interlocking 0.4mm:1km log scale",
+  "parentTemplates": [],
+  "demRes": 250,
+  "pathsAndOutputFileSuffix": [
+    ["./dem-feature-generation/usa-individual-states-log/raiseLandAIfNotInHydroMaskBAndScaleAt4m-", ""],
+    ["./dem-feature-generation/usa-individual-states-log/raiseLandAScaleAt4m-", "-no-rivers"],
+    ["./dem-feature-generation/usa-individual-states-log/deleteLandAIfInHydroMaskB-", "-thru-river-cutout-base"],
+    ["./dem-feature-generation/usa-individual-states-log/keepLandAIfNotInHydroMaskB-", "-single-print"]
+  ],
+  "addResToPaths": true,
+  "addSuffixToPaths": "m-clipped/",
+  "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
+
+  "1mmToRealScale": 2500000,
+
+  "basethick": 0.7,
+  "fill_holes": [-1, 7],
+  "zscale": 5,
+  
+  "printres": -1,
+  "ignore_leq": -100,
+  "min_elev": -100,
+  "smooth_borders": false,
+  
+  "ntilesx": 1,
+  "ntilesy": 1,            
+
+  "fileformat": "STLb",
+  "tile_centered": false,
+  "clean_diags": true
+}

@@ -10,7 +10,7 @@
   ],
   "addResToPaths": true,
   "addSuffixToPaths": "m-clipped/",
-  "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
+  "excludeFileList": ["HI", "GU", "AS", "MP", "usa_48"],
 
   "1mmToRealScale": 2500000,
 

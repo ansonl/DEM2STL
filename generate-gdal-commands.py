@@ -17,6 +17,8 @@ import json
 # Run this file in root project directory
 #os.chdir("./cb_2019_us_states_individual")
 
+templateShortName = "usa-individual-states-log"
+
 #boundaryScanDir = "./cb_2018_us_state_20m_individual"
 boundaryScanDir = "./sources/USCB/tl_2022_us_state/split_individual/"
 
@@ -24,13 +26,13 @@ gdalwarpBatchFilename = 'gdalwarp-batch.sh'
 #gdalcalcBatchFilename = 'gdalcalc-batch.sh'
 
 resolution = 250 #200
-raised = 460 #160
-hydroPatchedRaised = 400 #100
+#raised = 460 #160
+#hydroPatchedRaised = 400 #100
 
-destPath1 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
-destPath2 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-clipped/'
-destPath3 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/deleteLandAIfInHydroMaskB-{resolution}m-clipped/'
-destPath4 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
+destPath1 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/{templateShortName}/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-clipped/'
+destPath2 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/{templateShortName}/raiseLandAScaleAt4m-{resolution}m-clipped/'
+destPath3 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/{templateShortName}/deleteLandAIfInHydroMaskB-{resolution}m-clipped/'
+destPath4 = f'C:/Users/ansonl/development/dem-to-stl-workflow/dem-feature-generation/{templateShortName}/keepLandAIfNotInHydroMaskB-{resolution}m-clipped/'
 
 with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
     
@@ -45,13 +47,13 @@ with open('./'+gdalwarpBatchFilename, 'w+') as cmdfp:
             
             stateName = entry.name.replace(".gpkg","")
     
-            clipElevationCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m-raised-{raised}m.tif {destPath1}{stateName}.tif -r near -multi -dstnodata -9999'
+            clipElevationCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/{templateShortName}/raiseLandAIfNotInHydroMaskBAndScaleAt4m-{resolution}m.tif {destPath1}{stateName}.tif -r near -multi -dstnodata -9999'
 
-            clipElevationRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/raiseLandAScaleAt4m-{resolution}m-raised-{hydroPatchedRaised}m.tif {destPath2}{stateName}.tif -r near -multi'
+            clipElevationRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/{templateShortName}/raiseLandAScaleAt4m-{resolution}m.tif {destPath2}{stateName}.tif -r near -multi'
             
-            clipElevationTransluscentRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/deleteLandAIfInHydroMaskB-{resolution}m-raised-{raised}m.tif {destPath3}{stateName}.tif -r near -multi'
+            clipElevationTransluscentRaisedHydroCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/{templateShortName}/deleteLandAIfInHydroMaskB-{resolution}m.tif {destPath3}{stateName}.tif -r near -multi'
             
-            clipElevationSinglePrintCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/keepLandAIfNotInHydroMaskB-{resolution}m.tif {destPath4}{stateName}.tif -r near -multi'
+            clipElevationSinglePrintCmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr {resolution} {resolution} -cutline {forwardSlashPath} -crop_to_cutline ./dem-feature-generation/{templateShortName}/keepLandAIfNotInHydroMaskB-{resolution}m.tif {destPath4}{stateName}.tif -r near -multi'
             
             commandCount += 3
             cmdfp.write(clipElevationCmd + '\n')
