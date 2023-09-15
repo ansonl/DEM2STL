@@ -1,0 +1,35 @@
+{
+  "templateName": "USAofPlastic individual states interlocking 0.4mm:1km sqrt scale",
+  "templateShortName": "usa-individual-states-sqrt",
+  "parentTemplates": [],
+  "demRes": 250,
+  "clipBoundariesDir": "./sources/USCB/tl_2022_us_state/split_individual/",
+  "clippedRasterPathsAndOutputFileSuffix": [
+    ["./template-workspace/usa-individual-states-sqrt/globalScaleLandA-", ""],
+    ["./template-workspace/usa-individual-states-sqrt/raiseLandAIfNotInHydroMaskBAndScale-", ""],
+    ["./template-workspace/usa-individual-states-sqrt/raiseLandAAndScale-", "-no-rivers"],
+    ["./template-workspace/usa-individual-states-sqrt/deleteLandAIfInHydroMaskB-", "-thru-river-cutout-base"],
+    ["./template-workspace/usa-individual-states-sqrt/keepLandAIfNotInHydroMaskB-", "-single-print"]
+  ],
+  "addResToPaths": true,
+  "addSuffixToPaths": "m-clipped/",
+  "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
+
+  "1mmToRealScale": 2500000,
+
+  "basethick": 0.7,
+  "fill_holes": [-1, 7],
+  "zscale": 5,
+  
+  "printres": -1,
+  "ignore_leq": -100,
+  "min_elev": -100,
+  "smooth_borders": false,
+  
+  "ntilesx": 1,
+  "ntilesy": 1,            
+
+  "fileformat": "STLb",
+  "tile_centered": false,
+  "clean_diags": true
+}

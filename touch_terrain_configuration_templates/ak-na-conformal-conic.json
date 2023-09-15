@@ -1,0 +1,32 @@
+{
+  "templateName": "alaska 102009 NA conformal conic 0.4mm:1km",
+  "parentTemplates": [],
+  "demRes": 250,
+  "pathsAndOutputFileSuffix": [
+    ["./template-workspace/alaska-na-conformal-conic/raiseLandAIfNotInHydroMaskBAndScale-", ""],
+    ["./template-workspace/alaska-na-conformal-conic/raiseLandAAndScale-", "-no-rivers"],
+    ["./template-workspace/alaska-na-conformal-conic/deleteLandAIfInHydroMaskB-", "-thru-river-cutout-base"],
+    ["./template-workspace/alaska-na-conformal-conic/keepLandAIfNotInHydroMaskB-", "-single-print"]
+  ],
+  "addResToPaths": true,
+  "addSuffixToPaths": "m-clipped/",
+  "excludeFileList": [],
+
+  "1mmToRealScale": 2500000,
+
+  "basethick": 0.7,
+  "fill_holes": [-1, 7],
+  "zscale": 5,
+  
+  "printres": -1,
+  "ignore_leq": -100,
+  "min_elev": -100,
+  "smooth_borders": false,
+  
+  "ntilesx": 1,
+  "ntilesy": 1,            
+
+  "fileformat": "STLb",
+  "tile_centered": false,
+  "clean_diags": true
+}

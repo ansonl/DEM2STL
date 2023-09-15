@@ -47,3 +47,7 @@ python ../../../TouchTerrain_standalone.py ./touch_terrain_configs_20m/oahu-sing
 
 ../../../tools/gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_20m/oahu-no-rivers/oahu_tile_1_1.STL ./state_stls_20m/oahu/oahu_tile_1_1.STL minus ./state_stls_20m/oahu/oahu_rivers.STL
 ../../../tools/gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_20m/oahu-no-rivers/oahu_tile_1_1.STL ./state_stls_20m/oahu-thru-river-cutout-base/oahu_tile_1_1.STL minus ./state_stls_20m/oahu-thru-river-cutout-base/oahu_thru_rivers.STL
+
+#lowpoly
+../../../tools/gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_20m/oahu-no-rivers/oahu_tile_low_poly_001.STL ./state_stls_20m/oahu/oahu_tile_low_poly_001.STL minus ./state_stls_20m/oahu/oahu_rivers_low_poly_001.STL
+../../../tools/gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls_20m/oahu-no-rivers/oahu_tile_low_poly_001.STL ./state_stls_20m/oahu/oahu_tile_low_poly_005.STL minus ./state_stls_20m/oahu/oahu_rivers_low_poly_005.STL

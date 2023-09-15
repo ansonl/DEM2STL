@@ -39,14 +39,25 @@ import argparse
 parser = argparse.ArgumentParser(description='touch terrain config generation')
 parser.add_argument(
     'template', help='Path to template configuration that will be used.')
+parser.add_argument('-g', action='Generate clip TIF to boundaries')
+parser.add_argument('-tt', action='Generate Touch Terrain configurations, TT batch, libigl batch')
 templateConfigurationPath = parser.parse_args().template
 
 
 # use tt template config
 # templateConfigurationPath = './touch_terrain_configuration_templates/individual-states.json'
 
-templateRequiredKeys = ['templateName', 'parentTemplates', 'demRes',
-                        'pathsAndOutputFileSuffix', 'addResToPaths', 'addSuffixToPaths', 'excludeFileList', '1mmToRealScale']
+templateRequiredKeys = [
+    'templateName',
+    'templateShortName', 
+    'parentTemplates', 
+    'demRes',
+    'clipBoundariesDir',
+    'clippedRasterPathsAndOutputFileSuffix',
+    'addResToPaths',
+    'addSuffixToPaths',
+    'excludeFileList',
+    '1mmToRealScale']
 templateConfig = {}
 templateName = ''
 templateDEMRes = -1

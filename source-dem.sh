@@ -19,9 +19,6 @@ gdalwarp -overwrite -t_srs ESRI:102004 -tr 500.0 500.0 -r average -multi -of GTi
 #downscale again from 500x500m to 1000x1000m (so we don't need to use QGIS again right now)
 gdalwarp -overwrite -t_srs ESRI:102004 -tr 1000.0 1000.0 -r average -multi -of GTiff -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" -wo "NUM_THREADS=ALL_CPUS" -wo "USE_OPENCL=FALSE" north_america_gmted2010_srtm_merge_102004_500m_average.tif north_america_gmted2010_srtm_merge_102004_1000m_average.tif
 
-#downscale again from 500x500m to 1000x1000m (so we don't need to use QGIS again right now)
-gdalwarp -overwrite -t_srs ESRI:102004 -tr 2000.0 2000.0 -r average -multi -of GTiff -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" -wo "NUM_THREADS=ALL_CPUS" -wo "USE_OPENCL=FALSE" north_america_gmted2010_srtm_merge_102004_1000m_average.tif north_america_gmted2010_srtm_merge_102004_2000m_average.tif
-
 #upscale to 250x250m
 gdalwarp -overwrite -t_srs ESRI:102004 -tr 250.0 250.0 -r bilinear -multi -of GTiff -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" -wo "NUM_THREADS=ALL_CPUS" -wo "USE_OPENCL=FALSE" north_america_gmted2010_srtm_merge_102004_500m_average.tif north_america_gmted2010_srtm_merge_102004_500m_avg_250m_bi.tif
 

@@ -55,9 +55,9 @@ def raiseLandAScaleAt4m(a, b):
   if b > 0: #set 0 if covered by mask first to keep 0 to >0 land slope lower at coast
     return 0
   if a > 40: # 40m -> 79m
-    return a + 39
+    return -50#a + 39
   elif a > 0:
-    return np.log(a+1)*79/np.log(41)
+    return -50#np.log(a+1)*79/np.log(41)
   else:
     return a
   
