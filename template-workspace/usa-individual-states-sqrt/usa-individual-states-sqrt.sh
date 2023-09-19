@@ -31,3 +31,7 @@ gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -
 gdalbuildvrt -resolution highest -overwrite keepLandAIfNotInHydroMaskB.vrt globalScaleLandA-250m.tif $env:HYDROGRAPHICMASKS/north_america_hydrographic_mask_merge_102004_250m.tif
 python $env:PATCHVRTPATH keepLandAIfNotInHydroMaskB.vrt keepLandAIfNotInHydroMaskB
 gdal_translate -ot Int16 -co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" keepLandAIfNotInHydroMaskB.vrt keepLandAIfNotInHydroMaskB-250m.tif --config GDAL_VRT_ENABLE_PYTHON YES
+
+#gdal
+
+#tt

@@ -43,7 +43,7 @@ def generateSourceDEMCommands(modelResolution):
     print(SRTM_GMTED_merge_translate_cmd)
     print()
 
-    #merge GMTED and SRTM buildvrt and warp to 102004 and downscale to 102004 
+    #merge GMTED and SRTM buildvrt and warp to 102004 and downscale to 500 
     #SRTM_GMTED_merge_resampling_method = 'average'
     #SRTM_GMTED_merge_102004_TIF_filename = 'north_america_gmted2010_srtm_merge_102004.tif'
     #SRTM_GMTED_merge_warp_102004_cmd = f'gdalwarp -overwrite -t_srs ESRI:102004 -r {SRTM_GMTED_merge_resampling_method}  -multi {GTIFF_creation_options_str} {GTIFF_write_options_str} {SRTM_GMTED_merge_VRT_filename} {SRTM_GMTED_merge_102004_TIF_filename}'
@@ -60,10 +60,10 @@ def generateSourceDEMCommands(modelResolution):
     print('# ' + SRTM_GMTED_merge_warp_102004_500m_cmd)
     print()
 
-    #250x250 upscale in bilinear
+    #250x250 upscale in cubicspline
     SRTM_GMTED_merge_102004_500m_250m_target_srs = SRTM_GMTED_merge_102004_500m_target_srs
     SRTM_GMTED_merge_102004_500m_250m_target_resolution = modelResolution
-    SRTM_GMTED_merge_102004_500m_250m_resampling_method = 'bilinear' #cubicspline
+    SRTM_GMTED_merge_102004_500m_250m_resampling_method = 'cubicspline' #cubicspline
     SRTM_GMTED_merge_102004_500m_250m_TIF_filename = f'{os.path.splitext(SRTM_GMTED_merge_102004_500m_TIF_filename)[0]}_{SRTM_GMTED_merge_102004_500m_250m_target_resolution}m_{SRTM_GMTED_merge_102004_500m_250m_resampling_method}.tif'
     SRTM_GMTED_merge_102004_500m_250m_cmd = f'gdalwarp -overwrite -tr {SRTM_GMTED_merge_102004_500m_250m_target_resolution} {SRTM_GMTED_merge_102004_500m_250m_target_resolution} -r {SRTM_GMTED_merge_102004_500m_250m_resampling_method} -multi -of GTiff {GTIFF_creation_options_str} {GTIFF_write_options_str} {SRTM_GMTED_merge_102004_500m_TIF_filename} {SRTM_GMTED_merge_102004_500m_250m_TIF_filename}'
 

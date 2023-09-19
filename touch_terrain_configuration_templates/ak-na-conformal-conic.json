@@ -1,16 +1,25 @@
 {
   "templateName": "alaska 102009 NA conformal conic 0.4mm:1km",
+  "templateShortName": "ak-na-conformal-conic",
   "parentTemplates": [],
   "demRes": 250,
-  "pathsAndOutputFileSuffix": [
-    ["./template-workspace/alaska-na-conformal-conic/raiseLandAIfNotInHydroMaskBAndScale-", ""],
-    ["./template-workspace/alaska-na-conformal-conic/raiseLandAAndScale-", "-no-rivers"],
-    ["./template-workspace/alaska-na-conformal-conic/deleteLandAIfInHydroMaskB-", "-thru-river-cutout-base"],
-    ["./template-workspace/alaska-na-conformal-conic/keepLandAIfNotInHydroMaskB-", "-single-print"]
+  "calcRasterTypes": [
+    "raiseLandAIfNotInHydroMaskBAndScale",
+    "raiseLandAAndScale",
+    "deleteLandAIfInHydroMaskB",
+    "keepLandAIfNotInHydroMaskB"
+  ],
+  "clipBoundariesDir": "",
+  "rasterTypeSuffixes": [
+    "", 
+    "-no-rivers", 
+    "-thru-river-cutout-base",
+    "-single-print"
   ],
   "addResToPaths": true,
   "addSuffixToPaths": "m-clipped/",
   "excludeFileList": [],
+  "targetSRS": "ESRI:102009",
 
   "1mmToRealScale": 2500000,
 

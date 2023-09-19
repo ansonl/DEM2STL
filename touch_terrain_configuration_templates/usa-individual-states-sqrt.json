@@ -3,17 +3,23 @@
   "templateShortName": "usa-individual-states-sqrt",
   "parentTemplates": [],
   "demRes": 250,
+  "calcRasterTypes": [
+    "raiseLandAIfNotInHydroMaskBAndScale",
+    "raiseLandAAndScale",
+    "deleteLandAIfInHydroMaskB",
+    "keepLandAIfNotInHydroMaskB"
+  ],
   "clipBoundariesDir": "./sources/USCB/tl_2022_us_state/split_individual/",
-  "clippedRasterPathsAndOutputFileSuffix": [
-    ["./template-workspace/usa-individual-states-sqrt/globalScaleLandA-", ""],
-    ["./template-workspace/usa-individual-states-sqrt/raiseLandAIfNotInHydroMaskBAndScale-", ""],
-    ["./template-workspace/usa-individual-states-sqrt/raiseLandAAndScale-", "-no-rivers"],
-    ["./template-workspace/usa-individual-states-sqrt/deleteLandAIfInHydroMaskB-", "-thru-river-cutout-base"],
-    ["./template-workspace/usa-individual-states-sqrt/keepLandAIfNotInHydroMaskB-", "-single-print"]
+  "rasterTypeSuffixes": [
+    "", 
+    "-no-rivers", 
+    "-thru-river-cutout-base",
+    "-single-print"
   ],
   "addResToPaths": true,
-  "addSuffixToPaths": "m-clipped/",
+  "addSuffixToPaths": "m-clipped",
   "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
+  "targetSRS": "ESRI:102004",
 
   "1mmToRealScale": 2500000,
 

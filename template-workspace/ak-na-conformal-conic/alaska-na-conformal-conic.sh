@@ -51,15 +51,15 @@ mkdir raiseLandAIfNotInHydroMaskBAndScale-250m-clipped
 mkdir raiseLandAAndScale-250m-clipped
 mkdir deleteLandAIfInHydroMaskB-250m-clipped
 mkdir keepLandAIfNotInHydroMaskB-250m-clipped
-gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./raiseLandAIfNotInHydroMaskBAndScale-250m.tif ./raiseLandAIfNotInHydroMaskBAndScale-250m-clipped/AK.tif -r near -multi -dstnodata -9999
-gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./raiseLandAAndScale-250m.tif ./raiseLandAAndScale-250m-clipped/AK.tif -r near -multi
-gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./deleteLandAIfInHydroMaskB-250m.tif ./deleteLandAIfInHydroMaskB-250m-clipped/AK.tif -r near -multi
-gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./keepLandAIfNotInHydroMaskB-250m.tif ./keepLandAIfNotInHydroMaskB-250m-clipped/AK.tif -r near -multi
+gdalwarp -overwrite -t_srs ESRI:102009 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./raiseLandAIfNotInHydroMaskBAndScale-250m.tif ./raiseLandAIfNotInHydroMaskBAndScale-250m-clipped/AK.tif -r near -multi -dstnodata -9999
+gdalwarp -overwrite -t_srs ESRI:102009 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./raiseLandAAndScale-250m.tif ./raiseLandAAndScale-250m-clipped/AK.tif -r near -multi
+gdalwarp -overwrite -t_srs ESRI:102009 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./deleteLandAIfInHydroMaskB-250m.tif ./deleteLandAIfInHydroMaskB-250m-clipped/AK.tif -r near -multi
+gdalwarp -overwrite -t_srs ESRI:102009 -of GTiff -tr 250 250 -cutline $env:SOURCES/USCB/tl_2022_us_state/split_individual/AK.gpkg -crop_to_cutline ./keepLandAIfNotInHydroMaskB-250m.tif ./keepLandAIfNotInHydroMaskB-250m-clipped/AK.tif -r near -multi
 
 #run generate tt config first
 python 
 #run from top dir
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/alaska/250/AK.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/alaska/250/AK-no-rivers.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/alaska/250/AK-thru-river-cutout-base.json
-python ./TouchTerrain_standalone.py ./touch_terrain_configs/alaska/250/AK-single-print.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/ak-na-conformal-conic/250/AK.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/ak-na-conformal-conic/250/AK-no-rivers.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/ak-na-conformal-conic/250/AK-thru-river-cutout-base.json
+python ./TouchTerrain_standalone.py ./touch_terrain_configs/ak-na-conformal-conic/250/AK-single-print.json
