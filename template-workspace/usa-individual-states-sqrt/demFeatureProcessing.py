@@ -74,16 +74,16 @@ def deleteLandAIfInHydroMaskB(a, b):
     return a
   
 # Input elevation DEM-A and hydro mask-B. Output single material print DEM.
-def keepLandAIfNotInHydroMaskB(a, b):
+#input land A, hydro mask B, coastline only mask C
+def keepLandAIfNotInHydroMaskB(a, b, c):
   if b > 0:
     if a > 0:
       return a
-    else: # if A is <= 0m and is covered by mask, set to NODATA so that it is not 3D generated. This allows us to start the base thickness from below sea level.
+    elif c > 0: # if A is <= 0m and is covered by combined hydro mask AND coastline mask, set to NODATA so that it is not 3D generated. This allows us to start the base thickness from below sea level.
       return -32768 
-  elif a > 0:
-    return a + 100
-  else:
-    return a
+    else: #otherwise, A is sea level or below sea level but considered inland and should be kept at it's below sea level elevation to be printed
+      return a 
+  return a
 
 def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize, radius, gt, **kwargs):
   op = kwargs['op'].decode('utf-8')
@@ -102,7 +102,7 @@ def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_y
     np.round_(vDeleteLandAIfInHydroMaskB(in_ar[0], in_ar[1]), out=out_ar)
   elif op == 'keepLandAIfNotInHydroMaskB':
     vKeepLandAIfNotInHydroMaskB = np.vectorize(keepLandAIfNotInHydroMaskB)
-    np.round_(vKeepLandAIfNotInHydroMaskB(in_ar[0], in_ar[1]), out=out_ar)
+    np.round_(vKeepLandAIfNotInHydroMaskB(in_ar[0], in_ar[1], in_ar[2]), out=out_ar)
   elif op == 'globalScaleLandA':
     vGlobalScaleLandA = np.vectorize(globalScaleLandA)
     np.round_(vGlobalScaleLandA(in_ar[0]), decimals=4, out=out_ar)
