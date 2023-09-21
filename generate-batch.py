@@ -12,29 +12,29 @@ import sys
 
 import argparse
 
-# File structure should be like below
+# File directory structure
 #
-# >geographic-data
-#   >dems/1000m-clipped
-#     -XX.tif
-#   >state_stls <-generated state stl files
-#     -example_config.json
-#     -TouchTerrain_standalone.py
-#     -touch-terrain-batch.sh <-generated batch script to run Touch Terrain
-#   >touch_terrain_configs
-#     -XX.json <-generated config JSON file for each state
+# >templates/
+#   >TEMPLATESHORTNAME/
+#     -TEMPLATESHORTNAME.json
+#     -TEMPLATESHORTNAME.sh
+#     -rasterPixelFunctions.py
+# >template-workspace/ <-working directory for each template
+#   >TEMPLATESHORTNAME/DEMRES/
+#     >CALCRASTERTYPES[:]/
+#       -XX.tif
+#     -clipRaster-batch.sh <-generated script to run gdalwarp
+#     >touch_terrain_configs/
+#       -XX.json <-generated config JSON file for each state
+#     -meshGeneration-batch.sh <-generated script to run Touch Terrain
+#     -meshBoolean-batch.sh <-generated script to run libigl# >state-stls/
+#   >TEMPLATESHORTNAME/DEMRES/
+#     >XX-RASTERTYPESUFFIXES[:]/
+#       -XX_tile_1_1.tif
 
-
-# Run this file in geographic_data directory
-
-# lower 48 us states
-# resolution = 250
-
-# oahu 5x
-# resolution = 20
-
-# usa48 low poly
-# tifsPath = f'./globalLogScaleLandA/'
+# Run this python script in top level dir directory
+# e.g. python ./generate-batch.py ./templates/TEMPLATESHORTNAME/TEMPLATESHORTNAME.json -gc -gt
+# python ./generate-batch.py ./templates/
 
 parser = argparse.ArgumentParser(description='touch terrain config generation')
 parser.add_argument(
@@ -43,14 +43,13 @@ parser.add_argument('-gc', action='store_true')
 parser.add_argument('-gt', action='store_true')
 args = parser.parse_args()
 
-templateWorkspace = './template-workspace/'
-calcRasterBatchFilename = 'calcRaster-batch.sh'
+templateWorkspaceAll = './template-workspace/'
+#calcRasterBatchFilename = 'calcRaster-batch.sh'
 clipRasterBatchFilename = 'clipRaster-batch.sh'
 meshGenerationBatchFilename = 'meshGeneration-batch.sh'
 meshBooleanBatchFilename = 'meshBoolean-batch.sh'
 
 meshBooleanBin = './tools/gp-cli/precompiled/pc/bin/meshboolean.exe'
-
 
 templateConfigurationPath = args.template
 
@@ -63,10 +62,9 @@ templateRequiredKeys = [
     'templateShortName',
     'parentTemplates',
     'demRes',
+    'calcRasterTypes',
     'clipBoundariesDir',
     'rasterTypeSuffixes',
-    'addResToPaths',
-    'addSuffixToPaths',
     'excludeFileList',
     'targetSRS',
     '1mmToRealScale'
@@ -105,22 +103,22 @@ if templateConfigurationPath:
         print(f'\nTemplate - {templateConfigurationPath} is not dict\n')
         sys.exit()
 
+#Create full output paths to specific template workspace
+templateWorkspacePath = templateWorkspaceAll + templateConfig['templateShortName'] + '/' + str(templateDEMRes) + '/'
+clipRasterBatchPath = templateWorkspacePath + clipRasterBatchFilename
+meshGenerationBatchPath = templateWorkspacePath + meshGenerationBatchFilename
+meshBooleanBatchPath = templateWorkspacePath + meshBooleanBatchFilename
 
 def clippedRastersPath(i):
-    p = templateWorkspace + \
-        templateConfig['templateShortName'] + '/' + \
+    p = templateWorkspacePath + '/' + \
         templateConfig['calcRasterTypes'][i]
-    if templateConfig['addResToPaths']:
-        p += '-' + str(templateDEMRes)
-    if len(templateConfig['addSuffixToPaths']):
-        p += templateConfig['addSuffixToPaths']
     p += '/'
     return p
 
 
 print(f'Getting all file name listing from directory {clippedRastersPath(0)}')
 
-configTemplatePath = f'./touch_terrain_configs/{templateConfig["templateShortName"]}/{templateDEMRes}/'
+configTemplatePath = f'{templateWorkspacePath}/touch_terrain_configs/'
 
 def delete_files_in_directory(directory_path):
     try:
@@ -139,7 +137,7 @@ if args.gc:
         os.makedirs(os.path.dirname(outputPath), exist_ok=True) 
         print(f'Created directory {outputPath}')
 
-    with open(f'{clipRasterBatchFilename}', 'w+') as cmdfp:
+    with open(clipRasterBatchPath, 'w+') as cmdfp:
         cmdCount = 0
         for entry in os.scandir(templateConfig['clipBoundariesDir']):
             if entry.name.endswith('.gpkg') and entry.is_file():
@@ -161,14 +159,14 @@ if args.gc:
 -tr {str(templateDEMRes)} {str(templateDEMRes)} \
 -cutline {forwardSlashPath} \
 -crop_to_cutline \
-{templateWorkspace}/{templateConfig["templateShortName"]}/{templateConfig["calcRasterTypes"][i]}-{str(templateDEMRes)}m.tif \
+{templateWorkspacePath}/{templateConfig["calcRasterTypes"][i]}.tif \
 {clippedRastersPath(i)}{entryName}.tif \
 -r near \
 -multi \
 -dstnodata -9999'
                     cmdfp.write(clipRasterCmd + '\n')
                     cmdCount += 1
-        print(f'{cmdCount} clip command generated in {clipRasterBatchFilename}')
+        print(f'{cmdCount} clip command generated in {clipRasterBatchPath}')
 
 if args.gt:
     delete_files_in_directory(configTemplatePath)
@@ -183,7 +181,7 @@ if args.gt:
     os.makedirs(os.path.dirname('./tmp/' + outputSTLTemplateDir), exist_ok=True)
     print(f'Created directory {"./tmp/" + outputSTLTemplateDir}')
 
-    with open(f'{meshGenerationBatchFilename}', 'w+') as cmdGenfp, open(f'{meshBooleanBatchFilename}', 'w+') as cmdBoolfp:
+    with open(meshGenerationBatchPath, 'w+') as cmdGenfp, open(meshBooleanBatchPath, 'w+') as cmdBoolfp:
         configFileCount = 0
 
         # use first path for master all file list
@@ -335,15 +333,15 @@ if args.gt:
                                     f'time {meshBooleanBin} {generateZipFilenameForPathIndex(1)}/{entryName}_tile_1_1.STL {generateZipFilenameForPathIndex(2)}/{entryName}_tile_1_1.STL minus {generateZipFilenameForPathIndex(2)}/{entryName}_thru_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
 
         print(
-            f'Wrote {str(configFileCount)} config files to {configTemplatePath}')
+            f'Wrote {str(configFileCount)} config files to {configTemplatePath}. Batch mesh generation script in {meshGenerationBatchPath}')
 
 
-    print(f'{meshGenerationBatchFilename} should be run from {os.getcwd()}')
+    print(f'{meshGenerationBatchPath} should be run from {os.getcwd()}')
 
     print(
         f'Each state will be unzipped into its own folder in {outputSTLTopDir} relative to where batch file is run from.')
-    print('Run libigl-boolean-subtract.sh after generating 3d state stls to perform boolean subtract to create rivers only 3d model')
-    print('Ex: \nchmod 700 touch-terrain-batch.sh\n./touch-terrain-batch.sh\nnice -n 5 ./libigl-boolean-subtract.sh')
+    print(f'Run {meshBooleanBatchPath} after generating 3d state stls to perform boolean subtract to create rivers only 3d model')
+    print(f'Ex: \nchmod 700 touch-terrain-batch.sh\n./touch-terrain-batch.sh\nnice -n 5 ./{meshBooleanBatchPath}')
 
 
     print('\nClean up nonmanifold meshes afterward with blender 3d print toolbox.')

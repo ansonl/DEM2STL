@@ -1,6 +1,6 @@
 {
-  "templateName": "USAofPlastic individual states interlocking 0.4mm:1km sqrt scale",
-  "templateShortName": "usa-individual-states-sqrt",
+  "templateName": "alaska 102009 NA conformal conic 0.4mm:1km",
+  "templateShortName": "ak-na-conformal-conic-linear",
   "parentTemplates": [],
   "demRes": 250,
   "calcRasterTypes": [
@@ -9,17 +9,15 @@
     "deleteLandAIfInHydroMaskB",
     "keepLandAIfNotInHydroMaskB"
   ],
-  "clipBoundariesDir": "./sources/USCB/tl_2022_us_state/split_individual/",
+  "clipBoundariesDir": "",
   "rasterTypeSuffixes": [
     "", 
     "-no-rivers", 
     "-thru-river-cutout-base",
     "-single-print"
   ],
-  "addResToPaths": true,
-  "addSuffixToPaths": "m-clipped",
-  "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
-  "targetSRS": "ESRI:102004",
+  "excludeFileList": [],
+  "targetSRS": "ESRI:102009",
 
   "1mmToRealScale": 2500000,
 

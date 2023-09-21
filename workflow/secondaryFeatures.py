@@ -26,7 +26,7 @@ def patchVRTPixelFunction(VRTFilename, pixelFunctionArgumentOp):
     vrtband1.set("subClass","VRTDerivedRasterBand")
     vrtband1.set("dataType","Float32")
     pixelFunctionType = etree.SubElement(vrtband1, 'PixelFunctionType')
-    pixelFunctionType.text = "demFeatureProcessing.runOperation"
+    pixelFunctionType.text = "rasterPixelFunctions.runOperation"
     pixelFunctionLanguage = etree.SubElement(vrtband1, 'PixelFunctionLanguage')
     pixelFunctionLanguage.text = "Python"
     pixelFunctionArguments = etree.SubElement(vrtband1, 'PixelFunctionArguments')

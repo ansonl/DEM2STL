@@ -1,0 +1,39 @@
+{
+  "templateName": "USAofPlastic lower 48 individual states interlocking 0.4mm:1km linear scale",
+  "templateShortName": "usa-individual-states-linear",
+  "parentTemplates": [],
+  "demRes": 250,
+  "calcRasterTypes": [
+    "raiseLandAIfNotInHydroMaskBAndScale",
+    "raiseLandAAndScale",
+    "deleteLandAIfInHydroMaskB",
+    "keepLandAIfNotInHydroMaskB"
+  ],
+  "clipBoundariesDir": "./sources/USCB/tl_2022_us_state/split_individual/",
+  "rasterTypeSuffixes": [
+    "", 
+    "-no-rivers", 
+    "-thru-river-cutout-base",
+    "-single-print"
+  ],
+  "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
+  "targetSRS": "ESRI:102004",
+
+  "1mmToRealScale": 2500000,
+
+  "basethick": 0.7,
+  "fill_holes": [-1, 7],
+  "zscale": 5,
+  
+  "printres": -1,
+  "ignore_leq": -100,
+  "min_elev": -100,
+  "smooth_borders": false,
+  
+  "ntilesx": 1,
+  "ntilesy": 1,            
+
+  "fileformat": "STLb",
+  "tile_centered": false,
+  "clean_diags": true
+}
