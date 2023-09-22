@@ -4,15 +4,16 @@ import re
 import time
 
 regionsTopDir = 'K:/USAofPlasticv1/release_250m_v1/'
+#regionsTopDir = 'C:/Users/ansonl/development/dem-to-stl-workflow/state_stls/usa-individual-states-linear/250/'
 
 excludeList = []
 
 def importSTL(abbr, printType, style):
-  bpy.ops.import_mesh.stl(filepath=f'K:/USAofPlasticv1/release_250m_v1/{abbr}/{abbr}-{printType}{"-land-elevation" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
+  bpy.ops.import_mesh.stl(filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-land-elevation" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
 
   # import second model if dual PrintType
   if printType == "dual":
-    bpy.ops.import_mesh.stl(filepath=f'K:/USAofPlasticv1/release_250m_v1/{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
+    bpy.ops.import_mesh.stl(filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
 
 def export3MF(abbr, printType, style, partNum):
   bpy.ops.object.select_all(action='DESELECT')
@@ -24,7 +25,7 @@ def export3MF(abbr, printType, style, partNum):
 
   # export objects
   if len(bpy.context.selected_objects) > 0:
-    bpy.ops.export_mesh.threemf(filepath=f'K:/USAofPlasticv1/release_250m_v1/{abbr}/{abbr}-{printType}{"-" if len(style) > 0 else ""}{style}{f"-p{partNum}" if partNum > 0 else ""}.3mf', use_selection=True)
+    bpy.ops.export_mesh.threemf(filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-" if len(style) > 0 else ""}{style}{f"-p{partNum}" if partNum > 0 else ""}.3mf', use_selection=True)
 
 class ModalTimerOperator(bpy.types.Operator):
   """Operator which runs its self from a timer"""
@@ -59,8 +60,8 @@ class ModalTimerOperator(bpy.types.Operator):
     if self._variant == 0:
         self._regionProcessStartTime = time.monotonic()
         # Import and export the different generated models
-        importSTL(rAbbr, 'single', '')
-        export3MF(rAbbr, 'single', '', 0)
+        importSTL(rAbbr, 'single-linear-v2', '')
+        export3MF(rAbbr, 'single-linear-v2', '', 0)
         bpy.ops.object.delete() # delete the object afterwards to reduce unused memory usage
     elif self._variant == 1:
         importSTL(rAbbr, 'dual', '')

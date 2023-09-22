@@ -163,7 +163,8 @@ if args.gc:
 {clippedRastersPath(i)}{entryName}.tif \
 -r near \
 -multi \
--dstnodata -9999'
+-dstnodata -9999 \
+-co "TILED=YES" -co "COMPRESS=ZSTD" -co "PREDICTOR=2" -co "BIGTIFF=IF_SAFER" -co "NUM_THREADS=ALL_CPUS" -wo "NUM_THREADS=ALL_CPUS"'
                     cmdfp.write(clipRasterCmd + '\n')
                     cmdCount += 1
         print(f'{cmdCount} clip command generated in {clipRasterBatchPath}')

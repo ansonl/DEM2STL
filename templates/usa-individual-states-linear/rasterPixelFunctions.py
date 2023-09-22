@@ -69,6 +69,8 @@ def keepLandAIfNotInHydroMaskB(a, b, c):
       return -32768 
     else: #otherwise, A is sea level or below sea level but considered inland and should be kept at it's below sea level elevation to be printed
       return a 
+  elif a > 0:
+      return a + 100
   return a
 
 def runOperation(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize, raster_ysize, radius, gt, **kwargs):

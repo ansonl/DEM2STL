@@ -4,10 +4,10 @@
   "parentTemplates": [],
   "demRes": 250,
   "calcRasterTypes": [
-    "raiseLandAIfNotInHydroMaskBAndScale",
-    "raiseLandAAndScale",
-    "deleteLandAIfInHydroMaskB",
-    "keepLandAIfNotInHydroMaskB"
+    "raiseLandAIfNotInHydroMaskBAndScale_tap",
+    "raiseLandAAndScale_tap",
+    "deleteLandAIfInHydroMaskB_tap",
+    "keepLandAIfNotInHydroMaskB_tap"
   ],
   "clipBoundariesDir": "./sources/USCB/tl_2022_us_state/split_individual/",
   "rasterTypeSuffixes": [

@@ -1,17 +1,13 @@
 import bpy
 import re
 import os
-import sys
+import time
 
 # cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
-# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\headless_blender_3mf_export.py DIR_WITH_ABBR_FOLDERS
+# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\headless_blender_3mf_export_single_variant.py
 
 regionsTopDir = 'K:/USAofPlasticv1/release_250m_v1/'
 regionsTopDir = 'C:/Users/ansonl/development/dem-to-stl-workflow/state_stls/usa-individual-states-linear/250/'
-
-argv = sys.argv
-argv = argv[argv.index("--") + 1:]  # get all args after "--"
-regionsTopDir = argv[0]
 
 excludeList = []
 
@@ -41,9 +37,11 @@ def export3MF(abbr, printType, style, partNum):
 
 
 def processEntry(rAbbr):
-    print('Starting single')
+    
+    print(f'Starting {rAbbr} single')
 
     importSTL(rAbbr, 'single-linear-scale-v2', '')
+    variantProcessStartTime = time.monotonic()
     export3MF(rAbbr, 'single-linear-scale-v2', '', 0)
     bpy.ops.object.delete()  # delete the object afterwards to reduce unused memory usage
 
@@ -60,6 +58,8 @@ def processEntry(rAbbr):
     export3MF(rAbbr, 'dual', 'transparent', 0)
     bpy.ops.object.delete()
     """
+
+    print(f'{rAbbr} export took {time.monotonic()-variantProcessStartTime}s')
     print('Finished')
 
 
@@ -74,7 +74,7 @@ def get_dir_size(path='.', exclude3MF=True):
             if entry.is_file():
                 if entry.name.endswith('.stl'):
                     total += entry.stat().st_size
-                if exclude3MF and entry.name.endswith('transparent.3mf'):
+                if exclude3MF and entry.name.endswith('single-linear-scale-v2.3mf'):
                     excludeList.append(path[path.rfind('/')+1:])
             elif entry.is_dir():
                 total += get_dir_size(entry.path)
@@ -84,8 +84,6 @@ def get_dir_size(path='.', exclude3MF=True):
 regionList.sort(key=lambda f: get_dir_size(regionsTopDir+f), reverse=False)
 
 for rAbbr in regionList:
-    """
     if rAbbr in excludeList:
         continue
-    """
     processEntry(rAbbr)
