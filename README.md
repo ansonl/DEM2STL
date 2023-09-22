@@ -1,12 +1,6 @@
 # DEM to STL workflow
 Convert DEMs with complex boundaries to STL models in preparation for 3D printing.
 
-### License
-
-- All files are released under [GNU Affero General Public License](https://www.gnu.org/licenses/gpl-faq.html). Copyright Anson Liu.
-
-- Licensing for this code is available for any usage that does not comply with AGPL. This includes nonattributed commercial distribution of models created using this code.
-
 - File `TouchTerrain_standalone.py` is provided for convenience. It is from the [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) project.  
 
 ```
@@ -186,3 +180,14 @@ gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline .
 gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline ./cb_2018_us_state_20m_individual/MD.gpkg -crop_to_cutline ./dems/7-5-arc-second-1000m-width-hydro-raised-above-sea-level-102004.tif ./dems/7-5-arc-second-clipped-500m-hydro-raised/MD-hydro-raised.tif -r cubicspline -multi -dstnodata -9999
 
 ./gp-cli/precompiled/pc/bin/meshboolean.exe ./state_stls/MD-no-rivers/MD-hydro-raised_tile_1_1.STL ./state_stls/MD/MD_tile_1_1.STL minus ./state_stls/MD/MD_rivers.STL
+
+
+### License
+
+- All files are released under [GNU Affero General Public License](https://www.gnu.org/licenses/gpl-faq.html). Copyright Anson Liu.
+
+- Commercial support is available as a consulting service. 
+
+- Commercial licensing is required for any usage that does not comply with AGPL. This includes nonattributed commercial distribution of models created using this code.
+
+- Contact support@ansonliu.com for commercial support and licensing. 
