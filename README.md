@@ -1,6 +1,14 @@
 # DEM to STL workflow
 Convert DEMs with complex boundaries to STL models in preparation for 3D printing.
 
+### License
+
+- All files are released under [GNU Affero General Public License](https://www.gnu.org/licenses/gpl-faq.html). Copyright Anson Liu.
+
+- Licensing for this code is available for any usage that does not comply with AGPL. This includes nonattributed commercial distribution of models created using this code.
+
+- File `TouchTerrain_standalone.py` is provided for convenience. It is from the [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) project.  
+
 ```
 Data working directory file structure details
 
@@ -108,12 +116,6 @@ for fileName in os.listdir("."):
 
 ### Installing USGS Bulk Download tool.
 - Bulk Download requires BOTH Java Runtime Environment (JRE) and Java Development Kit (JDK) to be installed. 
-
-### License
-
-- All files are released under [GNU Affero General Public License](https://www.gnu.org/licenses/gpl-faq.html). Copyright Anson Liu.
-
-- File `TouchTerrain_standalone.py` is provided for convenience. It is from the [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) project.  
 
 ### Creating offset mask layer Hydro1k and HydroLAKES
 
