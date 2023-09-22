@@ -1,8 +1,6 @@
 # DEM to STL workflow
 Convert DEMs with complex boundaries to STL models in preparation for 3D printing.
 
-- File `TouchTerrain_standalone.py` is provided for convenience. It is from the [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) project.  
-
 ```
 Data working directory file structure details
 
@@ -185,6 +183,7 @@ gdalwarp -overwrite -t_srs ESRI:102004 -of GTiff -tr 500.0 500.0 -tap -cutline .
 ### License
 
 - All files are released under [GNU Affero General Public License](https://www.gnu.org/licenses/gpl-faq.html). Copyright Anson Liu.
+  - File `TouchTerrain_standalone.py` is provided for convenience. It is from the [TouchTerrain](https://github.com/ChHarding/TouchTerrain_for_CAGEO) project.  
 
 - Commercial support is available as a consulting service. 
 
