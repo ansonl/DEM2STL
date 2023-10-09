@@ -25,7 +25,7 @@
   "fill_holes": [-1, 7],
   "zscale": 5,
   
-  "printres": -1,
+  "printres": 0.2,
   "ignore_leq": -100,
   "min_elev": -100,
   "smooth_borders": false,

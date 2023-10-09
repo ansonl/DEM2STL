@@ -1,15 +1,15 @@
 {
-  "templateName": "alaska 102009 NA conformal conic 0.4mm:1km sqrt",
-  "templateShortName": "ak-na-conformal-conic-sqrt",
+  "templateName": "cn 102027 ASIA conformal conic 0.4mm:1km",
+  "templateShortName": "cn-asia-conformal-conic-linear",
   "parentTemplates": [],
-  "demRes": 250,
+  "demRes": 1000,
   "calcRasterTypes": [
     "raiseLandAIfNotInHydroMaskBAndScale_tap",
     "raiseLandAAndScale_tap",
     "deleteLandAIfInHydroMaskB_tap",
     "keepLandAIfNotInHydroMaskB_tap"
   ],
-  "clipBoundariesDir": "",
+  "clipBoundariesDir": "../maps/china/boundary/",
   "rasterTypeSuffixes": [
     "", 
     "-no-rivers", 
@@ -17,17 +17,17 @@
     "-single-print"
   ],
   "excludeFileList": [],
-  "targetSRS": "ESRI:102009",
+  "targetSRS": "ESRI:102027",
 
   "1mmToRealScale": 2500000,
 
-  "basethick": 0.7,
+  "basethick": 3.3,
   "fill_holes": [-1, 7],
   "zscale": 5,
   
-  "printres": 0.2,
-  "ignore_leq": -100,
-  "min_elev": -100,
+  "printres": -1,
+  "ignore_leq": -150,
+  "min_elev": -150,
   "smooth_borders": false,
   
   "ntilesx": 1,

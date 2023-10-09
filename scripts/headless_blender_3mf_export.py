@@ -2,31 +2,47 @@ import bpy
 import re
 import os
 import sys
+import time
 
 # cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
-# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\headless_blender_3mf_export.py DIR_WITH_ABBR_FOLDERS
+# ./blender.exe -b --python --- C:\Users\ansonl\development\dem-to-stl-workflow\scripts\headless_blender_3mf_export.py DIR_WITH_ABBR_FOLDERS
 
-regionsTopDir = 'K:/USAofPlasticv1/release_250m_v1/'
-regionsTopDir = 'C:/Users/ansonl/development/dem-to-stl-workflow/state_stls/usa-individual-states-linear/250/'
+# server
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./headless_blender_3mf_export.py -- ~/data/state_stls/usa-individual-states-linear/250/
 
 argv = sys.argv
 argv = argv[argv.index("--") + 1:]  # get all args after "--"
-regionsTopDir = argv[0]
+
+regionsTopDir, scaleTitle, versionTitle = '', '', ''
+
+if len(argv) < 2:
+    print('not enough args')
+if len(argv) > 0:
+    regionsTopDir = argv[0]
+if len(argv) > 1:
+    scaleTitle = argv[1]
+if len(argv) > 2:
+    versionTitle = argv[2]
 
 excludeList = []
 
 
 def importSTL(abbr, printType, style):
+    importPath = f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-land-elevation" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.stl'
+    print(f'Importing {importPath}')
+
     bpy.ops.import_mesh.stl(
-        filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-land-elevation" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
+        filepath=importPath)
 
     # import second model if dual PrintType
     if printType == "dual":
+        secondImportPath = f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.stl'
+        print(f'Importing {secondImportPath}')
         bpy.ops.import_mesh.stl(
-            filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
+            filepath=secondImportPath)
 
 
-def export3MF(abbr, printType, style, partNum):
+def export3MF(abbr, scale, printType, style, version, partNum):
     bpy.ops.object.select_all(action='DESELECT')
 
     for o in bpy.data.objects:
@@ -34,38 +50,43 @@ def export3MF(abbr, printType, style, partNum):
         if re.search(f'{abbr}-{printType}{"-(?:land-elevation|hydrography)" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}{f"-p{partNum}" if partNum > 0 else ""}', o.name) is not None:
             o.select_set(True)
 
+    exportPath = f'{regionsTopDir}{abbr}/{abbr}{"-" if len(scale) > 0 else ""}{scale}-{printType}{"-" if len(style) > 0 else ""}{style}{"-" if len(version) > 0 else ""}{version}{f"-p{partNum}" if partNum > 0 else ""}.3mf'
+    print(f'Exporting {exportPath}')
+
     # export objects
     if len(bpy.context.selected_objects) > 0:
+        startExportTime = time.monotonic()
         bpy.ops.export_mesh.threemf(
-            filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-" if len(style) > 0 else ""}{style}{f"-p{partNum}" if partNum > 0 else ""}.3mf', use_selection=True)
+            filepath=exportPath, use_selection=True)
+        print(f'Exported in {time.monotonic()-startExportTime}s')
 
 
-def processEntry(rAbbr):
-    print('Starting single')
+def processEntry(rAbbr, scale, version):
+    print(f'Starting {rAbbr} single')
 
-    importSTL(rAbbr, 'single-linear-scale-v2', '')
-    export3MF(rAbbr, 'single-linear-scale-v2', '', 0)
+    importSTL(rAbbr, 'single', '')
+    export3MF(rAbbr, scale, 'single', '', version, 0)
     bpy.ops.object.delete()  # delete the object afterwards to reduce unused memory usage
 
-    """
-    print('Starting dual')
+    print(f'Starting {rAbbr} dual')
 
     importSTL(rAbbr, 'dual', '')
-    export3MF(rAbbr, 'dual', '', 0)
+    export3MF(rAbbr, scale, 'dual', '', version, 0)
     bpy.ops.object.delete()
 
-    print('Starting dual transparent')
+    print(f'Starting {rAbbr} dual transparent')
 
     importSTL(rAbbr, 'dual', 'transparent')
-    export3MF(rAbbr, 'dual', 'transparent', 0)
+    export3MF(rAbbr, scale, 'dual', 'transparent', version, 0)
     bpy.ops.object.delete()
-    """
-    print('Finished')
+
+    print(f'Finished {rAbbr}')
 
 
 os.chdir(regionsTopDir)
 regionList = os.listdir(regionsTopDir)
 excludeList = []
+
 
 def get_dir_size(path='.', exclude3MF=True):
     total = 0
@@ -88,4 +109,4 @@ for rAbbr in regionList:
     if rAbbr in excludeList:
         continue
     """
-    processEntry(rAbbr)
+    processEntry(rAbbr, scaleTitle, versionTitle)
