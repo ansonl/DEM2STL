@@ -8,7 +8,15 @@ import time
 # ./blender.exe -b --python --- C:\Users\ansonl\development\dem-to-stl-workflow\scripts\headless_blender_3mf_export.py DIR_WITH_ABBR_FOLDERS
 
 # server
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./headless_blender_3mf_export.py -- ~/data/state_stls/usa-individual-states-linear/250/
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/usa-individual-states-linear/250/ linear v2
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/usa-individual-states-sqrt/250/ sqrt v1
+
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-linear/250/ linear v1
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-sqrt/250/ sqrt v1
+
+
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_states.py -- ~/data/state_stls/cn-asia-conformal-conic-linear/1000/ linear v1
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_states.py -- ~/data/state_stls/cn-asia-conformal-conic-sqrt/1000/ sqrt v1
 
 argv = sys.argv
 argv = argv[argv.index("--") + 1:]  # get all args after "--"
@@ -32,14 +40,14 @@ def importSTL(abbr, printType, style):
     print(f'Importing {importPath}')
 
     bpy.ops.import_mesh.stl(
-        filepath=importPath)
+        filepath=importPath, global_scale=0.001)
 
     # import second model if dual PrintType
     if printType == "dual":
         secondImportPath = f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.stl'
         print(f'Importing {secondImportPath}')
         bpy.ops.import_mesh.stl(
-            filepath=secondImportPath)
+            filepath=secondImportPath, global_scale=0.001)
 
 
 def export3MF(abbr, scale, printType, style, version, partNum):

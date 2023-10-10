@@ -1,0 +1,39 @@
+{
+  "templateName": "cn 102027 ASIA conformal conic 0.4mm:1km",
+  "templateShortName": "cn-asia-conformal-conic-sqrt",
+  "parentTemplates": [],
+  "demRes": 1000,
+  "calcRasterTypes": [
+    "raiseLandAIfNotInHydroMaskBAndScale_tap",
+    "raiseLandAAndScale_tap",
+    "deleteLandAIfInHydroMaskB_tap",
+    "keepLandAIfNotInHydroMaskB_tap"
+  ],
+  "clipBoundariesDir": "../maps/china/boundary/",
+  "rasterTypeSuffixes": [
+    "", 
+    "-no-rivers", 
+    "-thru-river-cutout-base",
+    "-single-print"
+  ],
+  "excludeFileList": [],
+  "targetSRS": "ESRI:102027",
+
+  "1mmToRealScale": 2500000,
+
+  "basethick": 3.3,
+  "fill_holes": [-1, 7],
+  "zscale": 5,
+  
+  "printres": -1,
+  "ignore_leq": -150,
+  "min_elev": -150,
+  "smooth_borders": false,
+  
+  "ntilesx": 1,
+  "ntilesy": 1,            
+
+  "fileformat": "STLb",
+  "tile_centered": false,
+  "clean_diags": true
+}
