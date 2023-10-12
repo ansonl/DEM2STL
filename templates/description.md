@@ -1,51 +1,42 @@
-# REGION_NAME (REGION_ABBR) Topographic Relief Map with Water Features
+# REGION_NAME (REGION_ABBR) Topographic Relief Map with Rivers and Coastal Waters
 
-REGION_NAME mountains, coastlines, streams, and lakes in a dual color topographic and hydrographic map! All topographic states in this [USA of Plastic](https://www.printables.com/@ansonl_365531/collections/714909) project interlock without gaps.
+REGION_NAME mountains, coastlines, streams, and lakes in a dual color topographic and hydrographic map! All topographic states in the [USA of Plastic](https://www.printables.com/@ansonl_365531/collections/714909) project interlock with each other like a puzzle.
 
-Show off streams, lakes, and coastlines with filament that is glow-in-the-dark, translucent, or simply a different color from the base.
+Show off streams, lakes, and coastlines with filament that is glow-in-the-dark or translucent — or simply a different color from the base.
 
-# Which model file should you print? See 🌟 or ⭐ below:
+## Recommended Model Files for you to print? See 🌟 or ⭐ below
 
-The individual 3D printable 3MF files are cut for your convenience and fit together once printed. The files are in 3MF format instead of STL for smaller file size and in order to store separate land and water objects that are aligned for accurate dual color prints. 3MF is supported in Cura, PrusaSlicer, and other 3D slicers.
-
-## Recommended Files
-
-- REGION_ABBR-sqrt-dual.3mf 🌟 (Dual extrusion only)
+- REGION_ABBR-sqrt-dual.3mf 🌟 (Dual extrusion only ⚠️)
 - REGION_ABBR-sqrt-single.3mf ⭐ (Single/Dual extrusion OK)
+
+*Recommended to download only the model file name you need to avoid long download time and extra storage usage.*
 
 ## Model Filename Decoder
 
-`STATE-SCALING-VARIANT-STYLE-VERSION-PIECE##.3mf`
+`STATE-ESCALING-VARIANT-STYLE-VERSION-PIECE##.3mf`
 
 | Definition | Meaning |
 | ---- | ---- |
 | `STATE` | State Abbreviation |
-| `SCALING` | Linear or Square Root (sqrt) elevation scaling. |
+| `ESCALING` | Linear or Square Root (sqrt) elevation scaling. |
 | `VARIANT` | Dual or Single color model |
-| `STYLE` *(optional)* | `STYLE` is only present when the model is a special style. Default style is low lying land normally covered by water is printed underneath the water. This submerged land may be visible when water is printed with a transparent filament. This option minimizes usage of filament for printing water. `transparent` style means water features go all the way through the land for max light transmission with glow and transparent filaments. |
+| `STYLE` *(optional)* | `STYLE` is only present when the model is a special style or the model is exclusive to a special subregion. Default style is water model printed over submerged low lying lands. This submerged land may be visible when water layers are printed with a transparent filament. Default style minimizes usage of secondary (water) filament color. `transparent` style is water model features go all the way through the land for max light transmission when used with glow and transparent filaments.|
 | `VERSION` | Version number |
 | `PIECE##` *(optional)* | Interlocking piece # for 180 mm x 180 mm bed |
 
-| File | Description |
-| ------------- | ------------- |
-| REGION_ABBR-dual.3mf ⭐                 | Dual color model with land and water features. Low lying land normally covered by water is printed underneath the water. Submerged land may be visible when water object uses transparent filament. This option minimizes usage of filament for the water object. |
-| REGION_ABBR-dual-thru.3mf 🌟     | Dual color model with land and water features. Water features go all the way through the land for max light transmission with glow and transparent filaments. |
-| *REGION_ABBR-dual-p**N**.3mf (optional) | Multi-part dual color models. Interlocking piece number **N** for multi-part print on printers with at least *180 mm x 180 mm* build area. |
-| *REGION_ABBR-dual-thru-p**N**.3mf (optional) | Multi-part dual color models. Interlocking piece number **N** for multi-part print on printers with at least *180 mm x 180 mm* build area. |
-| REGION_ABBR-single.3mf                  | Single color model with land features and waterways as lines made for single extrusion printers. |
-| *REGION_ABBR-single-p**N**.3mf                  | Multi-part single color model Interlocking piece number **N** for multi-part print on printers with at least *180 mm x 180 mm* build area. |
+All individual state 3D printable 3MF files are cut for your convenience and fit together once printed. The files are in 3MF format instead of STL for smaller file size and in order to store separate land and water objects that are aligned for accurate dual color prints. 3MF is supported in Cura, PrusaSlicer, and other 3D slicers. If you need the STL, you may convert the 3MF by importing+exporting in a 3D modeling program.
 
-### *If multi-part files are not present, I have not created interlocking models for this state yet. Follow me and comment with your request to get future additions and updates.
+*If multi-part files are not present, I have not created interlocking models for this state yet. Follow me and comment with your request to get future additions and updates.*
 
 # Recommended print settings
 
-Print the models as is with a dual extrusion printer. If you have a single extrusion printer, you can either print the `*-single.3mf` model or run two single extrusion prints utilizing the Z-hop method on the hydrography model.
+Print the models as is with a dual extrusion printer. If you have a single extrusion printer, you can either print the `*-single.3mf` model or run two single extrusion prints utilizing the Z-hop method on the water model.
 
 You can scale the model up or down as needed to fit your printer size, the final map's scale will just be scaled accordingly. *E.g. 200% scale on a previous scale of **0.4mm:1000m** results in **0.4mm:500m***
 
-Download the optimized Cura print settings profile for topo maps [here](https://www.printables.com/model/529276-contiguous-usa-lower-48-topographic-map-with-hydro). 
+Download the optimized Cura print settings profile for topo maps [HERE](https://www.printables.com/model/529276-contiguous-usa-lower-48-topographic-map-with-hydro). 
 
-***Cura** may automatically scale the model by 10000% so you need to Select All Models `(Ctrl+A)` and manually set the Scale to `100%` and X/Y/Z position to `0,0,0` for the models to show correctly. Merge `(Ctrl+Alt+G)` objects in Cura if you rotate them.*
+*Merging `(Ctrl+Alt+G)` objects before rotating and scaling (if needed) in Cura will help keep the dual color print objects aligned.*
 
 Printing this will test your 3D printer's XY precision, Z-axis stability, retraction, cooling, and oozing!
 
