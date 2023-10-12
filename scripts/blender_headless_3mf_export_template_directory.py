@@ -15,8 +15,8 @@ import time
 # ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-sqrt/250/ sqrt v1
 
 
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_states.py -- ~/data/state_stls/cn-asia-conformal-conic-linear/1000/ linear v1
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_states.py -- ~/data/state_stls/cn-asia-conformal-conic-sqrt/1000/ sqrt v1
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/cn-asia-conformal-conic-linear/1000/ linear v1
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/cn-asia-conformal-conic-sqrt/1000/ sqrt v1
 
 argv = sys.argv
 argv = argv[argv.index("--") + 1:]  # get all args after "--"

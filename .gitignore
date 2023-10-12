@@ -13,7 +13,8 @@
 __pycache__/
 
 logfile.txt
-touch_terrain_configs*/*
+touch_terrain_configs*/
+template-workspace/*
 
 sources/*
 tools/*
