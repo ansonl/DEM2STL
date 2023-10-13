@@ -34,20 +34,22 @@ if len(argv) > 2:
 
 excludeList = []
 
+#set scene from m to mm
+bpy.data.scenes["Scene"].unit_settings.scale_length = 0.001
 
 def importSTL(abbr, printType, style):
     importPath = f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-land-elevation" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.stl'
     print(f'Importing {importPath}')
 
     bpy.ops.import_mesh.stl(
-        filepath=importPath, global_scale=0.001)
+        filepath=importPath)
 
     # import second model if dual PrintType
     if printType == "dual":
         secondImportPath = f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.stl'
         print(f'Importing {secondImportPath}')
         bpy.ops.import_mesh.stl(
-            filepath=secondImportPath, global_scale=0.001)
+            filepath=secondImportPath)
 
 
 def export3MF(abbr, scale, printType, style, version, partNum):
@@ -65,7 +67,7 @@ def export3MF(abbr, scale, printType, style, version, partNum):
     if len(bpy.context.selected_objects) > 0:
         startExportTime = time.monotonic()
         bpy.ops.export_mesh.threemf(
-            filepath=exportPath, use_selection=True)
+            filepath=exportPath, use_selection=True, coordinate_precision=6)
         print(f'Exported in {time.monotonic()-startExportTime}s')
 
 

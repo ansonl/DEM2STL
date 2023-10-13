@@ -14,12 +14,12 @@ excludeList = []
 
 def importSTL(abbr, printType, style):
     bpy.ops.import_mesh.stl(
-        filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-land-elevation" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
+        filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-land-elevation" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL', global_scale=0.001)
 
     # import second model if dual PrintType
     if printType == "dual":
         bpy.ops.import_mesh.stl(
-            filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL')
+            filepath=f'{regionsTopDir}{abbr}/{abbr}-{printType}{"-hydrography" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}.STL', global_scale=0.001)
 
 
 def export3MF(abbr, printType, style, partNum):
