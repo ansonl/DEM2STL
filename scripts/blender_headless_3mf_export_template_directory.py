@@ -64,12 +64,11 @@ if len(argv) > 4:
     materials.append(bpy.data.materials.new("Secondary"))
     materials[1].use_nodes = True
     materials[1].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = hexColorSecondary
-    print("found colors", hexColorPrimary, hexColorSecondary)
-    print(materials[0].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value[0], materials[1].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value)
+    print("Using colors", hexColorPrimary, hexColorSecondary)
+else:
+    print("No primary and secondary color provided")
 
 excludeList = []
-
-
 
 #set scene from m to mm
 bpy.data.scenes["Scene"].unit_settings.scale_length = 0.001
@@ -81,9 +80,7 @@ def importSTL(abbr, printType, style):
     bpy.ops.import_mesh.stl(
         filepath=importPath)
     if len(materials) > 0:
-      print("before", bpy.context.selected_objects[0].data.materials)
       bpy.context.selected_objects[0].data.materials.append(materials[0])
-      print("after", bpy.context.selected_objects[0].data.materials[0])
 
     # import second model if dual PrintType
     if printType == "dual":
