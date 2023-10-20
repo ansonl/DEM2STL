@@ -4,8 +4,17 @@ import os
 import sys
 import time
 
+# syntax
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- DIR_WITH_ABBR_FOLDERS MAP-E-SCALE-LABEL VERSION-STRING #PRIXXXFF #SECXXXFF
+
+# colors for printablescom render
+# all colors shifted orange in printables preview
+# 2AE3FF cyan shows as blue in printables
+# FFE066 yellow
+# C5F178 lime
+
 # cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
-# ./blender.exe -b --python --- C:\Users\ansonl\development\dem-to-stl-workflow\scripts\headless_blender_3mf_export.py DIR_WITH_ABBR_FOLDERS
+# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_export_template_directory.py -- C:\Users\ansonl\Downloads\share\staging\state_stls\test\ test v1 `#C5F178FF `#2AE3FFFF
 
 # server
 # ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/usa-individual-states-linear/250/ linear v2
@@ -32,7 +41,35 @@ if len(argv) > 1:
 if len(argv) > 2:
     versionTitle = argv[2]
 
+# Delete any existing objects
+for o in bpy.data.objects:
+  o.select_set(True)
+bpy.ops.object.delete()
+
+# create materials if colors specified
+materials = []
+if len(argv) > 4:
+    # Delete existing materials
+    for m in bpy.data.materials:
+        bpy.data.materials.remove(m)
+
+    print(argv[3].lstrip('#'))
+    hexColorPrimary = tuple(float(int(argv[3].lstrip('#')[i:i+2], 16))/255 for i in (0, 2, 4, 6))
+    hexColorSecondary = tuple(float(int(argv[4].lstrip('#')[i:i+2], 16))/255 for i in (0, 2, 4, 6))
+    # set colors
+    
+    materials.append(bpy.data.materials.new("Primary"))
+    materials[0].use_nodes = True
+    materials[0].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = hexColorPrimary
+    materials.append(bpy.data.materials.new("Secondary"))
+    materials[1].use_nodes = True
+    materials[1].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = hexColorSecondary
+    print("found colors", hexColorPrimary, hexColorSecondary)
+    print(materials[0].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value[0], materials[1].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value)
+
 excludeList = []
+
+
 
 #set scene from m to mm
 bpy.data.scenes["Scene"].unit_settings.scale_length = 0.001
@@ -43,6 +80,10 @@ def importSTL(abbr, printType, style):
 
     bpy.ops.import_mesh.stl(
         filepath=importPath)
+    if len(materials) > 0:
+      print("before", bpy.context.selected_objects[0].data.materials)
+      bpy.context.selected_objects[0].data.materials.append(materials[0])
+      print("after", bpy.context.selected_objects[0].data.materials[0])
 
     # import second model if dual PrintType
     if printType == "dual":
@@ -50,7 +91,8 @@ def importSTL(abbr, printType, style):
         print(f'Importing {secondImportPath}')
         bpy.ops.import_mesh.stl(
             filepath=secondImportPath)
-
+        if len(materials) > 1:
+          bpy.context.selected_objects[0].data.materials.append(materials[1])
 
 def export3MF(abbr, scale, printType, style, version, partNum):
     bpy.ops.object.select_all(action='DESELECT')
@@ -67,7 +109,7 @@ def export3MF(abbr, scale, printType, style, version, partNum):
     if len(bpy.context.selected_objects) > 0:
         startExportTime = time.monotonic()
         bpy.ops.export_mesh.threemf(
-            filepath=exportPath, use_selection=True, coordinate_precision=6)
+            filepath=exportPath, use_selection=True, coordinate_precision=6, use_color_group=True)
         print(f'Exported in {time.monotonic()-startExportTime}s')
 
 
@@ -96,7 +138,6 @@ def processEntry(rAbbr, scale, version):
 os.chdir(regionsTopDir)
 regionList = os.listdir(regionsTopDir)
 excludeList = []
-
 
 def get_dir_size(path='.', exclude3MF=True):
     total = 0
