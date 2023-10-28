@@ -21,13 +21,13 @@
 
   "1mmToRealScale": 2500000,
 
-  "basethick": 3.3,
+  "basethick": 3.2,
   "fill_holes": [-1, 7],
   "zscale": 5,
   
   "printres": -1,
-  "ignore_leq": -150,
-  "min_elev": -150,
+  "ignore_leq": -200,
+  "min_elev": -200,
   "smooth_borders": false,
   
   "ntilesx": 1,
