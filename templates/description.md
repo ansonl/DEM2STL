@@ -1,8 +1,8 @@
 # REGION_NAME (REGION_ABBR) Topographic Relief Map with Rivers and Coastal Waters
 
-REGION_NAME mountains, coastlines, streams, and lakes in a dual or single color topographic and hydrographic map! All topographic states in the [USA of Plastic](https://ansonliu.com/maps/) project are at 1:2500000 scale and interlock with each other similar to a puzzle.
+REGION_NAME mountains, coastlines, streams, and lakes in a dual or single color topographic and hydrographic map! All topographic states in the [USA of Plastic](https://www.printables.com/@ansonl/collections/714909) collection are at 1:2500000 scale and interlock with each other similar to a puzzle.
 
-Show off streams, lakes, and coastlines with filament that is glow-in-the-dark or translucent — or simply use a different color from the base!
+*[Download More 3D Printable Maps](https://ansonliu.com/maps/)*
 
 *[Model and Map Specifications](https://ansonliu.com/maps/specifications/)*
 
@@ -11,7 +11,9 @@ Show off streams, lakes, and coastlines with filament that is glow-in-the-dark o
 - REGION_ABBR-sqrt-dual.3mf 🌟 (Dual extrusion only ⚠️)
 - REGION_ABBR-sqrt-single.3mf ⭐ (Single/Dual extrusion OK)
 
-*Recommend to download only the model file name you need for faster download and less storage usage.*
+*Recommended to download only the model file name you need for faster download and less storage usage.*
+
+![3D Map Variants](https://media.printables.com/media/prints/520841/images/4983945_1fdfa216-46f8-4da0-b22a-75d123423348_fba5a591-0e79-4da4-8628-35425e1dbed3/thumbs/inside/1600x1200/png/map-variants.webp)
 
 ### Model Filename Chart
 
@@ -39,6 +41,8 @@ The models are in 3MF format which is like STL but better. 3MF has smaller file 
 # Recommended print settings
 
 Print the model flat. You can do a manual color change mid print to get interesting color transitions at higher elevations. Printers without multi-material capability should print the `*-single.3mf` models.
+
+Show off streams, lakes, and coastlines with filament that is glow-in-the-dark or translucent — or simply use a different color from the base!
 
 **Download the optimized Cura print settings profile for topo maps [HERE](https://www.printables.com/model/529276-contiguous-usa-lower-48-topographic-map-with-hydro).**
 
