@@ -18,6 +18,7 @@ template-workspace/*
 
 sources/*
 tools/*
+descriptions/*
 
 state_stls_*/*
 

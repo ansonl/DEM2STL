@@ -1,0 +1,35 @@
+{
+  "templateName": "williamstown ma usa utm18n 1:36000 linear",
+  "templateShortName": "williamstown-ma-usa-linear",
+  "parentTemplates": [],
+  "demRes": 3.6,
+  "calcRasterTypes": [
+    "raiseLandAIfNotInHydroMaskBAndScale_tap",
+    "raiseLandAAndScale_tap"
+  ],
+  "clipBoundariesDir": "",
+  "rasterTypeSuffixes": [
+    "", 
+    "-no-rivers"
+  ],
+  "excludeFileList": [],
+  "targetSRS": "EPSG:32618",
+
+  "1mmToRealScale": 36000,
+
+  "basethick": 0,
+  "fill_holes": [-1, 7],
+  "zscale": 1,
+  
+  "printres": -1,
+  "ignore_leq": 0,
+  "min_elev": 0,
+  "smooth_borders": false,
+  
+  "ntilesx": 1,
+  "ntilesy": 1,            
+
+  "fileformat": "STLb",
+  "tile_centered": false,
+  "clean_diags": true
+}

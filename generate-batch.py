@@ -328,7 +328,7 @@ if args.gt:
                     cmdBoolfp.write(f'echo {configFileCount} Mesh boolean subtracting {entryName}' + '\n' +
                                     f'time {meshBooleanBin} {generateZipFilenameForPathIndex(1)}/{entryName}_tile_1_1.STL {generateZipFilenameForPathIndex(0)}/{entryName}_tile_1_1.STL minus {generateZipFilenameForPathIndex(0)}/{entryName}_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')
 
-                if len(templateConfig['calcRasterTypes']) >= 2:
+                if len(templateConfig['calcRasterTypes']) > 2:
                     # Write libigl gp-CLI command for boolean subtract between second and third STL
                     cmdBoolfp.write(f'echo {configFileCount} Mesh boolean subtracting {entryName}' + '\n' +
                                     f'time {meshBooleanBin} {generateZipFilenameForPathIndex(1)}/{entryName}_tile_1_1.STL {generateZipFilenameForPathIndex(2)}/{entryName}_tile_1_1.STL minus {generateZipFilenameForPathIndex(2)}/{entryName}_thru_rivers.STL' + '\n' + f'echo {entryName} result $?' + '\n')

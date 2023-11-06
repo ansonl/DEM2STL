@@ -1,3 +1,6 @@
+#extract
+7zzs x -mmt256 -mx9 
+
 ./batch-usa-linear.sh |& tee usa-linear-output.log
 ./batch-usa-sqrt.sh |& tee usa-sqrt-output.log
 ./batch-ak-linear.sh |& tee ak-linear-output.log
@@ -13,6 +16,8 @@
 ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-sqrt/250/ sqrt v1 \#FFE066FF \#2AE3FFFF
 ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/cn-asia-conformal-conic-linear/1000/ linear v1 \#C5F178FF \#2AE3FFFF
 ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/cn-asia-conformal-conic-sqrt/1000/ sqrt v1 \#FFE066FF \#2AE3FFFF
+
+~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/williamstown-ma-usa-linear/3.6/ linear v1 \#C5F178FF \#2AE3FFFF
 
 
 #zip up
