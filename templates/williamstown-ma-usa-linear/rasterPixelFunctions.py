@@ -63,9 +63,9 @@ def raiseLandAIfNotInHydroMaskBAndScale(a, b):
 def raiseLandAAndScale(a, b):
   if b == 3:
     if a > 650:
-      return a
+      return a + 10
     else:
-      return 650
+      return 650 + 10
   else:
     return a
 
