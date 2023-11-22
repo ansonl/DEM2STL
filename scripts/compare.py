@@ -15,8 +15,10 @@ def compare_directories(dir1, dir2):
     
     # Check if the directories contain the same files
     if files1 != files2:
-        print(f"The directories do not contain the same files.")
-        return
+        #print(f"The directories {dir1} {dir2} do not contain the same files. Comparing similar files within.")
+        fi = files1.intersection(files2)
+        files1 = fi
+        files2 = fi
     
     # Compare the MD5 hash of each file
     for file_name in files1:
@@ -29,15 +31,16 @@ def compare_directories(dir1, dir2):
             
             if md5_1 != md5_2:
                 print(f"The file {file1_path} does not match.")
-            else:
-                print(f"The file {file2_path} matches.")
+            #else:
+            #    print(f"The file {file2_path} matches.")
 
         else:
             compare_directories(file1_path, file2_path)
 
 
 # Replace with the paths to the directories you want to compare
-dir1 = './staging/'
-dir2 = './unzip/'
+#dir1 = './staging/'
+dir1 = 'S:/state_3mf/usa-individual-states-linear/250/'
+dir2 = 'K:/USAofPlastic/USAofPlasticv2/'
 
 compare_directories(dir1, dir2)
