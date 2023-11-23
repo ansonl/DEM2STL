@@ -28,8 +28,13 @@ import time
 # ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-linear/250/ linear v1
 # ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-sqrt/250/ sqrt v1
 
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/cn-asia-conformal-conic-linear/1000/ linear v1
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/cn-asia-conformal-conic-sqrt/1000/ sqrt v1
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- autoTemplateDir ~/data/state_stls/cn-asia-conformal-conic-linear/1000/ linear v1
+
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- manual ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-land-elevation-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-hydrography-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-transparent.3mf
+
+# cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
+# ./blender.exe -b -noaudio --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_export_template_directory.py -- manual ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-land-elevation-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-hydrography-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-transparent.3mf
+
 
 argv = sys.argv
 argv = argv[argv.index("--") + 1:]  # get all args after "--"
@@ -63,11 +68,13 @@ if mode == MODE_MANUAL:
             hexColors.append(tuple(float(int(argv[i+1].lstrip('#')[k:k+2], 16))/255 for i in (0, 2, 4, 6)))
             importFileAndColor[1] = len(hexColors)-1
             k += 1 #skip next index which is the color for this model
-        manualImportFilePaths.append(importFileAndColor)
+        
         # last arg is export filename
         if k == len(argv) - 1:
             manualExportFilePath = argv[k]
-
+            break
+        manualImportFilePaths.append(importFileAndColor)
+        
         k+=1
 
 if mode == MODE_AUTOTEMPLATEDIR:
@@ -114,12 +121,14 @@ def setupScene():
     bpy.data.scenes["Scene"].unit_settings.scale_length = 0.001
 
 def importSTL(path, addMaterialFromIndex):
+    print(f'Importing {path}')
     bpy.ops.import_mesh.stl(
         filepath=path)
-    if len(materials) > addMaterialFromIndex:
+    if addMaterialFromIndex != -1 and len(materials) > addMaterialFromIndex:
       bpy.context.selected_objects[0].data.materials.append(materials[addMaterialFromIndex])
 
 def export3MF(path):
+    print(f'Exporting {path}')
     startExportTime = time.monotonic()
     bpy.ops.export_mesh.threemf(
         filepath=path, use_selection=True, coordinate_precision=6, use_color_group=True)
