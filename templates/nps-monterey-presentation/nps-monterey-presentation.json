@@ -1,0 +1,38 @@
+{
+  "templateName": "NPS presentation monterey nvdi",
+  "templateShortName": "nps-monterey-presentation",
+  "parentTemplates": [],
+  "demRes": 30,
+  "calcRasterTypes": [
+    "raiseLandAByBAndScale_tap",
+    "raiseLandAAndScale_tap",
+    "raiseLandAByBAndScaleB5Version"
+  ],
+  "clipBoundariesDir": "./sources/USCB/tl_2022_us_state/split_individual/",
+  "rasterTypeSuffixes": [
+    "", 
+    "-no-rivers", 
+    "-thru-river-cutout-base",
+    "-single-print"
+  ],
+  "excludeFileList": ["AK", "HI", "GU", "AS", "MP", "usa_48"],
+  "targetSRS": "ESRI:32610",
+
+  "1mmToRealScale": 75000,
+
+  "basethick": 1,
+  "fill_holes": [-1, 7],
+  "zscale": 1,
+  
+  "printres": -1,
+  "ignore_leq": 0,
+  "min_elev": 0,
+  "smooth_borders": false,
+  
+  "ntilesx": 1,
+  "ntilesy": 1,            
+
+  "fileformat": "STLb",
+  "tile_centered": false,
+  "clean_diags": true
+}

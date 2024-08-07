@@ -30,7 +30,7 @@ e.g. one of the below
 # minuend - subtrahend = difference
 
 # Input elevation DEM-A and hydro mask-B. Output subtrahend DEM.
-def raiseLandAIfNotInHydroMaskBAndScale(a, b):
+def raiseLandAIfNotInHydroMaskBAndScaleOrig(a, b):
   if b > 0:
     if a > 0:
       return a
@@ -40,6 +40,19 @@ def raiseLandAIfNotInHydroMaskBAndScale(a, b):
     return a + 410
   elif a > 0:
     return np.log(a+1)*450/np.log(41)
+  else:
+    return a
+  
+def raiseLandAIfNotInHydroMaskBAndScale(a, b):
+  if b > 0:
+    if a > 0:
+      return a
+    else: # if A is <= 0m and is covered by mask, set to NODATA so that it is not 3D generated. This will allow oceans to be show from other model. 
+      return -32768 
+  elif a > 40: # 40m -> 400m
+    return a + 360
+  elif a > 0:
+    return np.log(a+1)*400/np.log(41)
   else:
     return a
 

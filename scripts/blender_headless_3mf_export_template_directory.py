@@ -128,7 +128,7 @@ def importSTL(path, addMaterialFromIndex):
       bpy.context.selected_objects[0].data.materials.append(materials[addMaterialFromIndex])
 
 def export3MF(path):
-    print(f'Exporting {path}')
+    print(f'Exporting {len(bpy.data.objects)} objects to to {path}')
     startExportTime = time.monotonic()
     bpy.ops.export_mesh.threemf(
         filepath=path, use_selection=True, coordinate_precision=6, use_color_group=True)
@@ -187,6 +187,8 @@ setupScene()
 if mode == MODE_MANUAL:
     for x in range(len(manualImportFilePaths)):
         importSTL(manualImportFilePaths[x][0], manualImportFilePaths[x][1])
+    for o in bpy.data.objects:
+        o.select_set(True)
     export3MF(manualExportFilePath)
     print(f'Finished with manual mode 3MF export')
 

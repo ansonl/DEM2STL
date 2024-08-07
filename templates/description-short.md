@@ -6,7 +6,7 @@ REGION_NAME mountains, coastlines, streams, and lakes in a dual or single color 
 
 *[Model and Map Specifications](https://ansonliu.com/maps/specifications/)*
 
-# Recommended 3D Model Files to Print ↓ See 🌟 or ⭐ ↓
+## Recommended 3D Model Files to Print ↓ See 🌟 or ⭐ ↓
 
 - REGION_ABBR-sqrt-dual.3mf 🌟 (Dual extrusion only ⚠️)
 - REGION_ABBR-sqrt-single.3mf ⭐ (Single/Dual extrusion OK)
@@ -15,7 +15,9 @@ REGION_NAME mountains, coastlines, streams, and lakes in a dual or single color 
 
 ![3D Map Variants](https://media.printables.com/media/prints/520841/images/4983945_1fdfa216-46f8-4da0-b22a-75d123423348_fba5a591-0e79-4da4-8628-35425e1dbed3/thumbs/inside/1600x1200/png/map-variants.webp)
 
-### Model Filename Chart
+### *[Latest Recommended 3D Topo Map Print Settings](https://ansonliu.com/maps/print-settings/)*
+
+## Model Filename Chart
 
 ```
 STATE-ESCALING-EXTRUDER-STYLE-REVISION-PIECE##.3mf
@@ -36,33 +38,9 @@ STATE-ESCALING-EXTRUDER-STYLE-REVISION-PIECE##.3mf
 
 †*If multi-part files are not present, I have not created interlocking models for this state yet. Follow me and comment with your request to get future additions and updates.*
 
-The models are in 3MF format which is like STL but better. 3MF has smaller file size and can store separate land and water objects that are aligned for easy dual color prints. 3MF is supported in Cura, PrusaSlicer, and other 3D slicers.
+**Need a custom map modeled or a commercial license?** [Let's talk!](mailto:maps@ansonliu.com) *([maps@ansonliu.com](mailto:maps@ansonliu.com))*
 
-# Recommended print settings
-
-*[Latest 3D Topo Map Print Settings](https://ansonliu.com/maps/print-settings/)*
-
-| Slicer Setting | Recommended Value for 0.4 mm nozzle |
-| ------------- |-------------|
-| Layer Height | 0.1 mm |
-| Line Width | 0.4 mm |
-| Minimum Thin Wall Line Width | 0.2 mm |
-| Top Surface Skin Layers | 2 |
-| Top Surface Skin Pattern | Lines |
-| Skin Overlap | 20% |
-| Top/Bottom Flow | 100% |
-| Top Surface Skin Flow | 100% |
-| Infill and Infill Percentage | Lightning 30% |
-| Ironing Line Spacing | 0.2 mm |
-| Ironing Flow | 20% |
-| Ironing Inset | 0.34 mm |
-| Ironing Speed | 60 mm/s |
-| Brim Extruder | Extruder 1 or 2 |
-| Ooze Shield | Yes |
-
-**Need a special location/map modeled and printed as a showpiece or gift?** [Contact me](mailto:maps@ansonliu.com) *([maps@ansonliu.com](mailto:maps@ansonliu.com))* for design and production services to bring your idea to life!
-
-### Credits
+## Credits
 
 USAofPlastic topographic map project uses data from [NASA SRTM V3.0](https://www2.jpl.nasa.gov/srtm/), [USGS GMTED2010](https://www.usgs.gov/coastal-changes-and-impacts/gmted2010), [USGS HYDRO1K](https://www.usgs.gov/centers/eros/science/usgs-eros-archive-digital-elevation-hydro1k) based on 1996 GTOPO30, [HydroLAKES](https://www.hydrosheds.org/products/hydrolakes), and [USCB TIGER/Line](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html).
 
