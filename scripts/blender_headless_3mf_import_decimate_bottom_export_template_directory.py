@@ -176,6 +176,11 @@ def export3MFTemplate(abbr, scale, printType, style, version, partNum):
         if re.search(f'{abbr}-{printType}{"-(?:land-elevation|hydrography)" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}{f"-p{partNum}" if partNum > 0 else ""}', o.name) is not None:
             o.select_set(True)
 
+    if len(bpy.context.selected_objects) == 0:
+          print(f'No object names matched land-elevation or hydrography so selecting all objects for export.')
+          for o in bpy.data.objects:
+              o.select_set(True)
+
     exportPath = f'{regionsTopDir}{abbr}/{abbr}{"-" if len(scale) > 0 else ""}{scale}-{printType}{"-" if len(style) > 0 else ""}{style}{"-" if len(version) > 0 else ""}{version}{f"-p{partNum}" if partNum > 0 else ""}.3mf'
     print(f'Exporting {exportPath}')
 
@@ -291,9 +296,11 @@ if mode == MODE_AUTOTEMPLATEDIR:
 
     regionList.sort(key=lambda f: get_dir_size(regionsTopDir+f), reverse=False)
 
+    print(regionList)
+
     for rAbbr in regionList:
-        """
+        
         if rAbbr in excludeList:
             continue
-        """
+        
         processEntry(rAbbr, scaleTitle, versionTitle)
