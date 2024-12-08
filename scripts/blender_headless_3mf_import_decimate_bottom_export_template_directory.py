@@ -18,8 +18,12 @@ import time
 # FFE066 yellow
 # C5F178 lime
 
+# Start-Transcript decimate.log
+
 # cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
 # ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2test\ linear v2 `#C5F178FF `#2AE3FFFF
+
+# Stop-Transcript
 
 #./blender.exe -b --python  C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- manual K:\USAofPlastic\USAofPlasticv2test\DC\DC-linear-dual-v2.3mf K:\USAofPlastic\USAofPlasticv2test\DC\DC-linear-dual-v2-decim.3mf
 
@@ -95,13 +99,7 @@ if mode == MODE_AUTOTEMPLATEDIR:
 
 excludeList = []
 
-# setup scene for 3d print export
-def setupScene():
-    # Delete any existing objects
-    for o in bpy.data.objects:
-      o.select_set(True)
-    bpy.ops.object.delete()
-
+def createMaterials():
     global materials
     # create materials if colors specified
     materials = []
@@ -120,6 +118,13 @@ def setupScene():
         print("Using colors", hexColors[0], hexColors[1])
     else:
         print("No primary and secondary color provided")
+
+# setup scene for 3d print export
+def setupScene():
+    # Delete any existing objects
+    for o in bpy.data.objects:
+        o.select_set(True)
+    bpy.ops.object.delete()
 
     #set scene from m to mm
     bpy.data.scenes["Scene"].unit_settings.scale_length = 0.001
@@ -236,29 +241,35 @@ def decimateBottomInnerVertices(targetObject):
 def processEntry(rAbbr, scale, version):
     print(f'Starting {rAbbr} single')
 
+    createMaterials()
     import3MFTemplate(rAbbr, scale=scale, printType='single', style='', version=version)
     for o in bpy.data.objects:
       decimateBottomInnerVertices(o)
     export3MFTemplate(rAbbr, scale, 'single', '', version, 0)
     bpy.ops.object.delete()  # delete the object afterwards to reduce unused memory usage
+    bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
 
     print(f'Starting {rAbbr} dual')
 
+    createMaterials()
     import3MFTemplate(rAbbr, scale=scale, printType='dual', style='', version=version)
     for o in bpy.data.objects:
       decimateBottomInnerVertices(o)
     export3MFTemplate(rAbbr, scale, 'dual', '', version, 0)
     bpy.ops.object.delete()
+    bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
 
     print(f'Starting {rAbbr} dual transparent')
 
+    createMaterials()
     import3MFTemplate(rAbbr, scale=scale, printType='dual', style='transparent', version=version)
     for o in bpy.data.objects:
       decimateBottomInnerVertices(o)
     export3MFTemplate(rAbbr, scale, 'dual', 'transparent', version, 0)
     bpy.ops.object.delete()
+    bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
 
     print(f'Finished {rAbbr}')
