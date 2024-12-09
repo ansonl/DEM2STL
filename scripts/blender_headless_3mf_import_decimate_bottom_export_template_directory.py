@@ -7,7 +7,7 @@ import time
 # usage syntax
 
 # Auto mode
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- autoTemplateDir DIR_WITH_ABBR_FOLDERS MAP-E-SCALE-LABEL VERSION-STRING #PRIXXXFF #SECXXXFF
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- autoTemplateDir DIR_WITH_ABBR_FOLDERS MAP-E-SCALE-LABEL VERSION-STRING NEW-VERSION-STRING #PRIXXXFF #SECXXXFF
 
 # Manual mode
 # ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- manual INPUT1 #PRIXXXFF(optional) INPUT2 #SECXXXFF(optional) ... EXPORT
@@ -21,7 +21,8 @@ import time
 # Start-Transcript decimate.log
 
 # cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
-# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2test\ linear v2 `#C5F178FF `#2AE3FFFF
+# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2test\ linear v2 v2 `#C5F178FF `#2AE3FFFF
+# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2test\ sqrt v1 v2 `#C5F178FF `#2AE3FFFF
 
 # Stop-Transcript
 
@@ -53,7 +54,7 @@ MODE_AUTOTEMPLATEDIR = 2 # autoTemplateDir
 
 #args storage
 mode = MODE_UNKNOWN
-regionsTopDir, scaleTitle, versionTitle, hexColors = '', '', '', []
+regionsTopDir, scaleTitle, versionTitle, newVersionTitle, hexColors = '', '', '', '', []
 
 manualImportFilePaths, manualExportFilePath = [], ''
 
@@ -93,9 +94,11 @@ if mode == MODE_AUTOTEMPLATEDIR:
     if len(argv) > 3:
         versionTitle = argv[3]
     if len(argv) > 4:
-        hexColors.append(tuple(float(int(argv[4].lstrip('#')[i:i+2], 16))/255 for i in (0, 2, 4, 6)))
+        newVersionTitle = argv[4]
     if len(argv) > 5:
         hexColors.append(tuple(float(int(argv[5].lstrip('#')[i:i+2], 16))/255 for i in (0, 2, 4, 6)))
+    if len(argv) > 6:
+        hexColors.append(tuple(float(int(argv[6].lstrip('#')[i:i+2], 16))/255 for i in (0, 2, 4, 6)))
 
 excludeList = []
 
@@ -238,14 +241,14 @@ def decimateBottomInnerVertices(targetObject):
 
   print(f'{targetObject.name} - Decimated end vertex count: {endVertexCount} - {endVertexCount/originalVertexCount*100}% of original vertex count')
 
-def processEntry(rAbbr, scale, version):
+def processEntry(rAbbr, scale, version, newVersion):
     print(f'Starting {rAbbr} single')
 
     createMaterials()
     import3MFTemplate(rAbbr, scale=scale, printType='single', style='', version=version)
     for o in bpy.data.objects:
       decimateBottomInnerVertices(o)
-    export3MFTemplate(rAbbr, scale, 'single', '', version, 0)
+    export3MFTemplate(rAbbr, scale, 'single', '', newVersion, 0)
     bpy.ops.object.delete()  # delete the object afterwards to reduce unused memory usage
     bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
@@ -256,7 +259,7 @@ def processEntry(rAbbr, scale, version):
     import3MFTemplate(rAbbr, scale=scale, printType='dual', style='', version=version)
     for o in bpy.data.objects:
       decimateBottomInnerVertices(o)
-    export3MFTemplate(rAbbr, scale, 'dual', '', version, 0)
+    export3MFTemplate(rAbbr, scale, 'dual', '', newVersion, 0)
     bpy.ops.object.delete()
     bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
@@ -267,7 +270,7 @@ def processEntry(rAbbr, scale, version):
     import3MFTemplate(rAbbr, scale=scale, printType='dual', style='transparent', version=version)
     for o in bpy.data.objects:
       decimateBottomInnerVertices(o)
-    export3MFTemplate(rAbbr, scale, 'dual', 'transparent', version, 0)
+    export3MFTemplate(rAbbr, scale, 'dual', 'transparent', newVersion, 0)
     bpy.ops.object.delete()
     bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
@@ -314,4 +317,4 @@ if mode == MODE_AUTOTEMPLATEDIR:
         if rAbbr in excludeList:
             continue
         
-        processEntry(rAbbr, scaleTitle, versionTitle)
+        processEntry(rAbbr, scaleTitle, versionTitle, newVersionTitle)
