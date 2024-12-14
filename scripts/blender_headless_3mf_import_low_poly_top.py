@@ -288,7 +288,8 @@ if mode == MODE_MANUAL:
         import3MF(manualImportFilePaths[x][0], addMaterialFromIndex=0, use_color_group=False)
     for o in bpy.data.objects:
         o.select_set(False)
-        mergeTopInnerVertices(o)  
+        mergeTopInnerVertices(o)
+        checkAndRepairNonSolid(o)
         o.select_set(False)
     export3MF(manualExportFilePath)
     print(f'Finished with manual mode 3MF export')
