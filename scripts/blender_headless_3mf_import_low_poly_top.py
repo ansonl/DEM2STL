@@ -237,6 +237,19 @@ def mergeTopInnerVertices(targetObject):
 
     print(f'Low poly took {time.monotonic()-variantProcessStartTime}s')
 
+def checkAndRepairNonSolid(targetObject):
+    if targetObject.data is None:
+        print(f'{targetObject.name} data is none. Skipping repair the object.')
+        return
+  
+    bpy.context.view_layer.objects.active = targetObject
+    
+    print(f'Making object manifold')
+    
+    bpy.ops.mesh.print3d_clean_non_manifold()
+    
+    print(f'Finished object manifold')
+
 def processEntry(rAbbr, scale, version, newVersion):
     print(f'Starting {rAbbr} single')
 
@@ -244,7 +257,8 @@ def processEntry(rAbbr, scale, version, newVersion):
     import3MFTemplate(rAbbr, scale=scale, printType='single', style='', version=version, use_color_group=True)
     for o in bpy.data.objects:
         o.select_set(False)
-        mergeTopInnerVertices(o)  
+        mergeTopInnerVertices(o)
+        checkAndRepairNonSolid(o)
         o.select_set(False)
     export3MFTemplate(rAbbr, scale, 'single', '', newVersion, 'lowpoly', 0)
     bpy.ops.object.delete()  # delete the object afterwards to reduce unused memory usage
@@ -257,7 +271,8 @@ def processEntry(rAbbr, scale, version, newVersion):
     import3MFTemplate(rAbbr, scale=scale, printType='dual', style='transparent', version=version, use_color_group=True)
     for o in bpy.data.objects:
         o.select_set(False)
-        mergeTopInnerVertices(o)  
+        mergeTopInnerVertices(o)
+        checkAndRepairNonSolid(o)
         o.select_set(False)
     export3MFTemplate(rAbbr, scale, 'dual', 'transparent', newVersion, 'lowpoly', 0)
     bpy.ops.object.delete()
