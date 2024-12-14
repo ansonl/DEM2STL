@@ -7,10 +7,10 @@ import time
 # usage syntax
 
 # Auto mode
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- autoTemplateDir DIR_WITH_ABBR_FOLDERS MAP-E-SCALE-LABEL VERSION-STRING NEW-VERSION-STRING #PRIXXXFF #SECXXXFF
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_import_low_poly_top.py -- autoTemplateDir DIR_WITH_ABBR_FOLDERS MAP-E-SCALE-LABEL VERSION-STRING NEW-VERSION-STRING #PRIXXXFF #SECXXXFF
 
 # Manual mode
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- manual INPUT1 #PRIXXXFF(optional) INPUT2 #SECXXXFF(optional) ... EXPORT
+# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_import_low_poly_top.py -- manual INPUT1 #PRIXXXFF(optional) INPUT2 #SECXXXFF(optional) ... EXPORT
 
 # colors for printablescom render
 # all colors shifted orange in printables preview
@@ -21,29 +21,13 @@ import time
 # Start-Transcript decimate.log
 
 # cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
-# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2test\ linear v2 v2 `#C5F178FF `#2AE3FFFF
-# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2test\ sqrt v1 v2 `#C5F178FF `#2AE3FFFF
+# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_low_poly_top.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2.2\ linear v2 v2 `#C5F178FF `#2AE3FFFF
+# ./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_low_poly_top.py -- autoTemplateDir K:\USAofPlastic\USAofPlasticv2.2\ sqrt v2 v2 `#C5F178FF `#2AE3FFFF
+
+
+#./blender.exe -b --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_low_poly_top.py -- manual K:\USAofPlastic\USAofPlasticv2.2\DE\DE-linear-dual-transparent-v2.3mf K:\USAofPlastic\USAofPlasticv2.2\DE\DE-linear-dual-transparent-v2-lowpoly.3mf
 
 # Stop-Transcript
-
-#./blender.exe -b --python  C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- manual K:\USAofPlastic\USAofPlasticv2.2\AK-0-2-res\AK-linear-dual-transparent-v1.3mf K:\USAofPlastic\USAofPlasticv2.2\AK-0-2-res\AK-linear-dual-transparent-v2.3mf
-
-#./blender.exe -b --python  C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_import_decimate_bottom_export_template_directory.py -- manual K:\USAofPlastic\USAofPlasticv2test\DC\DC-linear-single-v2.3mf K:\USAofPlastic\USAofPlasticv2test\DC\DC-linear-single-v2.3mf
-
-# server
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/usa-individual-states-linear/250/ linear v2
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/usa-individual-states-sqrt/250/ sqrt v1
-
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-linear/250/ linear v1
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- ~/data/state_stls/ak-na-conformal-conic-sqrt/250/ sqrt v1
-
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- autoTemplateDir ~/data/state_stls/cn-asia-conformal-conic-linear/1000/ linear v1
-
-# ~/blender-3.4.1-linux-x64/blender -b -noaudio --python ./blender_headless_3mf_export_template_directory.py -- manual ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-land-elevation-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-hydrography-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-transparent.3mf
-
-# cd 'C:\Program Files\Blender Foundation\Blender 3.5\'
-# ./blender.exe -b -noaudio --python C:\Users\ansonl\development\dem-to-stl-workflow\scripts\blender_headless_3mf_export_template_directory.py -- manual ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-land-elevation-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-hydrography-transparent.stl ~/data/state_stls/cn-asia-conformal-conic-linear/1000/CN/CN-dual-transparent.3mf
-
 
 argv = sys.argv
 argv = argv[argv.index("--") + 1:]  # get all args after "--"
@@ -106,13 +90,14 @@ materials = []
 
 def createMaterials():
     global materials
+    materials = []
     # create materials if colors specified
     if len(hexColors) > 0:
         # Delete existing materials
         for m in bpy.data.materials:
             bpy.data.materials.remove(m)    
         
-        # set colors
+        # set colors        
         materials.append(bpy.data.materials.new("Primary"))
         materials[0].use_nodes = True
         materials[0].node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = hexColors[0]
@@ -177,70 +162,80 @@ def import3MFTemplate(abbr, scale, printType, style, version, use_color_group):
     importPath = f'{regionsTopDir}{abbr}/{abbr}-{scale}-{printType}{"-" if len(style) > 0 else ""}{style}-{version}.3mf'
     import3MF(importPath, addMaterialFromIndex=0, use_color_group=use_color_group)
 
-def export3MFTemplate(abbr, scale, printType, style, version, partNum):
+def export3MFTemplate(abbr, scale, printType, style, version, postProcess, partNum):
     bpy.ops.object.select_all(action='DESELECT')
 
     for o in bpy.data.objects:
-        # Check for given object names
-        if re.search(f'{abbr}-{printType}{"-(?:land-elevation|hydrography)" if printType == "dual" else ""}{"-" if len(style) > 0 else ""}{style}{f"-p{partNum}" if partNum > 0 else ""}', o.name) is not None:
-            o.select_set(True)
+        o.select_set(True)
 
-    if len(bpy.context.selected_objects) == 0:
-          print(f'No object names matched land-elevation or hydrography so selecting all objects for export.')
-          for o in bpy.data.objects:
-              o.select_set(True)
-
-    exportPath = f'{regionsTopDir}{abbr}/{abbr}{"-" if len(scale) > 0 else ""}{scale}-{printType}{"-" if len(style) > 0 else ""}{style}{"-" if len(version) > 0 else ""}{version}{f"-p{partNum}" if partNum > 0 else ""}.3mf'
+    exportPath = f'{regionsTopDir}{abbr}/{abbr}{"-" if len(scale) > 0 else ""}{scale}-{printType}{"-" if len(style) > 0 else ""}{style}{"-" if len(version) > 0 else ""}{version}{f"-{postProcess}" if postProcess else ""}{f"-p{partNum}" if partNum > 0 else ""}.3mf'
     print(f'Exporting {exportPath}')
 
     # export objects
     if len(bpy.context.selected_objects) > 0:
         export3MF(exportPath)
 
+# merge top surface inner vertices to by 2mm
+def mergeTopInnerVertices(targetObject):
+    #desired_threshold_border = 0.001
+    original_vertex_resolution = 0.0001 #0.1mm
+    desired_threshold = 0.002 #2mm
+    inset_steps = int(desired_threshold/original_vertex_resolution)
 
-# decimate bottom inner vertices to 1%
-def decimateBottomInnerVertices(targetObject):
-  if targetObject.data is None:
-      print(f'{targetObject.name} data is none. Skipping decimating the object.')
-      return
+    scaleZ = 3
 
-  bpy.context.view_layer.objects.active = targetObject
+    modelBaseThicknessAtSeaLevel = 0.9
+    sinkDownZ = modelBaseThicknessAtSeaLevel*(scaleZ-1)
 
-  originalVertexCount = 0
-  originalVertexCount += len(targetObject.data.vertices)
-      
-  print(f'{targetObject.name} - Original vertex count: {originalVertexCount}')
+    if targetObject.data is None:
+        print(f'{targetObject.name} data is none. Skipping decimating the object.')
+        return
 
-  decimateStartTime = time.monotonic()
+    bpy.context.view_layer.objects.active = targetObject
 
-  for e in [targetObject.data.vertices, targetObject.data.polygons, targetObject.data.edges]:
-      e.foreach_set("select", (False,)*len(e))
+    originalVertexCount = len(bpy.context.active_object.data.vertices)
+        
+    print(f'{bpy.context.active_object.name} - Original vertex count: {originalVertexCount}')
 
-  for v in targetObject.data.vertices:
-    v.select = v.co.z <= 0
-    
-  bpy.ops.object.mode_set(mode='EDIT')
-  bpy.ops.mesh.select_mode(type="VERT")
-  bpy.ops.mesh.select_less()
-    
-  bpy.ops.object.vertex_group_assign_new()
-  targetObject.vertex_groups[0].name = 'bottom-inner'
+    variantProcessStartTime = time.monotonic()
 
-  print(f'Selection took {time.monotonic()-decimateStartTime}s')
+    print(f'Starting low polyization of top surface')
 
-  bpy.ops.object.mode_set(mode='OBJECT')
+    # low poly top surface inner
+    # select inner land without outer border to merge
+    for e in [bpy.context.active_object.data.vertices, bpy.context.active_object.data.polygons, bpy.context.active_object.data.edges]:
+        e.foreach_set("select", (False,)*len(e))
 
-  bpy.ops.object.modifier_add(type='DECIMATE')
-  bpy.context.object.modifiers["Decimate"].vertex_group='bottom-inner'
-  bpy.context.object.modifiers["Decimate"].ratio=0.01
-  bpy.ops.object.mode_set(mode='OBJECT')
-  bpy.ops.object.modifier_apply(modifier='Decimate')
+    for v in bpy.context.active_object.data.vertices:
+        v.select = v.co.z <= 0
 
-  print(f'Decimate Bottom & Selection took {time.monotonic()-decimateStartTime}s')
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.select_mode(type="VERT")
+    bpy.ops.mesh.select_more()
 
-  endVertexCount = len(targetObject.data.vertices)
+    for _ in range(inset_steps):
+        bpy.ops.mesh.select_more()
 
-  print(f'{targetObject.name} - Decimated end vertex count: {endVertexCount} - {endVertexCount/originalVertexCount*100}% of original vertex count')
+    bpy.ops.mesh.select_all(action='INVERT')
+
+    recalculated_threshold = desired_threshold / bpy.context.scene.unit_settings.scale_length
+
+    bpy.ops.mesh.remove_doubles(threshold=recalculated_threshold, use_unselected=False)
+
+    bpy.ops.object.mode_set(mode='OBJECT')
+
+    # scale up all vertices Z by 300% and correct base level back to original base level
+    for v in bpy.context.active_object.data.vertices:
+        if v.co.z > 0:
+            v.co.z *= scaleZ
+            v.co.z -= sinkDownZ
+            
+    # print Status
+    endVertexCount = len(bpy.context.active_object.data.vertices)
+
+    print(f'{bpy.context.active_object.name} - End vertex count {endVertexCount} - {endVertexCount/originalVertexCount*100}% of original vertex count')        
+
+    print(f'Low poly took {time.monotonic()-variantProcessStartTime}s')
 
 def processEntry(rAbbr, scale, version, newVersion):
     print(f'Starting {rAbbr} single')
@@ -249,23 +244,10 @@ def processEntry(rAbbr, scale, version, newVersion):
     import3MFTemplate(rAbbr, scale=scale, printType='single', style='', version=version, use_color_group=True)
     for o in bpy.data.objects:
         o.select_set(False)
-        decimateBottomInnerVertices(o)
+        mergeTopInnerVertices(o)  
         o.select_set(False)
-    export3MFTemplate(rAbbr, scale, 'single', '', newVersion, 0)
+    export3MFTemplate(rAbbr, scale, 'single', '', newVersion, 'lowpoly', 0)
     bpy.ops.object.delete()  # delete the object afterwards to reduce unused memory usage
-    bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
-    print(f'Remaining objects count {len(bpy.data.objects)}')
-
-    print(f'Starting {rAbbr} dual')
-
-    createMaterials()
-    import3MFTemplate(rAbbr, scale=scale, printType='dual', style='', version=version, use_color_group=True)
-    for o in bpy.data.objects:
-        o.select_set(False)
-        decimateBottomInnerVertices(o)
-        o.select_set(False)
-    export3MFTemplate(rAbbr, scale, 'dual', '', newVersion, 0)
-    bpy.ops.object.delete()
     bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
 
@@ -275,9 +257,9 @@ def processEntry(rAbbr, scale, version, newVersion):
     import3MFTemplate(rAbbr, scale=scale, printType='dual', style='transparent', version=version, use_color_group=True)
     for o in bpy.data.objects:
         o.select_set(False)
-        decimateBottomInnerVertices(o)
+        mergeTopInnerVertices(o)  
         o.select_set(False)
-    export3MFTemplate(rAbbr, scale, 'dual', 'transparent', newVersion, 0)
+    export3MFTemplate(rAbbr, scale, 'dual', 'transparent', newVersion, 'lowpoly', 0)
     bpy.ops.object.delete()
     bpy.ops.outliner.orphans_purge() # purge remaining mesh left behind by object, this also deletes materials
     print(f'Remaining objects count {len(bpy.data.objects)}')
@@ -291,10 +273,8 @@ if mode == MODE_MANUAL:
         import3MF(manualImportFilePaths[x][0], addMaterialFromIndex=0, use_color_group=False)
     for o in bpy.data.objects:
         o.select_set(False)
-        decimateBottomInnerVertices(o)
+        mergeTopInnerVertices(o)  
         o.select_set(False)
-    for o in bpy.data.objects:
-        o.select_set(True)
     export3MF(manualExportFilePath)
     print(f'Finished with manual mode 3MF export')
 
