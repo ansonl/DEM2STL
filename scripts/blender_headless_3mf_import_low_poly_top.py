@@ -237,6 +237,9 @@ def mergeTopInnerVertices(targetObject):
 
     print(f'Low poly took {time.monotonic()-variantProcessStartTime}s')
 
+# Copy the function and this line to trigger in Blender Scripting
+#mergeTopInnerVertices(bpy.context.active_object)
+
 def checkAndRepairNonSolid(targetObject):
     if targetObject.data is None:
         print(f'{targetObject.name} data is none. Skipping repair the object.')
@@ -323,3 +326,5 @@ if mode == MODE_AUTOTEMPLATEDIR:
             continue
         
         processEntry(rAbbr, scaleTitle, versionTitle, newVersionTitle)
+
+
